@@ -109,7 +109,7 @@ export const SourcesList: React.FC<SourcesListProps> = ({
                     }
                   )}
                 >
-                  {source.name.toUpperCase()}
+                  {source.name?.toUpperCase() || 'UNNAMED SOURCE'}
                 </Typography>
                 
                 {source.active !== false && (
