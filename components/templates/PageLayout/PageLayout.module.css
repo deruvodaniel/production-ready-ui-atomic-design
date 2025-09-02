@@ -1,0 +1,31 @@
+.layout {
+  @apply min-h-screen bg-neutral-50 dark:bg-neutral-900;
+}
+
+.main {
+  @apply flex-1 focus:outline-none;
+}
+
+.maxWidthSm {
+  @apply max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+}
+
+.maxWidthMd {
+  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+}
+
+.maxWidthLg {
+  @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+}
+
+.maxWidthXl {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+}
+
+.maxWidth2xl {
+  @apply max-w-none mx-auto px-4 sm:px-6 lg:px-8 py-8;
+}
+
+.maxWidthFull {
+  @apply w-full px-4 sm:px-6 lg:px-8 py-8;
+}

@@ -1,0 +1,114 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  gap: 0.25rem;
+  outline: none;
+}
+
+.badge:focus {
+  outline: 2px solid rgb(var(--color-primary-500));
+  outline-offset: 2px;
+}
+
+/* Variants */
+.default {
+  background-color: rgb(var(--color-neutral-100));
+  color: rgb(var(--color-neutral-900));
+}
+
+.primary {
+  background-color: rgb(var(--color-primary-600));
+  color: white;
+}
+
+.secondary {
+  background-color: rgb(var(--color-secondary-100));
+  color: rgb(var(--color-secondary-900));
+}
+
+.accent {
+  background-color: rgb(var(--color-primary-100));
+  color: rgb(var(--color-primary-900));
+}
+
+.success {
+  background-color: rgb(var(--color-success-100));
+  color: rgb(var(--color-success-900));
+}
+
+.warning {
+  background-color: rgb(var(--color-warning-100));
+  color: rgb(var(--color-warning-900));
+}
+
+.error {
+  background-color: rgb(var(--color-error-100));
+  color: rgb(var(--color-error-900));
+}
+
+.outline {
+  background-color: transparent;
+  color: rgb(var(--color-primary-600));
+  border: 1px solid rgb(var(--color-primary-300));
+}
+
+/* Sizes */
+.sm {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.625rem;
+}
+
+.md {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.lg {
+  padding: 0.375rem 1rem;
+  font-size: 0.875rem;
+}
+
+.icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* Dark mode variants */
+.dark .default {
+  background-color: rgb(var(--color-neutral-800));
+  color: rgb(var(--color-neutral-100));
+}
+
+.dark .secondary {
+  background-color: rgb(var(--color-secondary-800));
+  color: rgb(var(--color-secondary-100));
+}
+
+.dark .accent {
+  background-color: rgb(var(--color-primary-900));
+  color: rgb(var(--color-primary-100));
+}
+
+.dark .success {
+  background-color: rgb(var(--color-success-900));
+  color: rgb(var(--color-success-100));
+}
+
+.dark .warning {
+  background-color: rgb(var(--color-warning-900));
+  color: rgb(var(--color-warning-100));
+}
+
+.dark .error {
+  background-color: rgb(var(--color-error-900));
+  color: rgb(var(--color-error-100));
+}
+
+.dark .outline {
+  color: rgb(var(--color-primary-400));
+  border-color: rgb(var(--color-primary-600));
+}

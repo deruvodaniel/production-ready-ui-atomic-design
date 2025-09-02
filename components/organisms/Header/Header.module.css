@@ -1,0 +1,157 @@
+.header {
+  width: 100%;
+  background-color: rgb(255 255 255 / 0.95);
+  border-bottom: 1px solid rgb(var(--color-neutral-200));
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.dark .header {
+  background-color: rgb(var(--color-neutral-900) / 0.95);
+  border-bottom-color: rgb(var(--color-neutral-800));
+}
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .navigation {
+    display: block;
+  }
+}
+
+.navigationList {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigationLink {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(var(--color-neutral-600));
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.125rem;
+}
+
+.navigationLink:hover {
+  color: rgb(var(--color-neutral-900));
+}
+
+.navigationLink:focus {
+  outline: 2px solid rgb(var(--color-primary-500));
+  outline-offset: 2px;
+}
+
+.navigationLink[aria-current="page"] {
+  color: rgb(var(--color-primary-600));
+}
+
+.dark .navigationLink {
+  color: rgb(var(--color-neutral-400));
+}
+
+.dark .navigationLink:hover {
+  color: rgb(var(--color-neutral-100));
+}
+
+.dark .navigationLink[aria-current="page"] {
+  color: rgb(var(--color-primary-400));
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.notificationWrapper {
+  position: relative;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  background-color: rgb(var(--color-error-500));
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.userMenu {
+  margin-left: 0.5rem;
+}
+
+.userTrigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.userName {
+  display: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(var(--color-neutral-700));
+}
+
+@media (min-width: 640px) {
+  .userName {
+    display: block;
+  }
+}
+
+.dark .userName {
+  color: rgb(var(--color-neutral-300));
+}

@@ -1,0 +1,51 @@
+.skeleton {
+  @apply bg-neutral-200 dark:bg-neutral-700;
+}
+
+.default {
+  @apply rounded-md;
+}
+
+.circular {
+  @apply rounded-full;
+}
+
+.rectangular {
+  @apply rounded-none;
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.wave {
+  @apply relative overflow-hidden;
+}
+
+.wave::after {
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent;
+  content: '';
+  animation: wave 1.6s linear infinite;
+}
+
+.none {
+  /* No animation */
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

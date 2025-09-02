@@ -1,0 +1,86 @@
+.card {
+  border-radius: 0.5rem;
+  border: 1px solid rgb(var(--color-neutral-200));
+  background-color: white;
+  color: rgb(var(--color-neutral-900));
+  transition: all 0.2s ease-in-out;
+}
+
+.default {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.outlined {
+  border: 1px solid rgb(var(--color-neutral-300));
+  background-color: white;
+}
+
+.elevated {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  transform: translateY(-1px);
+}
+
+/* Padding variants */
+.paddingNone {
+  padding: 0;
+}
+
+.paddingSm {
+  padding: 0.5rem;
+}
+
+.paddingMd {
+  padding: 1rem;
+}
+
+.paddingLg {
+  padding: 1.5rem;
+}
+
+/* Card sections */
+.header {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(var(--color-neutral-200));
+  margin-bottom: 1rem;
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  padding-top: 1rem;
+  border-top: 1px solid rgb(var(--color-neutral-200));
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Dark mode */
+.dark .card {
+  background-color: rgb(var(--color-neutral-800));
+  color: rgb(var(--color-neutral-100));
+  border-color: rgb(var(--color-neutral-700));
+}
+
+.dark .outlined {
+  border-color: rgb(var(--color-neutral-600));
+  background-color: rgb(var(--color-neutral-800));
+}
+
+.dark .header {
+  border-color: rgb(var(--color-neutral-700));
+}
+
+.dark .footer {
+  border-color: rgb(var(--color-neutral-700));
+}

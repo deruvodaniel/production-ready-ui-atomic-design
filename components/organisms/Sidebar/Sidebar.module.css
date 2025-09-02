@@ -1,0 +1,75 @@
+.sidebar {
+  @apply w-64 h-full bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 transition-all duration-300 ease-in-out;
+}
+
+.sidebarCollapsed {
+  @apply w-16;
+}
+
+.navigation {
+  @apply p-4;
+}
+
+.list {
+  @apply space-y-1 list-none m-0 p-0;
+}
+
+.listItem {
+  @apply relative;
+}
+
+.itemContainer {
+  @apply flex items-center;
+}
+
+.item {
+  @apply flex items-center gap-3 w-full px-3 py-2 text-left rounded-md transition-all duration-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-neutral-900 no-underline;
+}
+
+.subItem {
+  @apply ml-4 pl-6;
+}
+
+.active {
+  @apply bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300;
+}
+
+.collapsed {
+  @apply justify-center px-2;
+}
+
+.icon {
+  @apply w-5 h-5 flex-shrink-0 text-neutral-500 dark:text-neutral-400;
+}
+
+.active .icon {
+  @apply text-primary-600 dark:text-primary-400;
+}
+
+.label {
+  @apply flex-1 truncate text-neutral-700 dark:text-neutral-300;
+}
+
+.active .label {
+  @apply text-primary-700 dark:text-primary-300;
+}
+
+.badge {
+  @apply flex-shrink-0;
+}
+
+.expandButton {
+  @apply p-1 w-6 h-6 min-w-0 ml-auto flex-shrink-0;
+}
+
+.expandIcon {
+  @apply w-4 h-4 transition-transform duration-200;
+}
+
+.expandIconRotated {
+  @apply rotate-90;
+}
+
+.subList {
+  @apply ml-4 mt-1 space-y-1 list-none m-0 p-0;
+}

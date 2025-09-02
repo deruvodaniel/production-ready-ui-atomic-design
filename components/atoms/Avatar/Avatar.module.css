@@ -1,0 +1,107 @@
+.avatar {
+  @apply relative inline-flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 overflow-hidden transition-all duration-200;
+}
+
+.circular {
+  @apply rounded-full;
+}
+
+.rounded {
+  @apply rounded-lg;
+}
+
+.square {
+  @apply rounded-none;
+}
+
+.xs {
+  @apply w-6 h-6;
+}
+
+.sm {
+  @apply w-8 h-8;
+}
+
+.md {
+  @apply w-10 h-10;
+}
+
+.lg {
+  @apply w-12 h-12;
+}
+
+.xl {
+  @apply w-16 h-16;
+}
+
+.\32 xl {
+  @apply w-20 h-20;
+}
+
+.image {
+  @apply w-full h-full object-cover transition-opacity duration-200;
+}
+
+.loading {
+  @apply opacity-0;
+}
+
+.fallback {
+  @apply w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800;
+}
+
+.fallbackText {
+  @apply text-primary-700 dark:text-primary-300 font-medium uppercase;
+}
+
+.fallbackIcon {
+  @apply text-primary-600 dark:text-primary-400;
+}
+
+.xs .fallbackText {
+  @apply text-xs;
+}
+
+.sm .fallbackText {
+  @apply text-xs;
+}
+
+.md .fallbackText {
+  @apply text-sm;
+}
+
+.lg .fallbackText {
+  @apply text-base;
+}
+
+.xl .fallbackText {
+  @apply text-lg;
+}
+
+.\32 xl .fallbackText {
+  @apply text-xl;
+}
+
+.xs .fallbackIcon {
+  @apply w-3 h-3;
+}
+
+.sm .fallbackIcon {
+  @apply w-4 h-4;
+}
+
+.md .fallbackIcon {
+  @apply w-5 h-5;
+}
+
+.lg .fallbackIcon {
+  @apply w-6 h-6;
+}
+
+.xl .fallbackIcon {
+  @apply w-8 h-8;
+}
+
+.\32 xl .fallbackIcon {
+  @apply w-10 h-10;
+}

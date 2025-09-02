@@ -1,0 +1,15 @@
+.container {
+  @apply flex items-center gap-2 w-full;
+}
+
+.inputWrapper {
+  @apply relative flex-1;
+}
+
+.clearButton {
+  @apply absolute right-2 top-1/2 transform -translate-y-1/2 p-1 w-6 h-6 min-w-0 hover:bg-neutral-100 dark:hover:bg-neutral-700;
+}
+
+.searchButton {
+  @apply flex-shrink-0;
+}

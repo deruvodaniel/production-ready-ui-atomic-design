@@ -1,0 +1,11 @@
+.container {
+  @apply space-y-2;
+}
+
+.labelContainer {
+  @apply space-y-1;
+}
+
+.required {
+  @apply text-error-500 ml-1;
+}
