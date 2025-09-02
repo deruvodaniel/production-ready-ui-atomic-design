@@ -34,10 +34,10 @@ export default function StorybookPage() {
             accessibility testing, and responsive design previews.
           </Typography>
 
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             leftIcon={<ExternalLink />}
-            onClick={() => window.open('http://localhost:6006', '_blank')}
+            onClick={() => (window.location.href = '/components')}
           >
             Open Storybook
           </Button>
