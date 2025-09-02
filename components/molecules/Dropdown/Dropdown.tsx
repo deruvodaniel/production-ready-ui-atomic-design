@@ -104,7 +104,13 @@ export const Dropdown: React.FC<DropdownProps> = ({
         className={cn(styles.trigger, isOpen && styles.triggerOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label={selectedItem ? selectedItem.label : (typeof placeholder === 'string' ? placeholder : 'Select an option')}
+        aria-label={
+          selectedItem
+            ? selectedItem.label
+            : typeof placeholder === 'string'
+              ? placeholder
+              : 'Select an option'
+        }
       >
         <span className={styles.triggerContent}>
           {selectedItem?.icon && <span className={styles.triggerIcon}>{selectedItem.icon}</span>}
