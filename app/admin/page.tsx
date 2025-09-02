@@ -180,7 +180,7 @@ const ActivityItemComponent = ({ activity }: { activity: ActivityItem }) => {
   };
 
   const ActivityIcon = getActivityIcon(activity.type);
-  const timeAgo = new Date() - activity.timestamp;
+  const timeAgo = new Date().getTime() - activity.timestamp.getTime();
   const hours = Math.floor(timeAgo / (1000 * 60 * 60));
   const days = Math.floor(hours / 24);
 
