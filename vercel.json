@@ -1,5 +1,5 @@
 {
-  "framework": "other",
+  "framework": "nextjs",
   "buildCommand": "yarn build:vercel",
   "outputDirectory": "out",
   "cleanUrls": true
