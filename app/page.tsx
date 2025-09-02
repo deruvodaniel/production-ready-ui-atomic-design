@@ -21,6 +21,7 @@ import {
   Sun,
   Download
 } from 'lucide-react';
+import { FontSelector } from '@/components/molecules/FontSelector/FontSelector';
 
 export default function Home() {
   const { isDark, toggleDarkMode, config, updateTheme } = useTheme();
@@ -54,6 +55,27 @@ export default function Home() {
     });
   };
 
+  const handleExport = () => {
+    const data = {
+      theme: config,
+      mode: isDark ? 'dark' : 'light',
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'theme-config.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const scrollToTheme = () => {
+    const el = document.getElementById('theme-customization');
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <PageLayout
       header={{
@@ -81,10 +103,10 @@ export default function Home() {
           </Typography>
 
           <div className="flex justify-center gap-4 mb-8">
-            <Button size="lg" leftIcon={<Palette />}>
+            <Button size="lg" leftIcon={<Palette />} onClick={scrollToTheme}>
               Customize Theme
             </Button>
-            <Button variant="outline" size="lg" leftIcon={<Download />}>
+            <Button variant="outline" size="lg" leftIcon={<Download />} onClick={handleExport}>
               Export Config
             </Button>
           </div>
@@ -103,7 +125,7 @@ export default function Home() {
         </section>
 
         {/* Theme Customization */}
-        <section className="mb-16">
+        <section className="mb-16" id="theme-customization">
           <Card variant="elevated" padding="lg">
             <div className="flex items-center justify-between mb-6">
               <Typography variant="h3" weight="semibold">
@@ -195,6 +217,11 @@ export default function Home() {
               </div>
             </div>
           </Card>
+        </section>
+
+        {/* Typography Settings */}
+        <section className="mb-16">
+          <FontSelector />
         </section>
 
         {/* Component Preview */}
