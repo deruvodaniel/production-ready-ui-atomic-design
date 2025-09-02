@@ -1,0 +1,24 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Docs/Design System" />
+
+# Design System
+
+This Storybook documents the Atomic Design-based component library.
+
+## Foundations
+- Colors: driven by CSS variables `--color-*` managed by the ThemeProvider.
+- Typography: `--font-sans`, `--font-display`, `--font-serif`, `--font-mono` configurable at runtime.
+- Spacing: `--spacing-*` scales (`compact`, `comfortable`, `spacious`).
+
+## Atomic Levels
+- Atoms: Button, Input, Typography, Badge, Checkbox, RadioGroup.
+- Molecules: Card, FormField, SearchInput, Accordion, DatePicker, ResponsiveTable.
+- Organisms: Header, Sidebar.
+- Templates: PageLayout, DocsTemplate.
+
+## Accessibility
+- Keyboard navigation, focus-visible, roles/aria where needed.
+- Color contrast compliant tokens for light/dark.
+
+Refer to docs/COMPONENTS_GUIDE.md in the repo for the full guide.
