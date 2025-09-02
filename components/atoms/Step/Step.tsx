@@ -41,29 +41,20 @@ export const Step: React.FC<StepProps> = ({
     }
   );
 
-  const connectorClasses = cn(
-    'w-0.5 h-18 ml-5 transition-colors',
-    {
-      'bg-neutral-900': status === 'current' || status === 'completed',
-      'bg-neutral-200': status === 'upcoming',
-    }
-  );
+  const connectorClasses = cn('w-0.5 h-18 ml-5 transition-colors', {
+    'bg-neutral-900': status === 'current' || status === 'completed',
+    'bg-neutral-200': status === 'upcoming',
+  });
 
-  const contentClasses = cn(
-    'flex-1 transition-colors',
-    {
-      'cursor-pointer hover:bg-neutral-50 rounded-lg p-2 -m-2': isInteractive,
-    }
-  );
+  const contentClasses = cn('flex-1 transition-colors', {
+    'cursor-pointer hover:bg-neutral-50 rounded-lg p-2 -m-2': isInteractive,
+  });
 
-  const titleClasses = cn(
-    'font-semibold transition-colors',
-    {
-      'text-neutral-900': status === 'current',
-      'text-neutral-600': status === 'upcoming',
-      'text-neutral-800': status === 'completed',
-    }
-  );
+  const titleClasses = cn('font-semibold transition-colors', {
+    'text-neutral-900': status === 'current',
+    'text-neutral-600': status === 'upcoming',
+    'text-neutral-800': status === 'completed',
+  });
 
   const handleClick = () => {
     if (isInteractive) {
@@ -105,19 +96,11 @@ export const Step: React.FC<StepProps> = ({
 
         {/* Step Content */}
         <div className={contentClasses}>
-          <Typography
-            variant="body"
-            className={titleClasses}
-            style={{ lineHeight: '1.5' }}
-          >
+          <Typography variant="body" className={titleClasses} style={{ lineHeight: '1.5' }}>
             {title}
           </Typography>
           {description && (
-            <Typography
-              variant="caption"
-              color="muted"
-              className="mt-1 block"
-            >
+            <Typography variant="caption" color="muted" className="mt-1 block">
               {description}
             </Typography>
           )}
@@ -125,9 +108,7 @@ export const Step: React.FC<StepProps> = ({
       </div>
 
       {/* Connector */}
-      {showConnector && (
-        <div className={connectorClasses} />
-      )}
+      {showConnector && <div className={connectorClasses} />}
     </div>
   );
 };

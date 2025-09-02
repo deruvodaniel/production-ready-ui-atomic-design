@@ -10,7 +10,8 @@ const meta: Meta<typeof ReviewForm> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'A form component for performance reviews with expandable sections and action buttons for AI assistance.',
+        component:
+          'A form component for performance reviews with expandable sections and action buttons for AI assistance.',
       },
     },
   },
@@ -46,7 +47,8 @@ export const PerformanceReview: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance review form as shown in the Figma design with What, How, and Impact sections.',
+        story:
+          'Performance review form as shown in the Figma design with What, How, and Impact sections.',
       },
     },
   },
@@ -143,12 +145,8 @@ export const Interactive: Story = {
     const [sections, setSections] = useState(performanceReviewSections);
 
     const handleSectionChange = (sectionId: string, content: string) => {
-      setSections(prev => 
-        prev.map(section => 
-          section.id === sectionId 
-            ? { ...section, content }
-            : section
-        )
+      setSections(prev =>
+        prev.map(section => (section.id === sectionId ? { ...section, content } : section))
       );
     };
 
@@ -157,7 +155,7 @@ export const Interactive: Story = {
       if (!section) return;
 
       let newContent = section.content;
-      
+
       switch (action) {
         case 'tryAgain':
           newContent = `[Regenerated] ${section.content}`;
@@ -178,17 +176,18 @@ export const Interactive: Story = {
         <div className="p-4 bg-blue-50 rounded-lg">
           <h3 className="font-semibold mb-2">Interactive Review Form</h3>
           <p className="text-sm text-gray-600">
-            Try editing the content or using the action buttons (Try Again, Elaborate, Shorten) to see the AI assistance features.
+            Try editing the content or using the action buttons (Try Again, Elaborate, Shorten) to
+            see the AI assistance features.
           </p>
         </div>
-        
+
         <ReviewForm
           sections={sections}
           onSectionChange={handleSectionChange}
           onAction={handleAction}
           readOnly={false}
         />
-        
+
         <div className="p-4 bg-gray-50 rounded-lg">
           <h4 className="font-semibold mb-2">Current Content:</h4>
           <pre className="text-xs text-gray-600 overflow-auto">
@@ -201,7 +200,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Fully interactive form with real-time content updates and AI assistance simulation.',
+        story:
+          'Fully interactive form with real-time content updates and AI assistance simulation.',
       },
     },
   },

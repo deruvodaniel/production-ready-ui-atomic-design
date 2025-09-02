@@ -151,7 +151,7 @@ export interface NotificationItem {
 
 // Simulated API delay
 export const simulateAPICall = <T>(data: T, delay: number = 800): Promise<T> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => resolve(data), delay);
   });
 };
@@ -327,7 +327,8 @@ export const appConfig: AppConfig = {
         user: {
           id: 'rachel-green',
           name: 'Rachel Green',
-          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+          avatar:
+            'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
         },
         action: 'completed her self-assessment',
         timestamp: new Date('2024-01-15T10:30:00'),
@@ -338,7 +339,8 @@ export const appConfig: AppConfig = {
         user: {
           id: 'julia-harvey',
           name: 'Julia Harvey',
-          avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face',
+          avatar:
+            'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face',
         },
         action: 'submitted performance review',
         target: 'Q4 2024',
@@ -350,7 +352,8 @@ export const appConfig: AppConfig = {
         user: {
           id: 'jonah-smith',
           name: 'Jonah Smith',
-          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+          avatar:
+            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
         },
         action: 'achieved goal',
         target: 'Complete React 18 migration',
@@ -362,7 +365,8 @@ export const appConfig: AppConfig = {
         user: {
           id: 'jim-andrada',
           name: 'Jim Andrada',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+          avatar:
+            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
         },
         action: 'earned certification',
         target: 'AWS Solutions Architect',
@@ -374,7 +378,8 @@ export const appConfig: AppConfig = {
         user: {
           id: 'alex-ruiz',
           name: 'Alex Ruiz',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+          avatar:
+            'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
         },
         action: 'updated team objectives',
         target: 'Q1 2024 OKRs',
@@ -386,8 +391,8 @@ export const appConfig: AppConfig = {
     overview: {
       totalMembers: employeesData.length,
       activeMembers: employeesData.filter(emp => emp.status === 'Available').length,
-      newJoiners: employeesData.filter(emp => 
-        new Date(emp.joinDate) > new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
+      newJoiners: employeesData.filter(
+        emp => new Date(emp.joinDate) > new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
       ).length,
       avgPerformance: 87,
       teamSatisfaction: 4.2,
@@ -429,7 +434,8 @@ export const appConfig: AppConfig = {
       name: 'Alex Ruiz',
       email: 'alex.ruiz@sie.com',
       role: 'Engineering Manager',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+      avatar:
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
       permissions: ['admin', 'team-lead', 'performance-review'],
       preferences: {
         theme: 'light',
@@ -444,7 +450,7 @@ export const appConfig: AppConfig = {
       id: '1',
       type: 'warning',
       title: 'Performance Review Due',
-      message: 'Rachel Green\'s performance review is due in 2 days',
+      message: "Rachel Green's performance review is due in 2 days",
       timestamp: new Date('2024-01-15T09:00:00'),
       read: false,
       actionUrl: '/admin/performance-review/rachel-green',
@@ -488,7 +494,5 @@ export const getMetricsForDashboard = () => {
 };
 
 export const getRecentActivity = (limit: number = 5) => {
-  return simulateAPICall(
-    appConfig.dashboard.recentActivity.slice(0, limit)
-  );
+  return simulateAPICall(appConfig.dashboard.recentActivity.slice(0, limit));
 };

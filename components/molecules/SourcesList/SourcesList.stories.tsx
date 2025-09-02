@@ -9,7 +9,8 @@ const meta: Meta<typeof SourcesList> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'A component for displaying a list of information sources with optional click interactions. Used in chat interfaces to show data sources.',
+        component:
+          'A component for displaying a list of information sources with optional click interactions. Used in chat interfaces to show data sources.',
       },
     },
   },
@@ -45,7 +46,8 @@ export const PerformanceReview: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance review sources as shown in the Figma design. Includes Goals, Team Feedback, and Manager Notes.',
+        story:
+          'Performance review sources as shown in the Figma design. Includes Goals, Team Feedback, and Manager Notes.',
       },
     },
   },
@@ -86,7 +88,8 @@ export const MixedStates: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Sources with mixed active/inactive states. Inactive sources are dimmed and not clickable.',
+        story:
+          'Sources with mixed active/inactive states. Inactive sources are dimmed and not clickable.',
       },
     },
   },
@@ -109,9 +112,7 @@ export const Empty: Story = {
 
 export const SingleSource: Story = {
   args: {
-    sources: [
-      createSource('single', 'Single Source', 'goals', true),
-    ],
+    sources: [createSource('single', 'Single Source', 'goals', true)],
     title: 'Source',
     showCount: true,
   },
@@ -170,10 +171,11 @@ export const Interactive: Story = {
           showCount={true}
           onSourceClick={handleSourceClick}
         />
-        
+
         <div className="p-4 bg-gray-100 rounded-lg">
           <p className="text-sm text-gray-600">
-            Click on any source above to see the interaction. Active sources will trigger the callback.
+            Click on any source above to see the interaction. Active sources will trigger the
+            callback.
           </p>
         </div>
       </div>
@@ -193,17 +195,18 @@ export const InChatContext: Story = {
     <div className="max-w-md bg-gray-50 p-6 rounded-lg">
       <div className="mb-4">
         <p className="text-sm text-gray-700">
-          Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on her feedback, 1:1 notes, goals progress. You can find the sources below.
+          Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on
+          her feedback, 1:1 notes, goals progress. You can find the sources below.
         </p>
       </div>
-      
+
       <SourcesList
         sources={performanceReviewSources}
         title="Sources"
         showCount={true}
         onSourceClick={fn()}
       />
-      
+
       <div className="mt-4">
         <p className="text-sm text-gray-700">
           Would you like to review her performance summary, or should I make some tweaks?

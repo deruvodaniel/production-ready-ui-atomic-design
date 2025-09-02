@@ -92,12 +92,10 @@ export const AdminMetricCard: React.FC<MetricCardProps> = ({
             <div className="flex items-center gap-2">
               {isPositive && <ArrowUp className="w-4 h-4 text-green-500" />}
               {isNegative && <ArrowDown className="w-4 h-4 text-red-500" />}
-              <Typography 
-                variant="caption" 
+              <Typography
+                variant="caption"
                 className={
-                  isPositive ? 'text-green-600' : 
-                  isNegative ? 'text-red-600' : 
-                  'text-gray-600'
+                  isPositive ? 'text-green-600' : isNegative ? 'text-red-600' : 'text-gray-600'
                 }
               >
                 {change.value}% {change.period}
@@ -142,23 +140,35 @@ export const AdminActivityItem: React.FC<ActivityItemProps> = ({
 }) => {
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'feedback': return MessageSquare;
-      case 'review': return Star;
-      case 'goal': return Target;
-      case 'achievement': return CheckCircle;
-      case 'system': return Info;
-      default: return Info;
+      case 'feedback':
+        return MessageSquare;
+      case 'review':
+        return Star;
+      case 'goal':
+        return Target;
+      case 'achievement':
+        return CheckCircle;
+      case 'system':
+        return Info;
+      default:
+        return Info;
     }
   };
 
   const getActivityColor = (type: string) => {
     switch (type) {
-      case 'feedback': return 'text-blue-500';
-      case 'review': return 'text-purple-500';
-      case 'goal': return 'text-green-500';
-      case 'achievement': return 'text-yellow-500';
-      case 'system': return 'text-gray-500';
-      default: return 'text-gray-500';
+      case 'feedback':
+        return 'text-blue-500';
+      case 'review':
+        return 'text-purple-500';
+      case 'goal':
+        return 'text-green-500';
+      case 'achievement':
+        return 'text-yellow-500';
+      case 'system':
+        return 'text-gray-500';
+      default:
+        return 'text-gray-500';
     }
   };
 
@@ -174,13 +184,16 @@ export const AdminActivityItem: React.FC<ActivityItemProps> = ({
   };
 
   return (
-    <div 
+    <div
       className={`flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200 ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={onClick}
     >
-      <Avatar 
+      <Avatar
         src={user.avatar}
-        fallback={user.name.split(' ').map(n => n[0]).join('')}
+        fallback={user.name
+          .split(' ')
+          .map(n => n[0])
+          .join('')}
         size="sm"
         className="flex-shrink-0"
       />
@@ -226,18 +239,28 @@ export const AdminQuickAction: React.FC<QuickActionProps> = ({
   const IconComponent = iconMap[icon];
 
   const content = (
-    <Card className={`p-6 h-full transition-all duration-200 hover:shadow-lg hover:scale-105 cursor-pointer group ${className}`}>
+    <Card
+      className={`p-6 h-full transition-all duration-200 hover:shadow-lg hover:scale-105 cursor-pointer group ${className}`}
+    >
       <div className="flex items-start gap-4">
-        <div className={`p-3 rounded-lg bg-${color}-100 text-${color}-600 group-hover:scale-110 transition-transform duration-200`}>
+        <div
+          className={`p-3 rounded-lg bg-${color}-100 text-${color}-600 group-hover:scale-110 transition-transform duration-200`}
+        >
           {IconComponent && <IconComponent className="w-6 h-6" />}
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
-            <Typography variant="h6" weight="bold" className="group-hover:text-blue-600 transition-colors duration-200">
+            <Typography
+              variant="h6"
+              weight="bold"
+              className="group-hover:text-blue-600 transition-colors duration-200"
+            >
               {title}
             </Typography>
             {priority === 'high' && (
-              <Badge variant="error" size="sm">High</Badge>
+              <Badge variant="error" size="sm">
+                High
+              </Badge>
             )}
           </div>
           <Typography variant="body" color="muted" className="text-sm">
@@ -294,21 +317,24 @@ export const AdminTeamMemberCard: React.FC<TeamMemberCardProps> = ({
     }
   };
 
-  const isRecentlyActive = employee.lastActivity 
-    ? new Date() - employee.lastActivity < 24 * 60 * 60 * 1000 
+  const isRecentlyActive = employee.lastActivity
+    ? new Date() - employee.lastActivity < 24 * 60 * 60 * 1000
     : false;
 
   const content = (
-    <Card 
+    <Card
       className={`p-6 transition-all duration-300 cursor-pointer relative overflow-hidden group hover:shadow-xl ${className}`}
       role="article"
       aria-label={`Team member ${employee.name}, ${employee.role}`}
     >
       <div className="flex items-start gap-4 mb-4">
         <div className="relative">
-          <Avatar 
+          <Avatar
             src={employee.avatar}
-            fallback={employee.name.split(' ').map(n => n[0]).join('')}
+            fallback={employee.name
+              .split(' ')
+              .map(n => n[0])
+              .join('')}
             size="lg"
             className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
           />
@@ -317,9 +343,9 @@ export const AdminTeamMemberCard: React.FC<TeamMemberCardProps> = ({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <Typography 
-            variant="h5" 
-            weight="bold" 
+          <Typography
+            variant="h5"
+            weight="bold"
             className="text-gray-900 mb-1 truncate group-hover:text-blue-600 transition-colors"
           >
             {employee.name}
@@ -327,16 +353,12 @@ export const AdminTeamMemberCard: React.FC<TeamMemberCardProps> = ({
           <Typography variant="body" className="text-gray-600 mb-2 truncate">
             {employee.role}
           </Typography>
-          <Badge 
-            variant={getStatusVariant(employee.status)}
-            size="sm"
-            className="inline-flex"
-          >
+          <Badge variant={getStatusVariant(employee.status)} size="sm" className="inline-flex">
             {employee.status}
           </Badge>
         </div>
       </div>
-      
+
       {showPerformance && employee.performanceScore && (
         <div className="space-y-2 mb-4">
           <div className="flex items-center justify-between">
@@ -348,18 +370,22 @@ export const AdminTeamMemberCard: React.FC<TeamMemberCardProps> = ({
             </Typography>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
+            <div
               className={`h-2 rounded-full transition-all duration-1000 ease-out ${
-                employee.performanceScore >= 90 ? 'bg-green-500' :
-                employee.performanceScore >= 80 ? 'bg-blue-500' :
-                employee.performanceScore >= 70 ? 'bg-yellow-500' : 'bg-orange-500'
+                employee.performanceScore >= 90
+                  ? 'bg-green-500'
+                  : employee.performanceScore >= 80
+                    ? 'bg-blue-500'
+                    : employee.performanceScore >= 70
+                      ? 'bg-yellow-500'
+                      : 'bg-orange-500'
               }`}
               style={{ width: `${employee.performanceScore}%` }}
             />
           </div>
         </div>
       )}
-      
+
       {showProject && employee.currentProject && (
         <div className="mt-4 pt-4 border-t border-gray-200">
           <Typography variant="caption" className="text-gray-500 block mb-1">
@@ -388,11 +414,7 @@ export const AdminTeamMemberCard: React.FC<TeamMemberCardProps> = ({
     return <div onClick={onClick}>{content}</div>;
   }
 
-  return (
-    <Link href={`/admin/profile/${employee.id}`}>
-      {content}
-    </Link>
-  );
+  return <Link href={`/admin/profile/${employee.id}`}>{content}</Link>;
 };
 
 // Page Header Component
@@ -420,15 +442,16 @@ export const AdminPageHeader: React.FC<AdminPageHeaderProps> = ({
               {breadcrumbs.map((crumb, index) => (
                 <React.Fragment key={index}>
                   {crumb.href ? (
-                    <Link href={crumb.href} className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                    <Link
+                      href={crumb.href}
+                      className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                    >
                       {crumb.label}
                     </Link>
                   ) : (
                     <span className="text-sm text-gray-900 font-medium">{crumb.label}</span>
                   )}
-                  {index < breadcrumbs.length - 1 && (
-                    <span className="text-gray-400">/</span>
-                  )}
+                  {index < breadcrumbs.length - 1 && <span className="text-gray-400">/</span>}
                 </React.Fragment>
               ))}
             </nav>
@@ -442,11 +465,7 @@ export const AdminPageHeader: React.FC<AdminPageHeaderProps> = ({
             </Typography>
           )}
         </div>
-        {actions && (
-          <div className="flex items-center gap-3">
-            {actions}
-          </div>
-        )}
+        {actions && <div className="flex items-center gap-3">{actions}</div>}
       </div>
     </div>
   </header>

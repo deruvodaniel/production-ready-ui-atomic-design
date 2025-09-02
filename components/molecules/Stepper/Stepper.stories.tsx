@@ -10,7 +10,8 @@ const meta: Meta<typeof Stepper> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'A stepper component for multi-step workflows. Manages step state and navigation between steps.',
+        component:
+          'A stepper component for multi-step workflows. Manages step state and navigation between steps.',
       },
     },
   },
@@ -120,7 +121,8 @@ export const PerformanceReview: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance review stepper with predefined steps. This matches the design in the Figma mockup.',
+        story:
+          'Performance review stepper with predefined steps. This matches the design in the Figma mockup.',
       },
     },
   },
@@ -148,9 +150,9 @@ export const WithDisabledStep: Story = {
 
 // Interactive example with state management
 export const Interactive: Story = {
-  render: (args) => {
+  render: args => {
     const [currentStep, setCurrentStep] = useState(0);
-    
+
     const handleStepClick = (stepIndex: number, stepId: string) => {
       console.log(`Clicked step ${stepIndex} (${stepId})`);
       setCurrentStep(stepIndex);
@@ -178,7 +180,9 @@ export const Interactive: Story = {
             </button>
             <button
               className="px-3 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-50"
-              onClick={() => setCurrentStep(Math.min(performanceReviewSteps.length - 1, currentStep + 1))}
+              onClick={() =>
+                setCurrentStep(Math.min(performanceReviewSteps.length - 1, currentStep + 1))
+              }
               disabled={currentStep === performanceReviewSteps.length - 1}
             >
               Next
@@ -195,7 +199,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive stepper with navigation controls. Click on completed steps or use the buttons to navigate.',
+        story:
+          'Interactive stepper with navigation controls. Click on completed steps or use the buttons to navigate.',
       },
     },
   },

@@ -9,7 +9,8 @@ const meta: Meta<typeof Step> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'A step component for wizards and multi-step processes. Shows step number, title, status, and optional connector line.',
+        component:
+          'A step component for wizards and multi-step processes. Shows step number, title, status, and optional connector line.',
       },
     },
   },
@@ -129,13 +130,7 @@ export const MultipleSteps: Story = {
         showConnector={true}
         onClick={fn()}
       />
-      <Step
-        number={4}
-        title="Review"
-        status="upcoming"
-        showConnector={false}
-        onClick={fn()}
-      />
+      <Step number={4} title="Review" status="upcoming" showConnector={false} onClick={fn()} />
     </div>
   ),
   parameters: {
@@ -187,7 +182,8 @@ export const PerformanceReviewSteps: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance review stepper as shown in the design system. This shows the complete workflow for performance reviews.',
+        story:
+          'Performance review stepper as shown in the design system. This shows the complete workflow for performance reviews.',
       },
     },
   },

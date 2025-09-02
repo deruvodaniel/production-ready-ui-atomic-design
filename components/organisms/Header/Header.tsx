@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   const { isDark, toggleDarkMode } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
-  
+
   const userMenuItems = [
     {
       id: 'profile',
@@ -79,16 +79,13 @@ export const Header: React.FC<HeaderProps> = ({
         {navigation.length > 0 && (
           <nav className={styles.navigation} role="navigation" aria-label="Main navigation">
             <div className={styles.navigationContainer}>
-              {navigation.map((item) => {
+              {navigation.map(item => {
                 const isActive = item.active || pathname === item.href;
                 return (
                   <button
                     key={item.href}
                     onClick={() => router.push(item.href)}
-                    className={cn(
-                      styles.navigationPill,
-                      isActive && styles.navigationPillActive
-                    )}
+                    className={cn(styles.navigationPill, isActive && styles.navigationPillActive)}
                     aria-current={isActive ? 'page' : undefined}
                   >
                     <Typography
@@ -120,11 +117,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className={styles.assistantIcon}>
                 <Bot className={styles.botIcon} />
               </div>
-              <Typography
-                variant="body"
-                weight="semibold"
-                className={styles.assistantText}
-              >
+              <Typography variant="body" weight="semibold" className={styles.assistantText}>
                 Sony Assistant
               </Typography>
             </button>
@@ -155,24 +148,14 @@ export const Header: React.FC<HeaderProps> = ({
           )}
 
           {showSettingsButton && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onSettingsClick}
-              aria-label="Open settings"
-            >
+            <Button variant="ghost" size="sm" onClick={onSettingsClick} aria-label="Open settings">
               <Settings />
             </Button>
           )}
 
           {user && (
             <div className={styles.userAvatar}>
-              <Avatar
-                src={user.avatar}
-                alt={user.name}
-                fallback={user.name.charAt(0)}
-                size="md"
-              />
+              <Avatar src={user.avatar} alt={user.name} fallback={user.name.charAt(0)} size="md" />
             </div>
           )}
         </div>

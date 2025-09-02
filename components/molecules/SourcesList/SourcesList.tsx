@@ -71,10 +71,7 @@ export const SourcesList: React.FC<SourcesListProps> = ({
           variant="caption"
           className="uppercase tracking-wide font-bold text-neutral-700"
         >
-          {showCount && sources.length > 0 
-            ? `${sources.length} ${title}` 
-            : title
-          }
+          {showCount && sources.length > 0 ? `${sources.length} ${title}` : title}
         </Typography>
       </div>
 
@@ -85,45 +82,38 @@ export const SourcesList: React.FC<SourcesListProps> = ({
             No sources available
           </Typography>
         ) : (
-          sources.filter(source => source && source.id).map((source) => {
-            const isClickable = onSourceClick && source.active !== false;
-            
-            return (
-              <div
-                key={source.id}
-                className={cn(
-                  'flex items-center gap-2',
-                  {
-                    'cursor-pointer hover:bg-blue-100 rounded-lg p-2 -m-2 transition-colors': isClickable,
+          sources
+            .filter(source => source && source.id)
+            .map(source => {
+              const isClickable = onSourceClick && source.active !== false;
+
+              return (
+                <div
+                  key={source.id}
+                  className={cn('flex items-center gap-2', {
+                    'cursor-pointer hover:bg-blue-100 rounded-lg p-2 -m-2 transition-colors':
+                      isClickable,
                     'opacity-50': source.active === false,
-                  }
-                )}
-                onClick={() => handleSourceClick(source)}
-              >
-                <Typography
-                  variant="body"
-                  className={cn(
-                    'text-sm font-semibold text-blue-700',
-                    {
-                      'hover:text-blue-800': isClickable,
-                    }
-                  )}
+                  })}
+                  onClick={() => handleSourceClick(source)}
                 >
-                  {source.name?.toUpperCase() || 'UNNAMED SOURCE'}
-                </Typography>
-                
-                {source.active !== false && (
-                  <Badge 
-                    variant={getSourceVariant(source.type)} 
-                    size="sm"
-                    className="text-xs"
+                  <Typography
+                    variant="body"
+                    className={cn('text-sm font-semibold text-blue-700', {
+                      'hover:text-blue-800': isClickable,
+                    })}
                   >
-                    Active
-                  </Badge>
-                )}
-              </div>
-            );
-          })
+                    {source.name?.toUpperCase() || 'UNNAMED SOURCE'}
+                  </Typography>
+
+                  {source.active !== false && (
+                    <Badge variant={getSourceVariant(source.type)} size="sm" className="text-xs">
+                      Active
+                    </Badge>
+                  )}
+                </div>
+              );
+            })
         )}
       </div>
     </div>

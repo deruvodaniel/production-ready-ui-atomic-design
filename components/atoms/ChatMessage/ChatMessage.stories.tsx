@@ -8,7 +8,8 @@ const meta: Meta<typeof ChatMessage> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'A chat message component for displaying AI, user, or system messages with optional timestamps.',
+        component:
+          'A chat message component for displaying AI, user, or system messages with optional timestamps.',
       },
     },
   },
@@ -39,7 +40,8 @@ type Story = StoryObj<typeof meta>;
 
 export const AIMessage: Story = {
   args: {
-    content: "Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on her feedback, 1:1 notes, goals progress. You can find the sources below.",
+    content:
+      "Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on her feedback, 1:1 notes, goals progress. You can find the sources below.",
     type: 'ai',
     showTimestamp: false,
   },
@@ -55,7 +57,7 @@ export const UserMessage: Story = {
 
 export const SystemMessage: Story = {
   args: {
-    content: "Performance review session started",
+    content: 'Performance review session started',
     type: 'system',
     showTimestamp: false,
   },
@@ -63,7 +65,8 @@ export const SystemMessage: Story = {
 
 export const WithTimestamp: Story = {
   args: {
-    content: "Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on her feedback, 1:1 notes, goals progress. You can find the sources below.",
+    content:
+      "Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on her feedback, 1:1 notes, goals progress. You can find the sources below.",
     type: 'ai',
     showTimestamp: true,
     timestamp: new Date(),
@@ -134,14 +137,8 @@ export const AllTypes: Story = {
         content="This is an AI message with helpful information and suggestions."
         type="ai"
       />
-      <ChatMessage
-        content="This is a user message asking a question."
-        type="user"
-      />
-      <ChatMessage
-        content="This is a system notification."
-        type="system"
-      />
+      <ChatMessage content="This is a user message asking a question." type="user" />
+      <ChatMessage content="This is a system notification." type="system" />
     </div>
   ),
   parameters: {

@@ -32,30 +32,30 @@ describe('SearchInput', () => {
   it('calls onSearch when form is submitted', () => {
     const handleSearch = jest.fn();
     render(<SearchInput value="test query" onSearch={handleSearch} />);
-    
+
     const form = screen.getByRole('search');
     fireEvent.submit(form);
-    
+
     expect(handleSearch).toHaveBeenCalledWith('test query');
   });
 
   it('calls onClear when clear button is clicked', () => {
     const handleClear = jest.fn();
     render(<SearchInput value="test query" onClear={handleClear} />);
-    
+
     const clearButton = screen.getByLabelText('Clear search');
     fireEvent.click(clearButton);
-    
+
     expect(handleClear).toHaveBeenCalled();
   });
 
   it('clears input on Escape key', () => {
     const handleClear = jest.fn();
     render(<SearchInput value="test query" onClear={handleClear} />);
-    
+
     const input = screen.getByLabelText('Search input');
     fireEvent.keyDown(input, { key: 'Escape' });
-    
+
     expect(handleClear).toHaveBeenCalled();
   });
 
@@ -80,7 +80,7 @@ describe('SearchInput', () => {
   it('supports controlled input', () => {
     const handleSearch = jest.fn();
     render(<SearchInput value="controlled" onSearch={handleSearch} />);
-    
+
     const input = screen.getByDisplayValue('controlled');
     expect(input).toBeInTheDocument();
   });
@@ -89,7 +89,7 @@ describe('SearchInput', () => {
     render(<SearchInput />);
     const form = screen.getByRole('search');
     const input = screen.getByLabelText('Search input');
-    
+
     expect(form).toBeInTheDocument();
     expect(input).toHaveAttribute('aria-label', 'Search input');
     expect(input).toHaveAttribute('autoComplete', 'off');

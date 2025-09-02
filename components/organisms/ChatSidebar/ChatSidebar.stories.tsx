@@ -11,7 +11,8 @@ const meta: Meta<typeof ChatSidebar> = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'A sidebar chat interface with AI assistant, voice input, and information sources. Perfect for performance reviews and guided workflows.',
+        component:
+          'A sidebar chat interface with AI assistant, voice input, and information sources. Perfect for performance reviews and guided workflows.',
       },
     },
   },
@@ -65,25 +66,25 @@ const performanceReviewMessages = [
   ),
   createChatMessage(
     '2',
-    "What: Rachel successfully delivered on her AAA goals, including leading the front-end side of the API migration 1, contributing to the shared UI library rollout 2, and onboarding two junior developers. She consistently met project deadlines and closed over 150 tickets across new features and bug fixes during the year 3.",
+    'What: Rachel successfully delivered on her AAA goals, including leading the front-end side of the API migration 1, contributing to the shared UI library rollout 2, and onboarding two junior developers. She consistently met project deadlines and closed over 150 tickets across new features and bug fixes during the year 3.',
     'ai',
     new Date(Date.now() - 240000)
   ),
   createChatMessage(
     '3',
-    "How: She demonstrated strong collaboration by pairing with backend engineers during critical deadlines, mentoring juniors on React best practices",
+    'How: She demonstrated strong collaboration by pairing with backend engineers during critical deadlines, mentoring juniors on React best practices',
     'ai',
     new Date(Date.now() - 180000)
   ),
   createChatMessage(
     '4',
-    "Impact: Her contributions unblocked the API migration project in Q2, reducing release bottlenecks and improving cross-team delivery speed by 15%. The shared UI library she supported accelerated design consistency and improved team efficiency.",
+    'Impact: Her contributions unblocked the API migration project in Q2, reducing release bottlenecks and improving cross-team delivery speed by 15%. The shared UI library she supported accelerated design consistency and improved team efficiency.',
     'ai',
     new Date(Date.now() - 120000)
   ),
   createChatMessage(
     '5',
-    "Would you like to review her performance summary, or should I make some tweaks?",
+    'Would you like to review her performance summary, or should I make some tweaks?',
     'ai',
     new Date(Date.now() - 60000)
   ),
@@ -101,7 +102,8 @@ export const PerformanceReview: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance review chat interface as shown in the Figma design. Includes AI messages with sources.',
+        story:
+          'Performance review chat interface as shown in the Figma design. Includes AI messages with sources.',
       },
     },
   },
@@ -147,8 +149,12 @@ export const WithConversation: Story = {
   args: {
     title: 'Sony AI',
     messages: [
-      createChatMessage('1', 'Hi! Can you help me with Rachel\'s performance review?', 'user'),
-      createChatMessage('2', 'Of course! I\'d be happy to help you with Rachel\'s performance review. Let me gather her recent achievements and feedback.', 'ai'),
+      createChatMessage('1', "Hi! Can you help me with Rachel's performance review?", 'user'),
+      createChatMessage(
+        '2',
+        "Of course! I'd be happy to help you with Rachel's performance review. Let me gather her recent achievements and feedback.",
+        'ai'
+      ),
       createChatMessage('3', 'Performance review data loaded from 3 sources', 'system'),
       ...performanceReviewMessages,
     ],
@@ -189,7 +195,7 @@ export const NoSources: Story = {
     title: 'Sony AI',
     messages: [
       createChatMessage('1', 'Hello! How can I help you today?', 'ai'),
-      createChatMessage('2', 'I\'m ready to assist with your performance review process.', 'ai'),
+      createChatMessage('2', "I'm ready to assist with your performance review process.", 'ai'),
     ],
     sources: [],
     isOpen: true,
@@ -232,11 +238,7 @@ export const Interactive: Story = {
 
     const handleSendMessage = (message: string) => {
       // Add user message
-      const userMessage = createChatMessage(
-        Date.now().toString(),
-        message,
-        'user'
-      );
+      const userMessage = createChatMessage(Date.now().toString(), message, 'user');
       setMessages(prev => [...prev, userMessage]);
 
       // Simulate AI typing

@@ -6,9 +6,9 @@ import './team.css';
 import { Button } from '@/components/atoms/Button/Button';
 import { Typography } from '@/components/atoms/Typography/Typography';
 import { Card } from '@/components/molecules/Card/Card';
-import { 
+import {
   Search,
-  List, 
+  List,
   Grid3X3,
   Filter,
   Users,
@@ -16,22 +16,22 @@ import {
   Clock,
   CheckCircle,
   X,
-  Plus
+  Plus,
 } from 'lucide-react';
 import { employeesData, Employee } from '@/data/employees';
 import { getTeamData, simulateAPICall } from '@/data/config';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { 
+import {
   AdminLayout,
   AdminLoadingState,
-  AdminErrorState 
+  AdminErrorState,
 } from '@/components/templates/AdminLayout/AdminLayout';
 import {
   AdminMetricCard,
   AdminTeamMemberCard,
   AdminPageHeader,
-  AdminSection
+  AdminSection,
 } from '@/components/organisms/AdminComponents/AdminComponents';
 
 // Enhanced team data with analytics
@@ -40,40 +40,59 @@ const createTeamData = () => {
     ...emp,
     lastActivity: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000),
     performanceScore: Math.floor(Math.random() * 40) + 60, // 60-100 range
-    currentProject: ['Design System', 'Mobile App', 'Dashboard', 'E-commerce'][Math.floor(Math.random() * 4)]
+    currentProject: ['Design System', 'Mobile App', 'Dashboard', 'E-commerce'][
+      Math.floor(Math.random() * 4)
+    ],
   }));
 
-  const statusCounts = teamMembers.reduce((acc, emp) => {
-    acc[emp.status] = (acc[emp.status] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const statusCounts = teamMembers.reduce(
+    (acc, emp) => {
+      acc[emp.status] = (acc[emp.status] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
 
   const teamAnalytics = {
     totalMembers: teamMembers.length,
     availableMembers: statusCounts['Available'] || 0,
     activePRs: statusCounts['PR In Progress'] || 0,
     onLeave: statusCounts['On Leave'] || 0,
-    avgPerformance: Math.round(teamMembers.reduce((sum, emp) => sum + emp.performanceScore, 0) / teamMembers.length),
-    recentJoiners: teamMembers.filter(emp => 
-      new Date(emp.joinDate) > new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
+    avgPerformance: Math.round(
+      teamMembers.reduce((sum, emp) => sum + emp.performanceScore, 0) / teamMembers.length
+    ),
+    recentJoiners: teamMembers.filter(
+      emp => new Date(emp.joinDate) > new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
     ).length,
     statusDistribution: [
       { name: 'Available', value: statusCounts['Available'] || 0, color: '#10b981' },
       { name: 'PR In Progress', value: statusCounts['PR In Progress'] || 0, color: '#f59e0b' },
       { name: 'On Leave', value: statusCounts['On Leave'] || 0, color: '#ef4444' },
-      { name: 'Busy', value: statusCounts['Busy'] || 0, color: '#8b5cf6' }
+      { name: 'Busy', value: statusCounts['Busy'] || 0, color: '#8b5cf6' },
     ],
     performanceDistribution: [
       { range: '90-100', count: teamMembers.filter(emp => emp.performanceScore >= 90).length },
-      { range: '80-89', count: teamMembers.filter(emp => emp.performanceScore >= 80 && emp.performanceScore < 90).length },
-      { range: '70-79', count: teamMembers.filter(emp => emp.performanceScore >= 70 && emp.performanceScore < 80).length },
-      { range: '60-69', count: teamMembers.filter(emp => emp.performanceScore >= 60 && emp.performanceScore < 70).length }
-    ]
+      {
+        range: '80-89',
+        count: teamMembers.filter(emp => emp.performanceScore >= 80 && emp.performanceScore < 90)
+          .length,
+      },
+      {
+        range: '70-79',
+        count: teamMembers.filter(emp => emp.performanceScore >= 70 && emp.performanceScore < 80)
+          .length,
+      },
+      {
+        range: '60-69',
+        count: teamMembers.filter(emp => emp.performanceScore >= 60 && emp.performanceScore < 70)
+          .length,
+      },
+    ],
   };
 
   return {
     members: teamMembers,
-    analytics: teamAnalytics
+    analytics: teamAnalytics,
   };
 };
 
@@ -96,7 +115,7 @@ const StatusChart = ({ data }: { data: any[] }) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
             ))}
           </Pie>
-          <ChartTooltip 
+          <ChartTooltip
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
                 const data = payload[0];
@@ -123,7 +142,7 @@ const PerformanceChart = ({ data }: { data: any[] }) => (
         <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <XAxis dataKey="range" fontSize={12} />
           <YAxis hide />
-          <ChartTooltip 
+          <ChartTooltip
             content={({ active, payload, label }) => {
               if (active && payload && payload.length) {
                 return (
@@ -177,14 +196,14 @@ export default function MyTeamPage() {
     if (!teamData) return [];
 
     let filtered = teamData.members.filter((employee: any) => {
-      const matchesSearch = 
+      const matchesSearch =
         employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         employee.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
         employee.team.toLowerCase().includes(searchTerm.toLowerCase()) ||
         employee.currentProject.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       const matchesStatus = filterStatus === 'all' || employee.status === filterStatus;
-      
+
       return matchesSearch && matchesStatus;
     });
 
@@ -210,13 +229,13 @@ export default function MyTeamPage() {
 
   if (error) {
     return (
-      <AdminErrorState 
-        error={error} 
+      <AdminErrorState
+        error={error}
         onRetry={() => {
           setError(null);
           setLoading(true);
           // Reload logic here
-        }} 
+        }}
       />
     );
   }
@@ -279,10 +298,7 @@ export default function MyTeamPage() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Analytics Dashboard */}
-          <AdminSection 
-            title="Team Analytics"
-            subtitle="Key metrics and insights about your team"
-          >
+          <AdminSection title="Team Analytics" subtitle="Key metrics and insights about your team">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
               {metrics.map((metric, index) => (
                 <AdminMetricCard key={index} {...metric} />
@@ -307,7 +323,7 @@ export default function MyTeamPage() {
           </AdminSection>
 
           {/* Team Members */}
-          <AdminSection 
+          <AdminSection
             title="Team Members"
             subtitle={`${filteredAndSortedMembers.length} of ${teamData.members.length} members`}
           >
@@ -323,7 +339,7 @@ export default function MyTeamPage() {
                         type="text"
                         placeholder="Search team members..."
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={e => setSearchTerm(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
                         aria-label="Search team members"
                       />
@@ -335,9 +351,7 @@ export default function MyTeamPage() {
                     <button
                       onClick={() => setShowFilters(!showFilters)}
                       className={`p-2 rounded-lg transition-colors duration-200 ${
-                        showFilters 
-                          ? 'bg-blue-500 text-white' 
-                          : 'text-gray-600 hover:bg-gray-100'
+                        showFilters ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-100'
                       }`}
                       aria-label="Toggle filters"
                       aria-expanded={showFilters}
@@ -349,8 +363,8 @@ export default function MyTeamPage() {
                       <button
                         onClick={() => setViewMode('list')}
                         className={`p-2 rounded transition-colors duration-200 ${
-                          viewMode === 'list' 
-                            ? 'bg-white text-blue-600 shadow-sm' 
+                          viewMode === 'list'
+                            ? 'bg-white text-blue-600 shadow-sm'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                         aria-label="List view"
@@ -361,8 +375,8 @@ export default function MyTeamPage() {
                       <button
                         onClick={() => setViewMode('grid')}
                         className={`p-2 rounded transition-colors duration-200 ${
-                          viewMode === 'grid' 
-                            ? 'bg-white text-blue-600 shadow-sm' 
+                          viewMode === 'grid'
+                            ? 'bg-white text-blue-600 shadow-sm'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                         aria-label="Grid view"
@@ -380,13 +394,16 @@ export default function MyTeamPage() {
                     <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                       <div className="flex flex-col sm:flex-row gap-4">
                         <div>
-                          <label htmlFor="status-filter" className="block text-sm font-medium text-gray-700 mb-1">
+                          <label
+                            htmlFor="status-filter"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
                             Status
                           </label>
                           <select
                             id="status-filter"
                             value={filterStatus}
-                            onChange={(e) => setFilterStatus(e.target.value)}
+                            onChange={e => setFilterStatus(e.target.value)}
                             className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white"
                           >
                             <option value="all">All Statuses</option>
@@ -396,15 +413,18 @@ export default function MyTeamPage() {
                             <option value="Busy">Busy</option>
                           </select>
                         </div>
-                        
+
                         <div>
-                          <label htmlFor="sort-filter" className="block text-sm font-medium text-gray-700 mb-1">
+                          <label
+                            htmlFor="sort-filter"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                          >
                             Sort By
                           </label>
                           <select
                             id="sort-filter"
                             value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value as any)}
+                            onChange={e => setSortBy(e.target.value as any)}
                             className="px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white"
                           >
                             <option value="name">Name</option>
@@ -450,14 +470,14 @@ export default function MyTeamPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {filteredAndSortedMembers.map((employee, index) => (
                     <AdminTeamMemberCard
-                  key={employee.id}
-                  employee={employee}
-                  showPerformance={true}
-                  showProject={true}
-                  className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
-                  style={{ animationDelay: `${index * 50}ms` } as any}
-                  onClick={() => router.push(`/admin/profile/${employee.id}`)}
-                />
+                      key={employee.id}
+                      employee={employee}
+                      showPerformance={true}
+                      showProject={true}
+                      className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
+                      style={{ animationDelay: `${index * 50}ms` } as any}
+                      onClick={() => router.push(`/admin/profile/${employee.id}`)}
+                    />
                   ))}
                 </div>
               ) : (

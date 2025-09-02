@@ -32,20 +32,20 @@ const AdminLayoutContent: React.FC<AdminLayoutProps> = ({
 
   // Navigation configuration
   const getNavigationItems = () => [
-    { 
-      label: 'Home', 
-      href: '/admin', 
-      active: currentPage === 'home' 
+    {
+      label: 'Home',
+      href: '/admin',
+      active: currentPage === 'home',
     },
-    { 
-      label: 'My Team', 
-      href: '/admin/team', 
-      active: currentPage === 'team' 
+    {
+      label: 'My Team',
+      href: '/admin/team',
+      active: currentPage === 'team',
     },
-    { 
-      label: 'Game Changers', 
-      href: '/admin/game-changers', 
-      active: currentPage === 'game-changers' 
+    {
+      label: 'Game Changers',
+      href: '/admin/game-changers',
+      active: currentPage === 'game-changers',
     },
   ];
 
@@ -60,7 +60,7 @@ const AdminLayoutContent: React.FC<AdminLayoutProps> = ({
   const HeaderRightContent = () => (
     <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
       {/* Sony Assistant */}
-      <button 
+      <button
         className="hidden sm:flex items-center gap-3 bg-neutral-200 rounded-full px-3 lg:px-4 py-2 transition-all duration-200 hover:bg-neutral-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
         onClick={toggleChat}
         aria-label="Open Sony AI Assistant chat"
@@ -96,9 +96,14 @@ const AdminLayoutContent: React.FC<AdminLayoutProps> = ({
       </button>
 
       {/* User Avatar */}
-      <Avatar 
-        src={currentUser?.avatar || "/api/placeholder/48/48"} 
-        fallback={currentUser?.name?.split(' ').map((n: string) => n[0]).join('') || "U"} 
+      <Avatar
+        src={currentUser?.avatar || '/api/placeholder/48/48'}
+        fallback={
+          currentUser?.name
+            ?.split(' ')
+            .map((n: string) => n[0])
+            .join('') || 'U'
+        }
         size="md"
         className="lg:w-12 lg:h-12 transition-transform duration-200 hover:scale-105"
       />
@@ -116,11 +121,13 @@ const AdminLayoutContent: React.FC<AdminLayoutProps> = ({
         onSonyAssistantClick: toggleChat,
         showNotifications: true,
         notificationCount: 3,
-        user: currentUser ? {
-          name: currentUser.name,
-          email: currentUser.email,
-          avatar: currentUser.avatar
-        } : undefined,
+        user: currentUser
+          ? {
+              name: currentUser.name,
+              email: currentUser.email,
+              avatar: currentUser.avatar,
+            }
+          : undefined,
         showThemeToggle: false,
         showSettingsButton: false,
       }}
@@ -142,7 +149,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 }) => {
   return (
     <ChatProvider>
-      <AdminLayoutContent 
+      <AdminLayoutContent
         currentPage={currentPage}
         showBackButton={showBackButton}
         customHeader={customHeader}
@@ -155,33 +162,23 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
 // Specific layout variations for common patterns
 export const AdminDashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AdminLayout currentPage="home">
-    {children}
-  </AdminLayout>
+  <AdminLayout currentPage="home">{children}</AdminLayout>
 );
 
 export const AdminTeamLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AdminLayout currentPage="team">
-    {children}
-  </AdminLayout>
+  <AdminLayout currentPage="team">{children}</AdminLayout>
 );
 
 export const AdminGameChangersLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AdminLayout currentPage="game-changers">
-    {children}
-  </AdminLayout>
+  <AdminLayout currentPage="game-changers">{children}</AdminLayout>
 );
 
 export const AdminFeedbackLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AdminLayout currentPage="feedback">
-    {children}
-  </AdminLayout>
+  <AdminLayout currentPage="feedback">{children}</AdminLayout>
 );
 
 // Loading state component for admin pages
-export const AdminLoadingState: React.FC<{ message?: string }> = ({ 
-  message = "Loading..." 
-}) => (
+export const AdminLoadingState: React.FC<{ message?: string }> = ({ message = 'Loading...' }) => (
   <AdminLayout>
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center">
@@ -193,7 +190,7 @@ export const AdminLoadingState: React.FC<{ message?: string }> = ({
 );
 
 // Error state component for admin pages
-export const AdminErrorState: React.FC<{ 
+export const AdminErrorState: React.FC<{
   error: string;
   onRetry?: () => void;
 }> = ({ error, onRetry }) => (
@@ -201,14 +198,24 @@ export const AdminErrorState: React.FC<{
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center max-w-md">
         <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            className="w-8 h-8 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
         </div>
         <h2 className="text-xl font-semibold text-gray-900 mb-2">Something went wrong</h2>
         <p className="text-gray-600 mb-4">{error}</p>
         {onRetry && (
-          <button 
+          <button
             onClick={onRetry}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
           >

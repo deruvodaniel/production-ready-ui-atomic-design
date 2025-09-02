@@ -111,18 +111,18 @@
   .reviewSection {
     margin-bottom: 24px;
   }
-  
+
   .sectionTextarea {
     min-height: 100px;
     padding: 12px;
     font-size: 16px; /* Prevent zoom on iOS */
   }
-  
+
   .actionButtons {
     flex-wrap: wrap;
     gap: 8px;
   }
-  
+
   .actionButton {
     font-size: 14px;
     padding: 6px 12px;
@@ -134,7 +134,7 @@
   .actionButtons {
     display: none;
   }
-  
+
   .sectionTextarea {
     border: 1px solid #ccc !important;
     box-shadow: none !important;

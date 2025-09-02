@@ -64,16 +64,13 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
     }
   };
 
-  const formClasses = cn(
-    'review-form space-y-8',
-    className
-  );
+  const formClasses = cn('review-form space-y-8', className);
 
   return (
     <div className={formClasses}>
-      {sections.map((section) => {
+      {sections.map(section => {
         const isExpanded = expandedSections.has(section.id);
-        
+
         return (
           <div key={section.id} className="review-section">
             {/* Section Header */}
@@ -87,11 +84,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
                 onClick={() => toggleSectionExpansion(section.id)}
                 className="p-2"
               >
-                {isExpanded ? (
-                  <Minimize2 className="w-4 h-4" />
-                ) : (
-                  <Maximize2 className="w-4 h-4" />
-                )}
+                {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </Button>
             </div>
 
@@ -101,7 +94,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
               <div className="relative">
                 <textarea
                   value={section.content}
-                  onChange={(e) => handleContentChange(section.id, e.target.value)}
+                  onChange={e => handleContentChange(section.id, e.target.value)}
                   placeholder={section.placeholder}
                   readOnly={readOnly}
                   className={cn(
@@ -116,12 +109,13 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
                     }
                   )}
                 />
-                
+
                 {/* Resize indicator */}
-                <div className="absolute bottom-2 right-2 w-4 h-4 bg-neutral-300 opacity-50" 
-                     style={{
-                       clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)'
-                     }}
+                <div
+                  className="absolute bottom-2 right-2 w-4 h-4 bg-neutral-300 opacity-50"
+                  style={{
+                    clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)',
+                  }}
                 />
               </div>
 
@@ -137,7 +131,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
                     <RotateCcw className="w-4 h-4" />
                     Try Again
                   </Button>
-                  
+
                   <Button
                     variant="ghost"
                     size="sm"
@@ -147,7 +141,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
                     <Maximize2 className="w-4 h-4" />
                     Elaborate
                   </Button>
-                  
+
                   <Button
                     variant="ghost"
                     size="sm"

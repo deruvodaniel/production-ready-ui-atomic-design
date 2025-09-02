@@ -9,7 +9,7 @@ import { Typography } from '@/components/atoms/Typography/Typography';
 import { Button } from '@/components/atoms/Button/Button';
 import { Badge } from '@/components/atoms/Badge/Badge';
 import { useChatContext } from '@/components/providers/ChatProvider';
-import { 
+import {
   Calendar,
   ArrowRight,
   Plus,
@@ -18,7 +18,7 @@ import {
   Grid,
   ArrowUpLeft,
   ExpandIcon,
-  ArrowUpRight
+  ArrowUpRight,
 } from 'lucide-react';
 import { employeesData, getEmployeeById } from '@/data/employees';
 
@@ -28,14 +28,14 @@ const mainTabs = [
   { id: 'checkins', label: 'Check-ins', active: false },
   { id: 'feedback', label: 'Feedback', active: false },
   { id: 'performance', label: 'Performance', active: false },
-  { id: 'talent-plan', label: 'Talent Plan', active: false }
+  { id: 'talent-plan', label: 'Talent Plan', active: false },
 ];
 
 // Sub tabs for Team Goals section
 const teamGoalsTabs = [
   { id: 'middle-range', label: 'Middle Range Plans', active: false },
   { id: 'my-goals', label: 'My Goals', active: false },
-  { id: 'team-goals', label: 'Team Goals', active: true }
+  { id: 'team-goals', label: 'Team Goals', active: true },
 ];
 
 // Mock goal data based on Figma design
@@ -47,9 +47,9 @@ const teamGoals = [
     status: 'On Track',
     assignee: {
       name: 'Perform AI Trainings',
-      avatar: '/api/placeholder/36/36'
+      avatar: '/api/placeholder/36/36',
     },
-    badges: ['Personal Goal', 'Approved']
+    badges: ['Personal Goal', 'Approved'],
   },
   {
     id: 2,
@@ -58,9 +58,9 @@ const teamGoals = [
     status: 'On Track',
     assignee: {
       name: 'Perform AI Trainings',
-      avatar: '/api/placeholder/36/36'
+      avatar: '/api/placeholder/36/36',
     },
-    badges: ['Personal Goal', 'Approved']
+    badges: ['Personal Goal', 'Approved'],
   },
   {
     id: 3,
@@ -69,9 +69,9 @@ const teamGoals = [
     status: 'On Track',
     assignee: {
       name: 'Perform AI Trainings',
-      avatar: '/api/placeholder/36/36'
+      avatar: '/api/placeholder/36/36',
     },
-    badges: ['Personal Goal', 'Approved']
+    badges: ['Personal Goal', 'Approved'],
   },
   {
     id: 4,
@@ -80,9 +80,9 @@ const teamGoals = [
     status: 'On Track',
     assignee: {
       name: 'Perform AI Trainings',
-      avatar: '/api/placeholder/36/36'
+      avatar: '/api/placeholder/36/36',
     },
-    badges: ['Personal Goal', 'Approved']
+    badges: ['Personal Goal', 'Approved'],
   },
   {
     id: 5,
@@ -91,10 +91,10 @@ const teamGoals = [
     status: 'On Track',
     assignee: {
       name: 'Perform AI Trainings',
-      avatar: '/api/placeholder/36/36'
+      avatar: '/api/placeholder/36/36',
     },
-    badges: ['Personal Goal', 'Approved']
-  }
+    badges: ['Personal Goal', 'Approved'],
+  },
 ];
 
 // Performance metrics component
@@ -105,14 +105,7 @@ const PerformanceMetrics = () => {
       <div className="relative w-24 h-24">
         <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
           {/* Background circle */}
-          <circle
-            cx="50"
-            cy="50"
-            r="35"
-            stroke="#CBCEE1"
-            strokeWidth="8"
-            fill="none"
-          />
+          <circle cx="50" cy="50" r="35" stroke="#CBCEE1" strokeWidth="8" fill="none" />
           {/* Progress circle */}
           <circle
             cx="50"
@@ -193,7 +186,7 @@ const GoalCard = ({ goal }: { goal: any }) => {
         {/* Progress */}
         <div className="flex items-center gap-4">
           <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gray-400 rounded-full transition-all duration-1000 ease-out"
               style={{ width: `${goal.progress}%` }}
             />
@@ -206,11 +199,7 @@ const GoalCard = ({ goal }: { goal: any }) => {
         {/* Assignee */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Avatar
-              src={goal.assignee.avatar}
-              fallback="PA"
-              size="sm"
-            />
+            <Avatar src={goal.assignee.avatar} fallback="PA" size="sm" />
             <Typography variant="body" className="text-sm">
               {goal.assignee.name}
             </Typography>
@@ -250,11 +239,7 @@ const GameChangersContent = () => {
           <div className="py-6 border-b border-gray-100">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-2">
-                <Avatar
-                  src="/api/placeholder/32/32"
-                  fallback="AR"
-                  size="sm"
-                />
+                <Avatar src="/api/placeholder/32/32" fallback="AR" size="sm" />
                 <Typography variant="body" weight="bold">
                   My Journey
                 </Typography>
@@ -263,7 +248,7 @@ const GameChangersContent = () => {
 
               {/* Step Navigation */}
               <div className="flex items-center gap-4">
-                {mainTabs.map((tab) => (
+                {mainTabs.map(tab => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveMainTab(tab.id)}
@@ -288,7 +273,7 @@ const GameChangersContent = () => {
 
           {/* Team Goals Tabs */}
           <div className="flex items-center border-b border-gray-200">
-            {teamGoalsTabs.map((tab) => (
+            {teamGoalsTabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveSubTab(tab.id)}
@@ -313,7 +298,7 @@ const GameChangersContent = () => {
             <Typography variant="h4" weight="bold">
               Team Goals
             </Typography>
-            
+
             {/* Search and Controls */}
             <div className="flex items-center gap-4">
               <div className="flex-1 relative">
@@ -340,7 +325,7 @@ const GameChangersContent = () => {
           {/* Goals Grid */}
           <div className="grid grid-cols-1 gap-4">
             {teamGoals.map((goal, index) => (
-              <div 
+              <div
                 key={goal.id}
                 className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
                 style={{ animationDelay: `${index * 100}ms` }}
@@ -358,7 +343,8 @@ const GameChangersContent = () => {
               Need insights about team performance?
             </Typography>
             <Typography variant="body" className="text-gray-600 mb-6">
-              Use our AI assistant to analyze goal progress, team performance metrics, and get actionable recommendations.
+              Use our AI assistant to analyze goal progress, team performance metrics, and get
+              actionable recommendations.
             </Typography>
             <Button variant="primary" size="lg" onClick={handleChatClick}>
               Ask Sony AI Assistant

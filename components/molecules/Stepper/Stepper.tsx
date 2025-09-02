@@ -68,7 +68,7 @@ export const Stepper: React.FC<StepperProps> = ({
       {steps.map((step, index) => {
         const isLast = index === steps.length - 1;
         const status = getStepStatus(index);
-        const isClickable = allowNavigation && !step.disabled && (index <= currentStep);
+        const isClickable = allowNavigation && !step.disabled && index <= currentStep;
 
         return (
           <Step
@@ -114,14 +114,6 @@ export const performanceReviewSteps: StepData[] = [
     'Strengths and Opportunities',
     'Identify key strengths and areas for improvement'
   ),
-  createStep(
-    'summary',
-    'Performance Summary',
-    'Overall performance evaluation and ratings'
-  ),
-  createStep(
-    'review',
-    'Review',
-    'Final review and submission'
-  ),
+  createStep('summary', 'Performance Summary', 'Overall performance evaluation and ratings'),
+  createStep('review', 'Review', 'Final review and submission'),
 ];

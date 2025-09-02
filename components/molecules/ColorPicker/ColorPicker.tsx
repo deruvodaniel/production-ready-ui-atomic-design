@@ -18,7 +18,7 @@ const generateColorScale = (baseColor: string) => {
   // In a real implementation, you'd use a more sophisticated algorithm
   const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
   const colors: Record<number, string> = {};
-  
+
   // For demo purposes, we'll create a simple tint/shade system
   shades.forEach((shade, index) => {
     if (shade === 500) {
@@ -33,7 +33,7 @@ const generateColorScale = (baseColor: string) => {
       colors[shade] = darkenColor(baseColor, ratio);
     }
   });
-  
+
   return colors;
 };
 
@@ -43,11 +43,11 @@ const lightenColor = (color: string, ratio: number): string => {
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
-  
+
   const newR = Math.min(255, Math.round(r + (255 - r) * ratio));
   const newG = Math.min(255, Math.round(g + (255 - g) * ratio));
   const newB = Math.min(255, Math.round(b + (255 - b) * ratio));
-  
+
   return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
 };
 
@@ -56,18 +56,18 @@ const darkenColor = (color: string, ratio: number): string => {
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
-  
+
   const newR = Math.max(0, Math.round(r * (1 - ratio)));
   const newG = Math.max(0, Math.round(g * (1 - ratio)));
   const newB = Math.max(0, Math.round(b * (1 - ratio)));
-  
+
   return `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`;
 };
 
 // Color swatch component
-const ColorSwatch: React.FC<{ 
-  color: string; 
-  shade: number; 
+const ColorSwatch: React.FC<{
+  color: string;
+  shade: number;
   isActive?: boolean;
   onClick?: () => void;
 }> = ({ color, shade, isActive, onClick }) => {
@@ -81,24 +81,27 @@ const ColorSwatch: React.FC<{
   };
 
   return (
-    <div 
+    <div
       className={cn(
-        "relative group cursor-pointer rounded-lg overflow-hidden transition-all duration-200",
-        isActive ? "ring-2 ring-blue-500 ring-offset-2" : "hover:ring-2 hover:ring-gray-300 hover:ring-offset-2"
+        'relative group cursor-pointer rounded-lg overflow-hidden transition-all duration-200',
+        isActive
+          ? 'ring-2 ring-blue-500 ring-offset-2'
+          : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-2'
       )}
       onClick={onClick}
     >
-      <div 
-        className="h-16 w-full"
-        style={{ backgroundColor: color }}
-      />
+      <div className="h-16 w-full" style={{ backgroundColor: color }} />
       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
         <button
           onClick={handleCopy}
           className="opacity-0 group-hover:opacity-100 bg-white bg-opacity-90 p-2 rounded-full transition-all duration-200 hover:bg-opacity-100"
           aria-label="Copy color code"
         >
-          {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4 text-gray-700" />}
+          {copied ? (
+            <Check className="w-4 h-4 text-green-600" />
+          ) : (
+            <Copy className="w-4 h-4 text-gray-700" />
+          )}
         </button>
       </div>
       <div className="p-2 bg-white">
@@ -115,7 +118,9 @@ const ColorSwatch: React.FC<{
 
 export const ColorPicker: React.FC<ColorPickerProps> = ({ className }) => {
   const { config, updateTheme } = useTheme();
-  const [selectedColorType, setSelectedColorType] = useState<'primary' | 'secondary' | 'accent'>('primary');
+  const [selectedColorType, setSelectedColorType] = useState<'primary' | 'secondary' | 'accent'>(
+    'primary'
+  );
 
   const colorTypes = [
     { key: 'primary', label: 'Primary', description: 'Main brand color' },
@@ -155,15 +160,15 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ className }) => {
 
         {/* Color Type Selector */}
         <div className="grid grid-cols-3 gap-2">
-          {colorTypes.map((type) => (
+          {colorTypes.map(type => (
             <button
               key={type.key}
               onClick={() => setSelectedColorType(type.key)}
               className={cn(
-                "p-3 rounded-lg border-2 transition-all duration-200 text-left",
+                'p-3 rounded-lg border-2 transition-all duration-200 text-left',
                 selectedColorType === type.key
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-200 hover:border-gray-300 bg-white"
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300 bg-white'
               )}
             >
               <div className="flex items-center gap-2 mb-1">
@@ -188,14 +193,14 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ className }) => {
             <input
               type="color"
               value={currentColor}
-              onChange={(e) => handleColorChange(selectedColorType, e.target.value)}
+              onChange={e => handleColorChange(selectedColorType, e.target.value)}
               className="w-12 h-12 rounded-lg border-2 border-gray-200 cursor-pointer"
             />
             <div className="flex-1">
               <input
                 type="text"
                 value={currentColor}
-                onChange={(e) => {
+                onChange={e => {
                   const color = e.target.value;
                   if (color.match(/^#[0-9A-F]{6}$/i)) {
                     handleColorChange(selectedColorType, color);
@@ -243,7 +248,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ className }) => {
               '#84cc16', // Lime
               '#ec4899', // Pink
               '#6b7280', // Gray
-            ].map((color) => (
+            ].map(color => (
               <button
                 key={color}
                 onClick={() => handleColorChange(selectedColorType, color)}

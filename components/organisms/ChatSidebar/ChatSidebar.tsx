@@ -109,7 +109,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        {messages.map((message) => (
+        {messages.map(message => (
           <ChatMessage
             key={message.id}
             content={message.content}
@@ -133,9 +133,18 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         {isTyping && (
           <div className="flex items-center gap-2 p-4 bg-blue-50 rounded-lg">
             <div className="flex gap-1">
-              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div
+                className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+                style={{ animationDelay: '0ms' }}
+              />
+              <div
+                className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+                style={{ animationDelay: '150ms' }}
+              />
+              <div
+                className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
+                style={{ animationDelay: '300ms' }}
+              />
             </div>
             <Typography variant="caption" color="muted">
               {title} is typing...
@@ -163,14 +172,11 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   )}
                   onClick={toggleVoiceInput}
                 >
-                  <Mic 
-                    className={cn(
-                      'w-6 h-6',
-                      {
-                        'text-red-500': isListening,
-                        'text-black': !isListening,
-                      }
-                    )}
+                  <Mic
+                    className={cn('w-6 h-6', {
+                      'text-red-500': isListening,
+                      'text-black': !isListening,
+                    })}
                   />
                 </div>
               </div>
@@ -189,7 +195,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 <input
                   type="text"
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={e => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me anything..."
                   className="flex-1 text-lg bg-transparent border-none outline-none text-black placeholder-gray-500"

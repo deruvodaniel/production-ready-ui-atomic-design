@@ -1,7 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { ChatSidebar, ChatMessageData, createChatMessage } from '@/components/organisms/ChatSidebar/ChatSidebar';
+import {
+  ChatSidebar,
+  ChatMessageData,
+  createChatMessage,
+} from '@/components/organisms/ChatSidebar/ChatSidebar';
 import { Source } from '@/components/molecules/SourcesList/SourcesList';
 
 interface ChatContextType {
@@ -29,7 +33,7 @@ export const useChatContext = () => {
 const initialMessages: ChatMessageData[] = [
   createChatMessage(
     '1',
-    'Hello! I\'m Sony AI Assistant. I can help you with performance reviews, team management, feedback, and more. How can I assist you today?',
+    "Hello! I'm Sony AI Assistant. I can help you with performance reviews, team management, feedback, and more. How can I assist you today?",
     'ai',
     new Date(Date.now() - 30000)
   ),
@@ -76,38 +80,31 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
 
   const sendMessage = useCallback((message: string) => {
     // Add user message
-    const userMessage = createChatMessage(
-      `user-${Date.now()}`,
-      message,
-      'user',
-      new Date()
-    );
-    
+    const userMessage = createChatMessage(`user-${Date.now()}`, message, 'user', new Date());
+
     setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
 
     // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        "I understand you're looking for help with that. Let me provide you with some guidance...",
-        "Based on your question, I can help you with several approaches to handle this situation.",
-        "That's a great question! Here are some best practices I'd recommend...",
-        "I see what you're asking about. This is a common challenge, and here's how I suggest approaching it...",
-        "Thanks for reaching out! I have some insights that might be helpful for your situation.",
-      ];
-      
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      
-      const aiMessage = createChatMessage(
-        `ai-${Date.now()}`,
-        randomResponse,
-        'ai',
-        new Date()
-      );
-      
-      setMessages(prev => [...prev, aiMessage]);
-      setIsTyping(false);
-    }, 1500 + Math.random() * 2000); // Random delay between 1.5-3.5 seconds
+    setTimeout(
+      () => {
+        const responses = [
+          "I understand you're looking for help with that. Let me provide you with some guidance...",
+          'Based on your question, I can help you with several approaches to handle this situation.',
+          "That's a great question! Here are some best practices I'd recommend...",
+          "I see what you're asking about. This is a common challenge, and here's how I suggest approaching it...",
+          'Thanks for reaching out! I have some insights that might be helpful for your situation.',
+        ];
+
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+        const aiMessage = createChatMessage(`ai-${Date.now()}`, randomResponse, 'ai', new Date());
+
+        setMessages(prev => [...prev, aiMessage]);
+        setIsTyping(false);
+      },
+      1500 + Math.random() * 2000
+    ); // Random delay between 1.5-3.5 seconds
   }, []);
 
   const clearChat = useCallback(() => {

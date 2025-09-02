@@ -44,13 +44,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
       <Typography variant="body" className="whitespace-pre-wrap leading-relaxed">
         {content}
       </Typography>
-      
+
       {showTimestamp && timestamp && (
-        <Typography 
-          variant="caption" 
-          color="muted" 
-          className="mt-2 block text-right"
-        >
+        <Typography variant="caption" color="muted" className="mt-2 block text-right">
           {formatTimestamp(timestamp)}
         </Typography>
       )}

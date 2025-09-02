@@ -4,9 +4,15 @@ import React, { useState } from 'react';
 import { Button } from '@/components/atoms/Button/Button';
 import { Badge } from '@/components/atoms/Badge/Badge';
 import { Typography } from '@/components/atoms/Typography/Typography';
-import { StepperSidebar, createUserInfo } from '@/components/organisms/StepperSidebar/StepperSidebar';
+import {
+  StepperSidebar,
+  createUserInfo,
+} from '@/components/organisms/StepperSidebar/StepperSidebar';
 import { ChatSidebar, createChatMessage } from '@/components/organisms/ChatSidebar/ChatSidebar';
-import { ReviewForm, performanceReviewSections } from '@/components/molecules/ReviewForm/ReviewForm';
+import {
+  ReviewForm,
+  performanceReviewSections,
+} from '@/components/molecules/ReviewForm/ReviewForm';
 import { performanceReviewSteps } from '@/components/molecules/Stepper/Stepper';
 import { performanceReviewSources } from '@/components/molecules/SourcesList/SourcesList';
 import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
@@ -19,12 +25,12 @@ export default function PerformanceReviewPage() {
   const params = useParams();
   const router = useRouter();
   const employeeId = params.id as string;
-  
+
   const [currentStep, setCurrentStep] = useState(0);
   const [sections, setSections] = useState(performanceReviewSections);
   const [isChatOpen, setIsChatOpen] = useState(true);
   const [isAIAssisting, setIsAIAssisting] = useState(false);
-  
+
   const employee = getEmployeeById(employeeId);
 
   if (!employee) {
@@ -49,13 +55,13 @@ export default function PerformanceReviewPage() {
         <div className="bg-feedback-background min-h-screen">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="p-8 text-center bg-white rounded-lg">
-              <Typography variant="h4" className="mb-4">Employee Not Found</Typography>
+              <Typography variant="h4" className="mb-4">
+                Employee Not Found
+              </Typography>
               <Typography variant="body" color="muted" className="mb-6">
                 The employee you're trying to review doesn't exist.
               </Typography>
-              <Button onClick={() => router.push('/admin/team')}>
-                Back to Team
-              </Button>
+              <Button onClick={() => router.push('/admin/team')}>Back to Team</Button>
             </div>
           </div>
         </div>
@@ -63,11 +69,7 @@ export default function PerformanceReviewPage() {
     );
   }
 
-  const userInfo = createUserInfo(
-    employee.name,
-    employee.role,
-    employee.avatar
-  );
+  const userInfo = createUserInfo(employee.name, employee.role, employee.avatar);
 
   const chatMessages = [
     createChatMessage(
@@ -78,25 +80,25 @@ export default function PerformanceReviewPage() {
     ),
     createChatMessage(
       '2',
-      "What: Rachel successfully delivered on her AAA goals, including leading the front-end side of the API migration 1, contributing to the shared UI library rollout 2, and onboarding two junior developers. She consistently met project deadlines and closed over 150 tickets across new features and bug fixes during the year 3.",
+      'What: Rachel successfully delivered on her AAA goals, including leading the front-end side of the API migration 1, contributing to the shared UI library rollout 2, and onboarding two junior developers. She consistently met project deadlines and closed over 150 tickets across new features and bug fixes during the year 3.',
       'ai',
       new Date(Date.now() - 240000)
     ),
     createChatMessage(
       '3',
-      "How: She demonstrated strong collaboration by pairing with backend engineers during critical deadlines, mentoring juniors on React best practices",
+      'How: She demonstrated strong collaboration by pairing with backend engineers during critical deadlines, mentoring juniors on React best practices',
       'ai',
       new Date(Date.now() - 180000)
     ),
     createChatMessage(
       '4',
-      "Impact: Her contributions unblocked the API migration project in Q2, reducing release bottlenecks and improving cross-team delivery speed by 15%. The shared UI library she supported accelerated design consistency and improved team efficiency.",
+      'Impact: Her contributions unblocked the API migration project in Q2, reducing release bottlenecks and improving cross-team delivery speed by 15%. The shared UI library she supported accelerated design consistency and improved team efficiency.',
       'ai',
       new Date(Date.now() - 120000)
     ),
     createChatMessage(
       '5',
-      "Would you like to review her performance summary, or should I make some tweaks?",
+      'Would you like to review her performance summary, or should I make some tweaks?',
       'ai',
       new Date(Date.now() - 60000)
     ),
@@ -108,9 +110,7 @@ export default function PerformanceReviewPage() {
 
   const handleSectionChange = (sectionId: string, content: string) => {
     setSections(prev =>
-      prev.map(section =>
-        section.id === sectionId ? { ...section, content } : section
-      )
+      prev.map(section => (section.id === sectionId ? { ...section, content } : section))
     );
   };
 
@@ -122,7 +122,7 @@ export default function PerformanceReviewPage() {
       if (!section) return;
 
       let newContent = section.content;
-      
+
       switch (action) {
         case 'tryAgain':
           newContent = `[AI Regenerated] ${section.content}`;
@@ -165,7 +165,7 @@ export default function PerformanceReviewPage() {
               <div className="w-15 h-15 bg-gradient-to-br from-neutral-400 to-neutral-600 rounded-lg transform rotate-45 relative">
                 <div className="absolute inset-2 bg-white rounded opacity-20" />
               </div>
-              
+
               <nav className="hidden md:flex items-center gap-4">
                 <div className="flex items-center gap-1 px-4 py-3 bg-neutral-200 rounded-2xl">
                   <Typography variant="body" weight="bold" className="text-neutral-800">
@@ -191,7 +191,9 @@ export default function PerformanceReviewPage() {
                 <div className="w-10 h-10 bg-neutral-600 rounded-full flex items-center justify-center">
                   <Bot className="w-6 h-6 text-white" />
                 </div>
-                <span className="hidden lg:block text-neutral-600 font-semibold">Sony Assistant</span>
+                <span className="hidden lg:block text-neutral-600 font-semibold">
+                  Sony Assistant
+                </span>
               </div>
               <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
                 <Bell className="w-5 h-5 text-neutral-800" />

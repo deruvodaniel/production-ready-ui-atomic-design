@@ -11,7 +11,8 @@ const meta: Meta<typeof StepperSidebar> = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'A sidebar component combining user information with a stepper workflow. Perfect for performance reviews and multi-step processes.',
+        component:
+          'A sidebar component combining user information with a stepper workflow. Perfect for performance reviews and multi-step processes.',
       },
     },
   },
@@ -62,7 +63,8 @@ export const PerformanceReview: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Performance review stepper sidebar matching the Figma design. Shows Rachel Green as the subject of the review.',
+        story:
+          'Performance review stepper sidebar matching the Figma design. Shows Rachel Green as the subject of the review.',
       },
     },
   },
@@ -113,11 +115,7 @@ export const DifferentUser: Story = {
 
 export const CustomWorkflow: Story = {
   args: {
-    user: createUserInfo(
-      'Sarah Johnson',
-      'Product Manager',
-      '/api/placeholder/100/100'
-    ),
+    user: createUserInfo('Sarah Johnson', 'Product Manager', '/api/placeholder/100/100'),
     steps: [
       createStep('onboarding', 'Onboarding', 'Welcome and initial setup'),
       createStep('training', 'Training', 'Complete required training modules'),
@@ -154,9 +152,9 @@ export const NoNavigation: Story = {
 };
 
 export const Interactive: Story = {
-  render: (args) => {
+  render: args => {
     const [currentStep, setCurrentStep] = useState(0);
-    
+
     const handleStepClick = (stepIndex: number, stepId: string) => {
       console.log(`Navigated to step ${stepIndex} (${stepId})`);
       setCurrentStep(stepIndex);
@@ -175,9 +173,7 @@ export const Interactive: Story = {
           <h3 className="text-lg font-semibold mb-4">
             {performanceReviewSteps[currentStep]?.title}
           </h3>
-          <p className="text-gray-600 mb-4">
-            {performanceReviewSteps[currentStep]?.description}
-          </p>
+          <p className="text-gray-600 mb-4">{performanceReviewSteps[currentStep]?.description}</p>
           <div className="flex gap-2">
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
@@ -188,7 +184,9 @@ export const Interactive: Story = {
             </button>
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-              onClick={() => setCurrentStep(Math.min(performanceReviewSteps.length - 1, currentStep + 1))}
+              onClick={() =>
+                setCurrentStep(Math.min(performanceReviewSteps.length - 1, currentStep + 1))
+              }
               disabled={currentStep === performanceReviewSteps.length - 1}
             >
               Next

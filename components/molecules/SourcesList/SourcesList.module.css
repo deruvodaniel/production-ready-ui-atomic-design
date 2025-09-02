@@ -65,7 +65,7 @@
   .sourcesList {
     padding: 12px;
   }
-  
+
   .sourceItem {
     padding: 8px;
     margin: -8px;
@@ -83,7 +83,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {

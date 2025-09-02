@@ -22,11 +22,29 @@ import {
   CheckCircle,
   AlertCircle,
   Info,
-  Plus
+  Plus,
 } from 'lucide-react';
-import { getDashboardData, getCurrentUser, getRecentActivity, type DashboardMetric, type ActivityItem, type CurrentUser } from '@/data/config';
+import {
+  getDashboardData,
+  getCurrentUser,
+  getRecentActivity,
+  type DashboardMetric,
+  type ActivityItem,
+  type CurrentUser,
+} from '@/data/config';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+} from 'recharts';
 import { AdminLayout } from '@/components/templates/AdminLayout/AdminLayout';
 import Link from 'next/link';
 
@@ -78,7 +96,12 @@ const MetricCard = ({ metric }: { metric: DashboardMetric }) => {
           <div className="flex items-center gap-2">
             {isPositive && <ArrowUp className="w-4 h-4 text-green-500" />}
             {isNegative && <ArrowDown className="w-4 h-4 text-red-500" />}
-            <Typography variant="caption" className={isPositive ? 'text-green-600' : isNegative ? 'text-red-600' : 'text-gray-600'}>
+            <Typography
+              variant="caption"
+              className={
+                isPositive ? 'text-green-600' : isNegative ? 'text-red-600' : 'text-gray-600'
+              }
+            >
               {metric.change.value}% {metric.change.period}
             </Typography>
           </div>
@@ -96,11 +119,17 @@ const QuickActionCard = ({ action }: { action: any }) => {
     <Link href={action.href}>
       <Card className="p-6 h-full transition-all duration-200 hover:shadow-lg hover:scale-105 cursor-pointer group">
         <div className="flex items-start gap-4">
-          <div className={`p-3 rounded-lg bg-${action.color}-100 text-${action.color}-600 group-hover:scale-110 transition-transform duration-200`}>
+          <div
+            className={`p-3 rounded-lg bg-${action.color}-100 text-${action.color}-600 group-hover:scale-110 transition-transform duration-200`}
+          >
             {IconComponent && <IconComponent className="w-6 h-6" />}
           </div>
           <div className="flex-1">
-            <Typography variant="h6" weight="bold" className="mb-2 group-hover:text-blue-600 transition-colors duration-200">
+            <Typography
+              variant="h6"
+              weight="bold"
+              className="mb-2 group-hover:text-blue-600 transition-colors duration-200"
+            >
               {action.title}
             </Typography>
             <Typography variant="body" color="muted" className="text-sm">
@@ -118,23 +147,35 @@ const QuickActionCard = ({ action }: { action: any }) => {
 const ActivityItemComponent = ({ activity }: { activity: ActivityItem }) => {
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'feedback': return MessageSquare;
-      case 'review': return Star;
-      case 'goal': return Target;
-      case 'achievement': return CheckCircle;
-      case 'system': return Info;
-      default: return Info;
+      case 'feedback':
+        return MessageSquare;
+      case 'review':
+        return Star;
+      case 'goal':
+        return Target;
+      case 'achievement':
+        return CheckCircle;
+      case 'system':
+        return Info;
+      default:
+        return Info;
     }
   };
 
   const getActivityColor = (type: string) => {
     switch (type) {
-      case 'feedback': return 'text-blue-500';
-      case 'review': return 'text-purple-500';
-      case 'goal': return 'text-green-500';
-      case 'achievement': return 'text-yellow-500';
-      case 'system': return 'text-gray-500';
-      default: return 'text-gray-500';
+      case 'feedback':
+        return 'text-blue-500';
+      case 'review':
+        return 'text-purple-500';
+      case 'goal':
+        return 'text-green-500';
+      case 'achievement':
+        return 'text-yellow-500';
+      case 'system':
+        return 'text-gray-500';
+      default:
+        return 'text-gray-500';
     }
   };
 
@@ -145,9 +186,12 @@ const ActivityItemComponent = ({ activity }: { activity: ActivityItem }) => {
 
   return (
     <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-      <Avatar 
+      <Avatar
         src={activity.user.avatar}
-        fallback={activity.user.name.split(' ').map(n => n[0]).join('')}
+        fallback={activity.user.name
+          .split(' ')
+          .map(n => n[0])
+          .join('')}
         size="sm"
         className="flex-shrink-0"
       />
@@ -160,9 +204,11 @@ const ActivityItemComponent = ({ activity }: { activity: ActivityItem }) => {
           </Typography>
         </div>
         <Typography variant="caption" color="muted">
-          {days > 0 ? `${days} day${days > 1 ? 's' : ''} ago` : 
-           hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''} ago` : 
-           'Just now'}
+          {days > 0
+            ? `${days} day${days > 1 ? 's' : ''} ago`
+            : hours > 0
+              ? `${hours} hour${hours > 1 ? 's' : ''} ago`
+              : 'Just now'}
         </Typography>
       </div>
     </div>
@@ -182,17 +228,20 @@ const PerformanceChart = () => {
 
   return (
     <div className="h-64 w-full">
-      <ChartContainer config={{ score: { label: 'Performance', color: 'hsl(var(--chart-1))' } }} className="w-full h-full">
+      <ChartContainer
+        config={{ score: { label: 'Performance', color: 'hsl(var(--chart-1))' } }}
+        className="w-full h-full"
+      >
         <ResponsiveContainer>
           <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
             <XAxis dataKey="month" axisLine={false} tickLine={false} fontSize={12} />
             <YAxis hide />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Area 
-              type="monotone" 
-              dataKey="score" 
-              stroke="hsl(var(--chart-1))" 
-              fill="hsl(var(--chart-1))" 
+            <Area
+              type="monotone"
+              dataKey="score"
+              stroke="hsl(var(--chart-1))"
+              fill="hsl(var(--chart-1))"
               fillOpacity={0.1}
               strokeWidth={2}
             />
@@ -229,7 +278,7 @@ const TeamDistributionChart = () => {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <ChartTooltip 
+            <ChartTooltip
               content={({ active, payload }) => {
                 if (active && payload && payload.length) {
                   const data = payload[0];
@@ -265,9 +314,9 @@ export default function AdminDashboard() {
         const [dashboard, user, activity] = await Promise.all([
           getDashboardData(),
           getCurrentUser(),
-          getRecentActivity(5)
+          getRecentActivity(5),
         ]);
-        
+
         setDashboardData(dashboard);
         setCurrentUser(user);
         setRecentActivity(activity);
@@ -366,9 +415,7 @@ export default function AdminDashboard() {
                   <Typography variant="h5" weight="bold">
                     Team Performance Trend
                   </Typography>
-                  <Badge variant="success">
-                    +5% this quarter
-                  </Badge>
+                  <Badge variant="success">+5% this quarter</Badge>
                 </div>
                 <PerformanceChart />
               </Card>
@@ -428,7 +475,7 @@ export default function AdminDashboard() {
                 </Link>
               </div>
               <div className="space-y-2">
-                {recentActivity.map((activity) => (
+                {recentActivity.map(activity => (
                   <ActivityItemComponent key={activity.id} activity={activity} />
                 ))}
               </div>

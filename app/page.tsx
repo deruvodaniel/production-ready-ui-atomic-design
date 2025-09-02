@@ -10,18 +10,18 @@ import { Avatar } from '@/components/atoms/Avatar/Avatar';
 import { ColorPicker } from '@/components/molecules/ColorPicker/ColorPicker';
 import { FontSelector } from '@/components/molecules/FontSelector/FontSelector';
 import { SpacingSelector } from '@/components/molecules/SpacingSelector/SpacingSelector';
-import { 
-  Palette, 
-  Type, 
-  Layout, 
-  Download, 
-  Upload, 
-  RefreshCw, 
+import {
+  Palette,
+  Type,
+  Layout,
+  Download,
+  Upload,
+  RefreshCw,
   Settings,
   Eye,
   Code,
   Layers,
-  Zap
+  Zap,
 } from 'lucide-react';
 import { useTheme } from '@/theme/theme-provider';
 import Link from 'next/link';
@@ -48,29 +48,49 @@ const ComponentPreview: React.FC = () => {
         <div className="space-y-6 p-6 bg-gray-50 rounded-lg">
           {/* Buttons Preview */}
           <div className="space-y-3">
-            <Typography variant="body" weight="semibold">Buttons</Typography>
+            <Typography variant="body" weight="semibold">
+              Buttons
+            </Typography>
             <div className="flex flex-wrap gap-3">
-              <Button variant="primary" size="sm">Primary</Button>
-              <Button variant="secondary" size="sm">Secondary</Button>
-              <Button variant="outline" size="sm">Outline</Button>
-              <Button variant="ghost" size="sm">Ghost</Button>
+              <Button variant="primary" size="sm">
+                Primary
+              </Button>
+              <Button variant="secondary" size="sm">
+                Secondary
+              </Button>
+              <Button variant="outline" size="sm">
+                Outline
+              </Button>
+              <Button variant="ghost" size="sm">
+                Ghost
+              </Button>
             </div>
           </div>
 
           {/* Typography Preview */}
           <div className="space-y-3">
-            <Typography variant="body" weight="semibold">Typography</Typography>
+            <Typography variant="body" weight="semibold">
+              Typography
+            </Typography>
             <div className="space-y-2">
-              <Typography variant="h4" weight="bold">Heading Large</Typography>
-              <Typography variant="h6" weight="bold">Heading Small</Typography>
+              <Typography variant="h4" weight="bold">
+                Heading Large
+              </Typography>
+              <Typography variant="h6" weight="bold">
+                Heading Small
+              </Typography>
               <Typography variant="body">Body text with regular weight</Typography>
-              <Typography variant="caption" color="muted">Caption text in muted color</Typography>
+              <Typography variant="caption" color="muted">
+                Caption text in muted color
+              </Typography>
             </div>
           </div>
 
           {/* Badges Preview */}
           <div className="space-y-3">
-            <Typography variant="body" weight="semibold">Badges</Typography>
+            <Typography variant="body" weight="semibold">
+              Badges
+            </Typography>
             <div className="flex flex-wrap gap-2">
               <Badge variant="primary">Primary</Badge>
               <Badge variant="success">Success</Badge>
@@ -82,14 +102,12 @@ const ComponentPreview: React.FC = () => {
 
           {/* Card Preview */}
           <div className="space-y-3">
-            <Typography variant="body" weight="semibold">Cards</Typography>
+            <Typography variant="body" weight="semibold">
+              Cards
+            </Typography>
             <Card className="p-4">
               <div className="flex items-start gap-3">
-                <Avatar 
-                  src="/api/placeholder/40/40" 
-                  fallback="UI" 
-                  size="md" 
-                />
+                <Avatar src="/api/placeholder/40/40" fallback="UI" size="md" />
                 <div className="flex-1">
                   <Typography variant="body" weight="semibold" className="mb-1">
                     Card Component
@@ -126,11 +144,11 @@ const ThemeActions: React.FC = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = (e) => {
+    input.onchange = e => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = e => {
           try {
             const themeData = JSON.parse(e.target?.result as string);
             // updateTheme(themeData); // Would need to implement validation
@@ -170,29 +188,17 @@ const ThemeActions: React.FC = () => {
         </div>
 
         <div className="space-y-3">
-          <Button 
-            variant="outline" 
-            className="w-full justify-start"
-            onClick={handleExportTheme}
-          >
+          <Button variant="outline" className="w-full justify-start" onClick={handleExportTheme}>
             <Download className="w-4 h-4 mr-2" />
             Export Theme
           </Button>
-          
-          <Button 
-            variant="outline" 
-            className="w-full justify-start"
-            onClick={handleImportTheme}
-          >
+
+          <Button variant="outline" className="w-full justify-start" onClick={handleImportTheme}>
             <Upload className="w-4 h-4 mr-2" />
             Import Theme
           </Button>
-          
-          <Button 
-            variant="outline" 
-            className="w-full justify-start"
-            onClick={handleResetTheme}
-          >
+
+          <Button variant="outline" className="w-full justify-start" onClick={handleResetTheme}>
             <RefreshCw className="w-4 h-4 mr-2" />
             Reset to Default
           </Button>
@@ -251,8 +257,8 @@ export default function ThemeBuilderHome() {
                 Production-Ready Design System
               </Typography>
               <Typography variant="h6" className="text-gray-600 mb-8 max-w-2xl mx-auto">
-                Build and customize your theme with real-time preview. Export your configuration 
-                and deploy a production-ready design system.
+                Build and customize your theme with real-time preview. Export your configuration and
+                deploy a production-ready design system.
               </Typography>
               <div className="flex items-center justify-center gap-4">
                 <Badge variant="success" size="lg">
@@ -285,14 +291,14 @@ export default function ThemeBuilderHome() {
                     Customize your brand colors, typography, and spacing to match your design.
                   </Typography>
                 </div>
-                
+
                 <div className="space-y-6">
                   {/* Colors */}
                   <ColorPicker />
-                  
+
                   {/* Typography */}
                   <FontSelector />
-                  
+
                   {/* Spacing */}
                   <SpacingSelector />
                 </div>
@@ -303,10 +309,10 @@ export default function ThemeBuilderHome() {
             <div className="space-y-8">
               {/* Live Preview */}
               <ComponentPreview />
-              
+
               {/* Theme Actions */}
               <ThemeActions />
-              
+
               {/* Quick Links */}
               <Card variant="elevated" padding="lg">
                 <div className="space-y-4">

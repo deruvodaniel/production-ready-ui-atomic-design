@@ -58,7 +58,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           type="search"
           placeholder={placeholder}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={e => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
           leftIcon={<Search />}
           size={size}
@@ -67,7 +67,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           aria-label="Search input"
           autoComplete="off"
         />
-        
+
         {value && (
           <Button
             type="button"

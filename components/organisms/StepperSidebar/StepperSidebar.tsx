@@ -53,11 +53,17 @@ export const StepperSidebar: React.FC<StepperSidebarProps> = ({
       <div className="flex flex-col items-center text-center mb-10">
         <Avatar
           src={user.avatar}
-          fallback={user.initials || user.name.split(' ').map(n => n[0]).join('')}
+          fallback={
+            user.initials ||
+            user.name
+              .split(' ')
+              .map(n => n[0])
+              .join('')
+          }
           size="2xl"
           className="mb-6"
         />
-        
+
         <div className="space-y-1">
           <Typography variant="h4" weight="bold" className="text-neutral-900">
             {user.name}

@@ -8,7 +8,7 @@ import { Avatar } from '@/components/atoms/Avatar/Avatar';
 import { Typography } from '@/components/atoms/Typography/Typography';
 import { Button } from '@/components/atoms/Button/Button';
 import { Badge } from '@/components/atoms/Badge/Badge';
-import { 
+import {
   ArrowLeft,
   MapPin,
   Calendar,
@@ -26,23 +26,47 @@ import {
   Clock,
   Award,
   BookOpen,
-  BarChart3
+  BarChart3,
 } from 'lucide-react';
 import { getEmployeeById, type Employee } from '@/data/employees';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+} from 'recharts';
 import Link from 'next/link';
 
 // Generate performance data for each employee
 const generatePerformanceData = (employeeId: string) => {
-  const baseScore = 70 + Math.abs(employeeId.length * 3) % 25; // Generate consistent but different scores
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
+  const baseScore = 70 + (Math.abs(employeeId.length * 3) % 25); // Generate consistent but different scores
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
   return months.map((month, index) => ({
     month,
-    score: Math.min(100, baseScore + (Math.sin(index * 0.5 + employeeId.length) * 10) + (index * 2)),
-    goals: Math.floor(3 + (Math.cos(index * 0.3 + employeeId.length) * 2)),
-    feedback: Math.floor(2 + (Math.sin(index * 0.7 + employeeId.length) * 3)),
+    score: Math.min(100, baseScore + Math.sin(index * 0.5 + employeeId.length) * 10 + index * 2),
+    goals: Math.floor(3 + Math.cos(index * 0.3 + employeeId.length) * 2),
+    feedback: Math.floor(2 + Math.sin(index * 0.7 + employeeId.length) * 3),
   }));
 };
 
@@ -50,7 +74,7 @@ const generatePerformanceData = (employeeId: string) => {
 const generateSkillsData = (skills: string[]) => {
   return skills.map((skill, index) => ({
     skill,
-    level: 60 + (index * 7) % 40, // Generate different levels for each skill
+    level: 60 + ((index * 7) % 40), // Generate different levels for each skill
     color: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'][index % 5],
   }));
 };
@@ -59,21 +83,21 @@ const generateSkillsData = (skills: string[]) => {
 const generateProjectData = (projects: string[], employeeId: string) => {
   return projects.map((project, index) => ({
     name: project,
-    contribution: 20 + (employeeId.length * index * 3) % 60,
+    contribution: 20 + ((employeeId.length * index * 3) % 60),
     status: ['completed', 'in-progress', 'planning'][index % 3],
-    commits: Math.floor(50 + (employeeId.length * index * 5) % 200),
+    commits: Math.floor(50 + ((employeeId.length * index * 5) % 200)),
   }));
 };
 
 // Performance Chart Component
 const PerformanceChart = ({ data }: { data: any[] }) => (
   <div className="h-64 w-full">
-    <ChartContainer 
-      config={{ 
+    <ChartContainer
+      config={{
         score: { label: 'Performance Score', color: '#3b82f6' },
         goals: { label: 'Goals Completed', color: '#10b981' },
-        feedback: { label: 'Feedback Given', color: '#f59e0b' }
-      }} 
+        feedback: { label: 'Feedback Given', color: '#f59e0b' },
+      }}
       className="w-full h-full"
     >
       <ResponsiveContainer>
@@ -81,11 +105,11 @@ const PerformanceChart = ({ data }: { data: any[] }) => (
           <XAxis dataKey="month" axisLine={false} tickLine={false} fontSize={12} />
           <YAxis hide />
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Area 
-            type="monotone" 
-            dataKey="score" 
-            stroke="#3b82f6" 
-            fill="#3b82f6" 
+          <Area
+            type="monotone"
+            dataKey="score"
+            stroke="#3b82f6"
+            fill="#3b82f6"
             fillOpacity={0.1}
             strokeWidth={2}
           />
@@ -109,11 +133,11 @@ const SkillsChart = ({ data }: { data: any[] }) => (
           </Typography>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
+          <div
             className="h-2 rounded-full transition-all duration-1000 ease-out"
-            style={{ 
+            style={{
               width: `${item.level}%`,
-              backgroundColor: item.color 
+              backgroundColor: item.color,
             }}
           />
         </div>
@@ -130,7 +154,7 @@ const ProjectChart = ({ data }: { data: any[] }) => (
         <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <XAxis dataKey="name" fontSize={10} />
           <YAxis hide />
-          <ChartTooltip 
+          <ChartTooltip
             content={({ active, payload, label }) => {
               if (active && payload && payload.length) {
                 const data = payload[0].payload;
@@ -162,7 +186,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const employeeId = params.id as string;
     const empData = getEmployeeById(employeeId);
-    
+
     // Simulate API call
     setTimeout(() => {
       setEmployee(empData || null);
@@ -209,11 +233,16 @@ export default function ProfilePage() {
 
   const getStatusVariant = (status: string) => {
     switch (status) {
-      case 'Available': return 'success';
-      case 'PR In Progress': return 'warning';
-      case 'On Leave': return 'error';
-      case 'Busy': return 'secondary';
-      default: return 'secondary';
+      case 'Available':
+        return 'success';
+      case 'PR In Progress':
+        return 'warning';
+      case 'On Leave':
+        return 'error';
+      case 'Busy':
+        return 'secondary';
+      default:
+        return 'secondary';
     }
   };
 
@@ -224,9 +253,9 @@ export default function ProfilePage() {
         <header className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex items-center gap-4 mb-6">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => router.back()}
                 className="flex items-center gap-2"
               >
@@ -237,9 +266,12 @@ export default function ProfilePage() {
 
             <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
               <div className="flex items-start gap-6">
-                <Avatar 
+                <Avatar
                   src={employee.avatar}
-                  fallback={employee.name.split(' ').map(n => n[0]).join('')}
+                  fallback={employee.name
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('')}
                   size="2xl"
                   className="flex-shrink-0"
                 />
@@ -248,9 +280,7 @@ export default function ProfilePage() {
                     <Typography variant="h2" weight="bold" className="text-gray-900">
                       {employee.name}
                     </Typography>
-                    <Badge variant={getStatusVariant(employee.status)}>
-                      {employee.status}
-                    </Badge>
+                    <Badge variant={getStatusVariant(employee.status)}>{employee.status}</Badge>
                   </div>
                   <Typography variant="h6" className="text-gray-600 mb-2">
                     {employee.role}
@@ -258,7 +288,7 @@ export default function ProfilePage() {
                   <Typography variant="body" className="text-gray-500 mb-4 max-w-2xl">
                     {employee.bio}
                   </Typography>
-                  
+
                   {/* Contact Info */}
                   <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
@@ -402,11 +432,18 @@ export default function ProfilePage() {
                   </div>
                   {employee.manager && (
                     <div>
-                      <Typography variant="caption" className="text-gray-500 uppercase tracking-wide">
+                      <Typography
+                        variant="caption"
+                        className="text-gray-500 uppercase tracking-wide"
+                      >
                         Reports to
                       </Typography>
                       <Link href={`/admin/profile/${employee.manager}`}>
-                        <Typography variant="body" weight="semibold" className="text-blue-600 hover:text-blue-700">
+                        <Typography
+                          variant="body"
+                          weight="semibold"
+                          className="text-blue-600 hover:text-blue-700"
+                        >
                           Manager
                         </Typography>
                       </Link>
@@ -414,7 +451,10 @@ export default function ProfilePage() {
                   )}
                   {employee.reports && employee.reports.length > 0 && (
                     <div>
-                      <Typography variant="caption" className="text-gray-500 uppercase tracking-wide">
+                      <Typography
+                        variant="caption"
+                        className="text-gray-500 uppercase tracking-wide"
+                      >
                         Direct Reports
                       </Typography>
                       <Typography variant="body" weight="semibold">
@@ -438,25 +478,19 @@ export default function ProfilePage() {
                     <Typography variant="body" className="text-sm">
                       Feedback Given
                     </Typography>
-                    <Badge variant="primary">
-                      {employee.feedbackHistory.given}
-                    </Badge>
+                    <Badge variant="primary">{employee.feedbackHistory.given}</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <Typography variant="body" className="text-sm">
                       Feedback Received
                     </Typography>
-                    <Badge variant="secondary">
-                      {employee.feedbackHistory.received}
-                    </Badge>
+                    <Badge variant="secondary">{employee.feedbackHistory.received}</Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <Typography variant="body" className="text-sm">
                       Pending Reviews
                     </Typography>
-                    <Badge variant="warning">
-                      {employee.feedbackHistory.pending}
-                    </Badge>
+                    <Badge variant="warning">{employee.feedbackHistory.pending}</Badge>
                   </div>
                 </div>
               </Card>
@@ -469,9 +503,9 @@ export default function ProfilePage() {
                   </Typography>
                   <div className="flex gap-3">
                     {employee.socialLinks.linkedin && (
-                      <a 
-                        href={employee.socialLinks.linkedin} 
-                        target="_blank" 
+                      <a
+                        href={employee.socialLinks.linkedin}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors"
                       >
@@ -479,9 +513,9 @@ export default function ProfilePage() {
                       </a>
                     )}
                     {employee.socialLinks.github && (
-                      <a 
-                        href={employee.socialLinks.github} 
-                        target="_blank" 
+                      <a
+                        href={employee.socialLinks.github}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
                       >
@@ -489,9 +523,9 @@ export default function ProfilePage() {
                       </a>
                     )}
                     {employee.socialLinks.twitter && (
-                      <a 
-                        href={employee.socialLinks.twitter} 
-                        target="_blank" 
+                      <a
+                        href={employee.socialLinks.twitter}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="p-2 bg-sky-100 rounded-lg hover:bg-sky-200 transition-colors"
                       >
