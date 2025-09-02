@@ -112,6 +112,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         navigation: getNavigationItems(),
         rightContent: <HeaderRightContent />,
         showSonyAssistant: true,
+        onSonyAssistantClick: toggleChat,
         showNotifications: true,
         notificationCount: 3,
         user: currentUser ? {
