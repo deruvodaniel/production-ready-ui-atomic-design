@@ -222,6 +222,7 @@ export default function ThemeBuilderHome() {
           { label: 'Theme Builder', href: '/', active: true },
           { label: 'Components', href: '/components' },
           { label: 'Storybook', href: '/storybook' },
+          { label: 'Sony POC', href: '/admin' },
         ],
         rightContent: (
           <div className="flex items-center gap-4">
