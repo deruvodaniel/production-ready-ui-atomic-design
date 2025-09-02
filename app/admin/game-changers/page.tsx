@@ -339,6 +339,19 @@ Communicates effectively with team members, ensuring clear, concise, and error-f
               </Typography>
             </div>
 
+            {/* Performance Review Link */}
+            <div className="mb-8">
+              <Link href="/admin/performance-review">
+                <Button
+                  variant="primary"
+                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Start Performance Review
+                </Button>
+              </Link>
+            </div>
+
             {/* Performance Section */}
             <div className="evaluation-section">
               <Typography variant="h5" weight="bold" className="section-title">
