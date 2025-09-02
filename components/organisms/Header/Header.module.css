@@ -1,7 +1,8 @@
 .header {
   width: 100%;
-  background-color: hsl(var(--card) / 0.95);
-  border-bottom: 1px solid hsl(var(--border));
+  height: 84px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #EBEBF5;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -9,144 +10,298 @@
 }
 
 .container {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 0 1rem;
-  height: 4rem;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 1440px) {
   .container {
-    padding: 0 1.5rem;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 }
 
-@media (min-width: 1024px) {
-  .container {
-    padding: 0 2rem;
-  }
-}
-
-.brand {
+.logoSection {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  position: absolute;
+  left: 16px;
 }
 
 .logo {
-  width: 2rem;
-  height: 2rem;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .navigation {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .navigation {
-    display: block;
-  }
-}
-
-.navigationList {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  height: 48px;
 }
 
-.navigationLink {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgb(var(--color-neutral-600));
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.125rem;
+.navigationContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  height: 48px;
 }
 
-.navigationLink:hover {
-  color: rgb(var(--color-neutral-900));
+.navigationPill {
+  display: flex;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.navigationLink:focus {
-  outline: 2px solid rgb(var(--color-primary-500));
+.navigationPill:hover {
+  background: #f8f8fc;
+  transform: translateY(-1px);
+}
+
+.navigationPill:focus {
+  outline: 2px solid #4f46e5;
   outline-offset: 2px;
 }
 
-.navigationLink[aria-current='page'] {
-  color: rgb(var(--color-primary-600));
+.navigationPillActive {
+  background: #EBEBF5;
 }
 
-.dark .navigationLink {
-  color: rgb(var(--color-neutral-400));
+.navigationPillActive:hover {
+  background: #EBEBF5;
 }
 
-.dark .navigationLink:hover {
-  color: rgb(var(--color-neutral-100));
+.navigationLabel {
+  color: #474B69;
+  text-align: center;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: normal;
+  transition: color 0.2s ease-in-out;
 }
 
-.dark .navigationLink[aria-current='page'] {
-  color: rgb(var(--color-primary-400));
+.navigationLabelActive {
+  color: #1E1F3B;
+  font-weight: 700;
 }
 
 .actions {
+  position: absolute;
+  right: 16px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 24px;
+  height: 48px;
+}
+
+.sonyAssistant {
+  display: flex;
+  width: 179px;
+  height: 48px;
+  padding: 4px;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 800px;
+  background: #EBEBF5;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.sonyAssistant:hover {
+  background: #dcdce8;
+  transform: translateY(-1px);
+}
+
+.assistantIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #474B69;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.botIcon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.assistantText {
+  color: #474B69;
+  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: normal;
+  flex: 1;
 }
 
 .notificationWrapper {
   position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #F5F5F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.notificationWrapper:hover {
+  background: #e8e8ee;
+  transform: translateY(-1px);
+}
+
+.bellIcon {
+  width: 20px;
+  height: 20px;
+  color: #030217;
 }
 
 .notificationBadge {
   position: absolute;
-  top: -0.25rem;
-  right: -0.25rem;
-  background-color: rgb(var(--color-error-500));
+  top: -4px;
+  right: -4px;
+  background-color: #ef4444;
   color: white;
-  font-size: 0.75rem;
-  border-radius: 9999px;
-  width: 1.25rem;
-  height: 1.25rem;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
+  border: 2px solid white;
 }
 
-.userMenu {
-  margin-left: 0.5rem;
+.userAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.userTrigger {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.userAvatar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.userName {
-  display: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgb(var(--color-neutral-700));
-}
-
-@media (min-width: 640px) {
-  .userName {
-    display: block;
+/* Responsive design */
+@media (max-width: 1024px) {
+  .sonyAssistant {
+    width: auto;
+    padding: 8px;
+  }
+  
+  .assistantText {
+    display: none;
   }
 }
 
-.dark .userName {
-  color: rgb(var(--color-neutral-300));
+@media (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
+  
+  .actions {
+    gap: 16px;
+  }
+  
+  .sonyAssistant {
+    display: none;
+  }
+  
+  .notificationWrapper,
+  .userAvatar {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .bellIcon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Dark mode support */
+.dark .header {
+  background-color: #1e1f3b;
+  border-bottom-color: #333455;
+}
+
+.dark .navigationPill {
+  background: #2a2b47;
+}
+
+.dark .navigationPillActive {
+  background: #474b69;
+}
+
+.dark .navigationLabel {
+  color: #cbcee1;
+}
+
+.dark .navigationLabelActive {
+  color: #ffffff;
+}
+
+.dark .sonyAssistant {
+  background: #474b69;
+}
+
+.dark .assistantText {
+  color: #cbcee1;
+}
+
+.dark .notificationWrapper {
+  background: #474b69;
+}
+
+.dark .bellIcon {
+  color: #cbcee1;
+}
+
+/* Focus and accessibility improvements */
+.navigationPill:focus-visible,
+.sonyAssistant:focus-visible,
+.notificationWrapper:focus-visible,
+.userAvatar:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+.navigationPill[aria-current='page'] {
+  background: #EBEBF5;
+}
+
+.dark .navigationPill[aria-current='page'] {
+  background: #474b69;
 }
