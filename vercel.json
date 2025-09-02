@@ -1,0 +1,6 @@
+{
+  "framework": "other",
+  "buildCommand": "yarn build:vercel",
+  "outputDirectory": "out",
+  "cleanUrls": true
+}
