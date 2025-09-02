@@ -1,0 +1,139 @@
+/* Team View Specific Styles */
+
+/* Search input focus effects */
+.team-search-input:focus {
+  box-shadow: 0 0 0 3px rgba(51, 52, 85, 0.1);
+  border-color: rgb(var(--color-feedback-500));
+}
+
+/* Team member cards hover effects */
+.team-member-card {
+  transition: all 0.2s ease;
+}
+
+.team-member-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.team-member-card:hover .member-name {
+  color: rgb(var(--color-feedback-700));
+}
+
+/* View mode toggle buttons */
+.view-toggle-button {
+  transition: all 0.15s ease;
+}
+
+.view-toggle-button.active {
+  background-color: rgb(var(--color-feedback-500));
+  color: white;
+  box-shadow: 0 2px 4px rgba(51, 52, 85, 0.2);
+}
+
+.view-toggle-button:not(.active):hover {
+  background-color: rgb(var(--color-neutral-100));
+}
+
+/* List view specific styles */
+.team-list-item {
+  transition: all 0.15s ease;
+}
+
+.team-list-item:hover {
+  background-color: rgb(var(--color-neutral-50));
+  border-color: rgb(var(--color-feedback-200));
+}
+
+/* Stats grid animation */
+.team-stats {
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive grid improvements */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .team-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .team-search-input {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Status badges custom colors */
+.status-available {
+  background-color: rgb(var(--color-success-100));
+  color: rgb(var(--color-success-800));
+}
+
+.status-busy {
+  background-color: rgb(var(--color-error-100));
+  color: rgb(var(--color-error-800));
+}
+
+.status-leave {
+  background-color: rgb(var(--color-warning-100));
+  color: rgb(var(--color-warning-800));
+}
+
+.status-progress {
+  background-color: rgb(var(--color-feedback-100));
+  color: rgb(var(--color-feedback-800));
+}
+
+/* Loading states */
+.team-loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Search highlight */
+.search-highlight {
+  background-color: rgb(var(--color-warning-200));
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Empty state */
+.team-empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: rgb(var(--color-neutral-500));
+}
+
+.team-empty-state svg {
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}

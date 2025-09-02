@@ -67,6 +67,16 @@ const config: Config = {
           900: 'rgb(var(--color-neutral-900) / <alpha-value>)',
           950: 'rgb(var(--color-neutral-950) / <alpha-value>)',
         },
+        feedback: {
+          background: '#F8F8FC',
+          card: '#FFFFFF',
+          border: '#EBEBF5',
+          primary: '#333455',
+          secondary: '#474B69',
+          muted: '#9498B8',
+          light: '#CBCEE1',
+          text: '#030217',
+        },
         success: {
           50: 'rgb(var(--color-success-50) / <alpha-value>)',
           100: 'rgb(var(--color-success-100) / <alpha-value>)',
