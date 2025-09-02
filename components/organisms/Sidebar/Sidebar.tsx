@@ -26,6 +26,7 @@ export interface SidebarProps {
   collapsed?: boolean;
   onToggle?: () => void;
   className?: string;
+  disableItemLinks?: boolean; // when true, items are not clickable (used in component gallery)
 }
 
 const defaultItems: SidebarItem[] = [
@@ -38,7 +39,7 @@ const defaultItems: SidebarItem[] = [
   {
     id: 'analytics',
     label: 'Analytics',
-    href: '/analytics', 
+    href: '/analytics',
     icon: <BarChart3 />,
     badge: { text: 'New', variant: 'primary' },
   },
@@ -61,7 +62,7 @@ const defaultItems: SidebarItem[] = [
   },
   {
     id: 'settings',
-    label: 'Settings', 
+    label: 'Settings',
     href: '/settings',
     icon: <Settings />,
   },
@@ -73,17 +74,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   collapsed = false,
   onToggle,
   className,
+  disableItemLinks = false,
 }) => {
   const [expandedItems, setExpandedItems] = React.useState<Set<string>>(new Set());
 
   const toggleExpanded = (itemId: string) => {
     setExpandedItems(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(itemId)) {
-        newSet.delete(itemId);
-      } else {
-        newSet.add(itemId);
-      }
+      if (newSet.has(itemId)) newSet.delete(itemId);
+      else newSet.add(itemId);
       return newSet;
     });
   };
@@ -96,11 +95,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const active = isActive(item.href);
     const expanded = isExpanded(item.id);
 
+    const ItemWrapper: React.ElementType = disableItemLinks ? 'div' : 'a';
+    const itemWrapperProps = disableItemLinks
+      ? { role: 'button', tabIndex: -1 }
+      : { href: item.href };
+
     return (
       <li key={item.id} className={styles.listItem}>
         <div className={styles.itemContainer}>
-          <a
-            href={item.href}
+          <ItemWrapper
+            {...itemWrapperProps}
             className={cn(
               styles.item,
               level > 0 && styles.subItem,
@@ -114,25 +118,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 {item.icon}
               </span>
             )}
-            
+
             {!collapsed && (
               <>
                 <Typography variant="caption" weight="medium" className={styles.label}>
                   {item.label}
                 </Typography>
-                
+
                 {item.badge && (
-                  <Badge 
-                    variant={item.badge.variant} 
-                    size="sm"
-                    className={styles.badge}
-                  >
+                  <Badge variant={item.badge.variant} size="sm" className={styles.badge}>
                     {item.badge.text}
                   </Badge>
                 )}
               </>
             )}
-          </a>
+          </ItemWrapper>
 
           {hasChildren && !collapsed && (
             <Button
@@ -143,9 +143,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               aria-label={`${expanded ? 'Collapse' : 'Expand'} ${item.label}`}
               aria-expanded={expanded}
             >
-              <ChevronRight 
-                className={cn(styles.expandIcon, expanded && styles.expandIconRotated)}
-              />
+              <ChevronRight className={cn(styles.expandIcon, expanded && styles.expandIconRotated)} />
             </Button>
           )}
         </div>
@@ -160,10 +158,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <aside
-      className={cn(styles.sidebar, collapsed && styles.sidebarCollapsed, className)}
-      aria-label="Main navigation"
-    >
+    <aside className={cn(styles.sidebar, collapsed && styles.sidebarCollapsed, className)} aria-label="Main navigation">
       <nav className={styles.navigation} role="navigation">
         <ul className={styles.list} role="list">
           {items.map(item => renderSidebarItem(item))}
