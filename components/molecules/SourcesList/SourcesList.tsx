@@ -6,13 +6,13 @@ import { Badge } from '@/components/atoms/Badge/Badge';
 import { cn } from '@/lib/utils';
 
 export interface Source {
-  /** Unique identifier */
+  /** Unique identifier - required */
   id: string;
-  /** Source name */
+  /** Source name - required, will be displayed in uppercase */
   name: string;
-  /** Source type for styling */
+  /** Source type for styling and badge color */
   type?: 'goals' | 'feedback' | 'notes' | 'default';
-  /** Whether the source is active/available */
+  /** Whether the source is active/available - defaults to true */
   active?: boolean;
   /** Optional URL for source link */
   url?: string;
