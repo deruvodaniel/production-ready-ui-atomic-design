@@ -1,419 +1,530 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '@/components/atoms/Button/Button';
-import { Typography } from '@/components/atoms/Typography/Typography';
-import { Card } from '@/components/molecules/Card/Card';
-import { Badge } from '@/components/atoms/Badge/Badge';
-import { Avatar } from '@/components/atoms/Avatar/Avatar';
-import { ProgressBar } from '@/components/atoms/ProgressBar/ProgressBar';
+import React, { useState, useEffect } from 'react';
 import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
-import { useTheme } from '@/theme/theme-provider';
+import { Card } from '@/components/molecules/Card/Card';
+import { Avatar } from '@/components/atoms/Avatar/Avatar';
+import { Typography } from '@/components/atoms/Typography/Typography';
+import { Button } from '@/components/atoms/Button/Button';
+import { Badge } from '@/components/atoms/Badge/Badge';
 import {
-  Palette,
-  Type,
-  Zap,
+  Users,
+  Target,
+  TrendingUp,
+  Clock,
   Star,
+  Calendar,
+  MessageSquare,
+  BarChart3,
+  ArrowRight,
+  ArrowUp,
+  ArrowDown,
+  Bot,
+  Bell,
+  Zap,
   CheckCircle,
-  AlertTriangle,
-  Settings,
-  Moon,
-  Sun,
-  Download,
+  AlertCircle,
+  Info,
+  Plus
 } from 'lucide-react';
-import { FontSelector } from '@/components/molecules/FontSelector/FontSelector';
+import { getDashboardData, getCurrentUser, getRecentActivity, type DashboardMetric, type ActivityItem, type CurrentUser } from '@/data/config';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
+import Link from 'next/link';
 
-export default function Home() {
-  const { isDark, toggleDarkMode, config, updateTheme } = useTheme();
-  const [primaryColor, setPrimaryColor] = useState('#3b82f6');
-  const [secondaryColor, setSecondaryColor] = useState('#64748b');
-  const [accentColor, setAccentColor] = useState('#d946ef');
+// Icon mapping for dynamic rendering
+const iconMap: Record<string, React.ComponentType<any>> = {
+  Users,
+  Target,
+  TrendingUp,
+  Clock,
+  Star,
+  Calendar,
+  MessageSquare,
+  BarChart3,
+  Zap,
+  CheckCircle,
+  AlertCircle,
+  Info,
+};
 
-  const handleColorChange = (colorType: 'primary' | 'secondary' | 'accent', value: string) => {
-    if (colorType === 'primary') setPrimaryColor(value);
-    if (colorType === 'secondary') setSecondaryColor(value);
-    if (colorType === 'accent') setAccentColor(value);
+// Metric Card Component
+const MetricCard = ({ metric }: { metric: DashboardMetric }) => {
+  const IconComponent = iconMap[metric.icon];
+  const isPositive = metric.change.direction === 'up';
+  const isNegative = metric.change.direction === 'down';
 
-    updateTheme({
-      colors: {
-        ...config.colors,
-        [colorType]: value,
-      },
-    });
+  const colorClasses = {
+    blue: 'bg-blue-100 text-blue-600 border-blue-200',
+    green: 'bg-green-100 text-green-600 border-green-200',
+    yellow: 'bg-yellow-100 text-yellow-600 border-yellow-200',
+    red: 'bg-red-100 text-red-600 border-red-200',
+    purple: 'bg-purple-100 text-purple-600 border-purple-200',
   };
 
-  const resetColors = () => {
-    setPrimaryColor('#3b82f6');
-    setSecondaryColor('#64748b');
-    setAccentColor('#d946ef');
-    updateTheme({
-      colors: {
-        primary: '#3b82f6',
-        secondary: '#64748b',
-        accent: '#d946ef',
-      },
-    });
+  return (
+    <Card className="p-6 transition-all duration-200 hover:shadow-lg">
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-2">
+            <div className={`p-2 rounded-lg ${colorClasses[metric.color]}`}>
+              {IconComponent && <IconComponent className="w-5 h-5" />}
+            </div>
+            <Typography variant="body" color="muted" className="text-sm">
+              {metric.title}
+            </Typography>
+          </div>
+          <Typography variant="h3" weight="bold" className="mb-2">
+            {metric.value}
+          </Typography>
+          <div className="flex items-center gap-2">
+            {isPositive && <ArrowUp className="w-4 h-4 text-green-500" />}
+            {isNegative && <ArrowDown className="w-4 h-4 text-red-500" />}
+            <Typography variant="caption" className={isPositive ? 'text-green-600' : isNegative ? 'text-red-600' : 'text-gray-600'}>
+              {metric.change.value}% {metric.change.period}
+            </Typography>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+// Quick Action Card Component
+const QuickActionCard = ({ action }: { action: any }) => {
+  const IconComponent = iconMap[action.icon];
+
+  return (
+    <Link href={action.href}>
+      <Card className="p-6 h-full transition-all duration-200 hover:shadow-lg hover:scale-105 cursor-pointer group">
+        <div className="flex items-start gap-4">
+          <div className={`p-3 rounded-lg bg-${action.color}-100 text-${action.color}-600 group-hover:scale-110 transition-transform duration-200`}>
+            {IconComponent && <IconComponent className="w-6 h-6" />}
+          </div>
+          <div className="flex-1">
+            <Typography variant="h6" weight="bold" className="mb-2 group-hover:text-blue-600 transition-colors duration-200">
+              {action.title}
+            </Typography>
+            <Typography variant="body" color="muted" className="text-sm">
+              {action.description}
+            </Typography>
+          </div>
+          <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors duration-200" />
+        </div>
+      </Card>
+    </Link>
+  );
+};
+
+// Activity Item Component
+const ActivityItemComponent = ({ activity }: { activity: ActivityItem }) => {
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'feedback': return MessageSquare;
+      case 'review': return Star;
+      case 'goal': return Target;
+      case 'achievement': return CheckCircle;
+      case 'system': return Info;
+      default: return Info;
+    }
   };
 
-  const handleExport = () => {
-    const data = {
-      theme: config,
-      mode: isDark ? 'dark' : 'light',
+  const getActivityColor = (type: string) => {
+    switch (type) {
+      case 'feedback': return 'text-blue-500';
+      case 'review': return 'text-purple-500';
+      case 'goal': return 'text-green-500';
+      case 'achievement': return 'text-yellow-500';
+      case 'system': return 'text-gray-500';
+      default: return 'text-gray-500';
+    }
+  };
+
+  const ActivityIcon = getActivityIcon(activity.type);
+  const timeAgo = new Date() - activity.timestamp;
+  const hours = Math.floor(timeAgo / (1000 * 60 * 60));
+  const days = Math.floor(hours / 24);
+
+  return (
+    <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+      <Avatar 
+        src={activity.user.avatar}
+        fallback={activity.user.name.split(' ').map(n => n[0]).join('')}
+        size="sm"
+        className="flex-shrink-0"
+      />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-1">
+          <ActivityIcon className={`w-4 h-4 ${getActivityColor(activity.type)}`} />
+          <Typography variant="body" className="text-sm">
+            <span className="font-semibold">{activity.user.name}</span> {activity.action}
+            {activity.target && <span className="text-gray-600"> - {activity.target}</span>}
+          </Typography>
+        </div>
+        <Typography variant="caption" color="muted">
+          {days > 0 ? `${days} day${days > 1 ? 's' : ''} ago` : 
+           hours > 0 ? `${hours} hour${hours > 1 ? 's' : ''} ago` : 
+           'Just now'}
+        </Typography>
+      </div>
+    </div>
+  );
+};
+
+// Performance Chart Component
+const PerformanceChart = () => {
+  const data = [
+    { month: 'Jul', score: 82 },
+    { month: 'Aug', score: 85 },
+    { month: 'Sep', score: 83 },
+    { month: 'Oct', score: 87 },
+    { month: 'Nov', score: 89 },
+    { month: 'Dec', score: 91 },
+  ];
+
+  return (
+    <div className="h-64 w-full">
+      <ChartContainer config={{ score: { label: 'Performance', color: 'hsl(var(--chart-1))' } }} className="w-full h-full">
+        <ResponsiveContainer>
+          <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+            <XAxis dataKey="month" axisLine={false} tickLine={false} fontSize={12} />
+            <YAxis hide />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Area 
+              type="monotone" 
+              dataKey="score" 
+              stroke="hsl(var(--chart-1))" 
+              fill="hsl(var(--chart-1))" 
+              fillOpacity={0.1}
+              strokeWidth={2}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </ChartContainer>
+    </div>
+  );
+};
+
+// Team Distribution Chart
+const TeamDistributionChart = () => {
+  const data = [
+    { name: 'Available', value: 5, color: '#10b981' },
+    { name: 'PR In Progress', value: 3, color: '#f59e0b' },
+    { name: 'On Leave', value: 0, color: '#ef4444' },
+  ];
+
+  return (
+    <div className="h-48 w-full">
+      <ChartContainer config={{}} className="w-full h-full">
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={40}
+              outerRadius={80}
+              paddingAngle={2}
+              dataKey="value"
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <ChartTooltip 
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0];
+                  return (
+                    <div className="bg-white p-3 border rounded-lg shadow-lg">
+                      <p className="font-medium">{data.payload.name}</p>
+                      <p className="text-sm text-gray-600">{data.value} members</p>
+                    </div>
+                  );
+                }
+                return null;
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </ChartContainer>
+    </div>
+  );
+};
+
+export default function AdminDashboard() {
+  const [dashboardData, setDashboardData] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load dashboard data
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [dashboard, user, activity] = await Promise.all([
+          getDashboardData(),
+          getCurrentUser(),
+          getRecentActivity(5)
+        ]);
+        
+        setDashboardData(dashboard);
+        setCurrentUser(user);
+        setRecentActivity(activity);
+      } catch (err) {
+        setError('Failed to load dashboard data');
+        console.error('Dashboard loading error:', err);
+      } finally {
+        setLoading(false);
+      }
     };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'theme-config.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
 
-  const scrollToTheme = () => {
-    const el = document.getElementById('theme-customization');
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+    loadData();
+  }, []);
+
+  if (loading) {
+    return (
+      <PageLayout
+        header={{
+          logo: (
+            <div className="w-15 h-15 bg-gradient-to-br from-neutral-400 to-neutral-600 rounded-lg transform rotate-45 relative">
+              <div className="absolute inset-2 bg-white rounded opacity-20" />
+            </div>
+          ),
+          title: '',
+          navigation: [
+            { label: 'Home', href: '/', active: true },
+            { label: 'My Team', href: '/admin/team' },
+            { label: 'Game Changers', href: '/admin/game-changers' },
+          ],
+          rightContent: (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 bg-neutral-200 rounded-full px-4 py-2">
+                <div className="w-10 h-10 bg-neutral-600 rounded-full flex items-center justify-center">
+                  <Bot className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-neutral-600 font-semibold">Sony Assistant</span>
+              </div>
+              <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
+                <Bell className="w-5 h-5 text-neutral-800" />
+              </div>
+              <Avatar src="/api/placeholder/48/48" fallback="AR" size="md" />
+            </div>
+          ),
+          showSonyAssistant: true,
+          showNotifications: true,
+          showThemeToggle: false,
+          showSettingsButton: false,
+        }}
+      >
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neutral-600 mx-auto"></div>
+            <Typography variant="body" className="mt-4 text-gray-600">
+              Loading dashboard...
+            </Typography>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageLayout
+        header={{
+          logo: (
+            <div className="w-15 h-15 bg-gradient-to-br from-neutral-400 to-neutral-600 rounded-lg transform rotate-45 relative">
+              <div className="absolute inset-2 bg-white rounded opacity-20" />
+            </div>
+          ),
+          title: '',
+          navigation: [
+            { label: 'Home', href: '/', active: true },
+            { label: 'My Team', href: '/admin/team' },
+            { label: 'Game Changers', href: '/admin/game-changers' },
+          ],
+        }}
+      >
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="text-center">
+            <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+            <Typography variant="h5" className="text-red-600 mb-2">
+              Error loading dashboard
+            </Typography>
+            <Typography variant="body" className="text-gray-600">
+              {error}
+            </Typography>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout
       header={{
-        logo: <Zap className="w-6 h-6 text-primary-600" />,
-        title: 'Design System Builder',
+        logo: (
+          <div className="w-15 h-15 bg-gradient-to-br from-neutral-400 to-neutral-600 rounded-lg transform rotate-45 relative">
+            <div className="absolute inset-2 bg-white rounded opacity-20" />
+          </div>
+        ),
+        title: '',
         navigation: [
-          { label: 'Home', href: '/' },
-          { label: 'Components', href: '/components' },
-          { label: 'Storybook', href: '/storybook' },
+          { label: 'Home', href: '/', active: true },
+          { label: 'My Team', href: '/admin/team' },
+          { label: 'Game Changers', href: '/admin/game-changers' },
         ],
-        showThemeToggle: true,
-        showSettingsButton: true,
+        rightContent: (
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-3 bg-neutral-200 rounded-full px-4 py-2">
+              <div className="w-10 h-10 bg-neutral-600 rounded-full flex items-center justify-center">
+                <Bot className="w-6 h-6 text-white" />
+              </div>
+              <span className="hidden lg:block text-neutral-600 font-semibold">Sony Assistant</span>
+            </div>
+            <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
+              <Bell className="w-5 h-5 text-neutral-800" />
+            </div>
+            <Avatar 
+              src={currentUser?.avatar} 
+              fallback={currentUser?.name.split(' ').map(n => n[0]).join('') || 'U'} 
+              size="md" 
+            />
+          </div>
+        ),
+        showSonyAssistant: true,
+        showNotifications: true,
+        notificationCount: 3,
+        user: currentUser ? {
+          name: currentUser.name,
+          email: currentUser.email,
+          avatar: currentUser.avatar
+        } : undefined,
+        showThemeToggle: false,
+        showSettingsButton: false,
       }}
     >
-      <div className="max-w-6xl mx-auto">
-        {/* Hero Section */}
-        <section className="text-center mb-16">
-          <Typography variant="h1" weight="bold" className="mb-6">
-            Production-Ready Design System
-          </Typography>
-
-          <Typography variant="body" color="muted" className="max-w-3xl mx-auto mb-8 text-lg">
-            Build beautiful, accessible applications with our comprehensive component library.
-            Customize colors, typography, and spacing to match your brand identity.
-          </Typography>
-
-          <div className="flex justify-center gap-4 mb-8">
-            <Button size="lg" leftIcon={<Palette />} onClick={scrollToTheme}>
-              Customize Theme
-            </Button>
-            <Button variant="outline" size="lg" leftIcon={<Download />} onClick={handleExport}>
-              Export Config
-            </Button>
-          </div>
-
-          <div className="flex justify-center items-center gap-4">
-            <Badge variant="success" icon={<CheckCircle />}>
-              WCAG 2.1 AA
-            </Badge>
-            <Badge variant="primary" icon={<Star />}>
-              Production Ready
-            </Badge>
-            <Badge variant="warning" icon={<AlertTriangle />}>
-              TypeScript
-            </Badge>
-          </div>
-        </section>
-
-        {/* Theme Customization */}
-        <section className="mb-16" id="theme-customization">
-          <Card variant="elevated" padding="lg">
-            <div className="flex items-center justify-between mb-6">
-              <Typography variant="h3" weight="semibold">
-                Theme Customization
-              </Typography>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleDarkMode}
-                  leftIcon={isDark ? <Sun /> : <Moon />}
-                >
-                  {isDark ? 'Light' : 'Dark'} Mode
+      <div className="bg-gray-50 min-h-screen">
+        {/* Welcome Header */}
+        <header className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+              <div>
+                <Typography variant="h2" weight="bold" className="text-gray-900 mb-2">
+                  Welcome back, {currentUser?.name.split(' ')[0]}! 👋
+                </Typography>
+                <Typography variant="body" className="text-gray-600">
+                  Here's what's happening with your team today
+                </Typography>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Schedule 1:1
                 </Button>
-                <Button variant="outline" size="sm" onClick={resetColors}>
-                  Reset
+                <Button variant="primary" size="sm">
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Review
                 </Button>
               </div>
             </div>
+          </div>
+        </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Primary Color */}
-              <div className="space-y-4">
-                <Typography variant="h6" weight="medium">
-                  Primary Color
-                </Typography>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="color"
-                    value={primaryColor}
-                    onChange={e => handleColorChange('primary', e.target.value)}
-                    className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-mono text-neutral-600 dark:text-neutral-400">
-                      {primaryColor}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      Used for buttons, links, and primary actions
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Secondary Color */}
-              <div className="space-y-4">
-                <Typography variant="h6" weight="medium">
-                  Secondary Color
-                </Typography>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="color"
-                    value={secondaryColor}
-                    onChange={e => handleColorChange('secondary', e.target.value)}
-                    className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-mono text-neutral-600 dark:text-neutral-400">
-                      {secondaryColor}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      Used for secondary buttons and elements
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Accent Color */}
-              <div className="space-y-4">
-                <Typography variant="h6" weight="medium">
-                  Accent Color
-                </Typography>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="color"
-                    value={accentColor}
-                    onChange={e => handleColorChange('accent', e.target.value)}
-                    className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-mono text-neutral-600 dark:text-neutral-400">
-                      {accentColor}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      Used for highlights and special elements
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Key Metrics */}
+          <section className="mb-8">
+            <Typography variant="h4" weight="bold" className="mb-6">
+              Key Metrics
+            </Typography>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {dashboardData.metrics.map((metric: DashboardMetric) => (
+                <MetricCard key={metric.id} metric={metric} />
+              ))}
             </div>
-          </Card>
-        </section>
+          </section>
 
-        {/* Typography Settings */}
-        <section className="mb-16">
-          <FontSelector />
-        </section>
-
-        {/* Component Preview */}
-        <section className="mb-16">
-          <Typography variant="h3" weight="semibold" className="mb-6">
-            Component Preview
-          </Typography>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {/* Buttons */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Buttons
-              </Typography>
-              <div className="space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  <Button variant="primary" size="sm">
-                    Primary
-                  </Button>
-                  <Button variant="secondary" size="sm">
-                    Secondary
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    Outline
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Button loading size="sm">
-                    Loading
-                  </Button>
-                  <Button disabled size="sm">
-                    Disabled
-                  </Button>
-                  <Button variant="destructive" size="sm">
-                    Delete
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            {/* Badges */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Badges
-              </Typography>
-              <div className="space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="primary">Primary</Badge>
-                  <Badge variant="success" icon={<CheckCircle />}>
-                    Success
-                  </Badge>
-                  <Badge variant="warning" icon={<AlertTriangle />}>
-                    Warning
+          {/* Charts and Quick Actions */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            {/* Performance Trend */}
+            <div className="lg:col-span-2">
+              <Card className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <Typography variant="h5" weight="bold">
+                    Team Performance Trend
+                  </Typography>
+                  <Badge variant="success">
+                    +5% this quarter
                   </Badge>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge size="sm">Small</Badge>
-                  <Badge size="md">Medium</Badge>
-                  <Badge size="lg">Large</Badge>
-                </div>
-              </div>
-            </Card>
+                <PerformanceChart />
+              </Card>
+            </div>
 
-            {/* Progress */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Progress Bars
-              </Typography>
-              <div className="space-y-4">
-                <ProgressBar value={75} showLabel label="Upload Progress" />
-                <ProgressBar value={60} variant="success" label="Success" />
-                <ProgressBar value={40} variant="warning" label="Warning" />
-                <ProgressBar value={25} variant="error" label="Error" />
-              </div>
-            </Card>
-
-            {/* Avatars */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Avatars
-              </Typography>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <Avatar size="sm" fallback="SM" />
-                  <Avatar size="md" fallback="MD" />
-                  <Avatar size="lg" fallback="LG" />
-                  <Avatar size="xl" fallback="XL" />
+            {/* Team Distribution */}
+            <div>
+              <Card className="p-6">
+                <Typography variant="h5" weight="bold" className="mb-6">
+                  Team Status
+                </Typography>
+                <TeamDistributionChart />
+                <div className="mt-4 space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span>Available</span>
+                    </div>
+                    <span className="font-semibold">5</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <span>In Progress</span>
+                    </div>
+                    <span className="font-semibold">3</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Avatar
-                    src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
-                    alt="User"
-                    fallback="U"
-                  />
-                  <Avatar variant="rounded" fallback="R" />
-                  <Avatar variant="square" fallback="S" />
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </div>
+          </div>
 
-            {/* Typography */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Typography
-              </Typography>
+          {/* Quick Actions */}
+          <section className="mb-8">
+            <Typography variant="h4" weight="bold" className="mb-6">
+              Quick Actions
+            </Typography>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {dashboardData.quickActions.map((action: any) => (
+                <QuickActionCard key={action.id} action={action} />
+              ))}
+            </div>
+          </section>
+
+          {/* Recent Activity */}
+          <section>
+            <Card className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <Typography variant="h4" weight="bold">
+                  Recent Activity
+                </Typography>
+                <Link href="/admin/feedback">
+                  <Button variant="ghost" size="sm">
+                    View All
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
               <div className="space-y-2">
-                <Typography variant="h6">Heading 6</Typography>
-                <Typography variant="body">Body text with normal weight</Typography>
-                <Typography variant="caption" color="muted">
-                  Caption text in muted color
-                </Typography>
-                <Typography variant="overline" color="primary">
-                  Overline Text
-                </Typography>
+                {recentActivity.map((activity) => (
+                  <ActivityItemComponent key={activity.id} activity={activity} />
+                ))}
               </div>
             </Card>
-
-            {/* Status Cards */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Status Examples
-              </Typography>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">System Status</span>
-                  <Badge variant="success">Online</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">API Health</span>
-                  <Badge variant="warning">Degraded</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Database</span>
-                  <Badge variant="error">Offline</Badge>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </section>
-
-        {/* Features */}
-        <section>
-          <Typography variant="h3" weight="semibold" className="mb-6">
-            Features
-          </Typography>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card variant="elevated" padding="lg">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Palette className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                </div>
-                <Typography variant="h5" weight="semibold" className="mb-2">
-                  White-Label Theming
-                </Typography>
-                <Typography variant="body" color="muted">
-                  Customize colors, fonts, and spacing to match your brand identity with real-time
-                  preview.
-                </Typography>
-              </div>
-            </Card>
-
-            <Card variant="elevated" padding="lg">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-success-100 dark:bg-success-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-6 h-6 text-success-600 dark:text-success-400" />
-                </div>
-                <Typography variant="h5" weight="semibold" className="mb-2">
-                  Accessibility First
-                </Typography>
-                <Typography variant="body" color="muted">
-                  WCAG 2.1 AA compliant components with full keyboard navigation and screen reader
-                  support.
-                </Typography>
-              </div>
-            </Card>
-
-            <Card variant="elevated" padding="lg">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-warning-100 dark:bg-warning-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Type className="w-6 h-6 text-warning-600 dark:text-warning-400" />
-                </div>
-                <Typography variant="h5" weight="semibold" className="mb-2">
-                  TypeScript Ready
-                </Typography>
-                <Typography variant="body" color="muted">
-                  Fully typed components with comprehensive interfaces and strict type checking.
-                </Typography>
-              </div>
-            </Card>
-          </div>
-        </section>
+          </section>
+        </main>
       </div>
     </PageLayout>
   );
