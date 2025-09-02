@@ -9,7 +9,6 @@ import { Upload, Type, Download } from 'lucide-react';
 import styles from './FontSelector.module.css';
 import { useTheme } from '@/theme/theme-provider';
 
-
 const defaultFonts = [
   { id: 'inter', label: 'Inter', value: 'Inter', category: 'sans' },
   { id: 'roboto', label: 'Roboto', value: 'Roboto', category: 'sans' },
@@ -19,13 +18,13 @@ const defaultFonts = [
   { id: 'poppins', label: 'Poppins', value: 'Poppins', category: 'sans' },
   { id: 'nunito', label: 'Nunito', value: 'Nunito', category: 'sans' },
   { id: 'source-sans', label: 'Source Sans Pro', value: 'Source Sans Pro', category: 'sans' },
-  
+
   { id: 'playfair', label: 'Playfair Display', value: 'Playfair Display', category: 'serif' },
   { id: 'merriweather', label: 'Merriweather', value: 'Merriweather', category: 'serif' },
   { id: 'georgia', label: 'Georgia', value: 'Georgia', category: 'serif' },
   { id: 'times', label: 'Times New Roman', value: 'Times New Roman', category: 'serif' },
   { id: 'crimson', label: 'Crimson Text', value: 'Crimson Text', category: 'serif' },
-  
+
   { id: 'fira-code', label: 'Fira Code', value: 'Fira Code', category: 'mono' },
   { id: 'source-code', label: 'Source Code Pro', value: 'Source Code Pro', category: 'mono' },
   { id: 'jetbrains', label: 'JetBrains Mono', value: 'JetBrains Mono', category: 'mono' },
@@ -59,7 +58,7 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
 
   const loadGoogleFont = (fontName: string) => {
     const fontUrl = `https://fonts.googleapis.com/css2?family=${fontName.replace(/ /g, '+')}:wght@300;400;500;600;700&display=swap`;
-    
+
     // Check if font is already loaded
     const existingLink = document.querySelector(`link[href="${fontUrl}"]`);
     if (existingLink) return;
@@ -78,16 +77,19 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
     Array.from(files).forEach(file => {
       if (file.type.startsWith('font/') || file.name.match(/\.(woff|woff2|ttf|otf)$/i)) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = e => {
           const fontData = e.target?.result as string;
           const fontName = file.name.replace(/\.[^/.]+$/, '');
-          
+
           // Create font face
           const fontFace = new FontFace(fontName, `url(${fontData})`);
-          fontFace.load().then(() => {
-            document.fonts.add(fontFace);
-            setCustomFonts(prev => [...prev, fontName]);
-          }).catch(console.error);
+          fontFace
+            .load()
+            .then(() => {
+              document.fonts.add(fontFace);
+              setCustomFonts(prev => [...prev, fontName]);
+            })
+            .catch(console.error);
         };
         reader.readAsDataURL(file);
       }
@@ -96,12 +98,12 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
 
   const allFonts = [
     ...defaultFonts,
-    ...customFonts.map(font => ({ 
-      id: font.toLowerCase().replace(/\s+/g, '-'), 
-      label: font, 
-      value: font, 
-      category: 'custom' as const 
-    }))
+    ...customFonts.map(font => ({
+      id: font.toLowerCase().replace(/\s+/g, '-'),
+      label: font,
+      value: font,
+      category: 'custom' as const,
+    })),
   ];
 
   const sansFonts = allFonts.filter(f => f.category === 'sans' || f.category === 'custom');
@@ -151,9 +153,12 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
               items={sansFonts}
               value={config.typography.fontFamily.sans}
               placeholder="Select sans serif font"
-              onSelect={(item) => handleFontChange('sans', item.value)}
+              onSelect={item => handleFontChange('sans', item.value)}
             />
-            <div className={styles.preview} style={{ fontFamily: config.typography.fontFamily.sans }}>
+            <div
+              className={styles.preview}
+              style={{ fontFamily: config.typography.fontFamily.sans }}
+            >
               The quick brown fox jumps over the lazy dog
             </div>
           </div>
@@ -166,9 +171,16 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
               items={sansFonts}
               value={config.typography.fontFamily.display}
               placeholder="Select display font"
-              onSelect={(item) => handleFontChange('display', item.value)}
+              onSelect={item => handleFontChange('display', item.value)}
             />
-            <div className={styles.preview} style={{ fontFamily: config.typography.fontFamily.display, fontSize: '1.5rem', fontWeight: 'bold' }}>
+            <div
+              className={styles.preview}
+              style={{
+                fontFamily: config.typography.fontFamily.display,
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+              }}
+            >
               Heading Preview
             </div>
           </div>
@@ -181,9 +193,12 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
               items={serifFonts}
               value={config.typography.fontFamily.serif}
               placeholder="Select serif font"
-              onSelect={(item) => handleFontChange('serif', item.value)}
+              onSelect={item => handleFontChange('serif', item.value)}
             />
-            <div className={styles.preview} style={{ fontFamily: config.typography.fontFamily.serif }}>
+            <div
+              className={styles.preview}
+              style={{ fontFamily: config.typography.fontFamily.serif }}
+            >
               Elegant serif typography for emphasis
             </div>
           </div>
@@ -196,9 +211,12 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
               items={monoFonts}
               value={config.typography.fontFamily.mono}
               placeholder="Select monospace font"
-              onSelect={(item) => handleFontChange('mono', item.value)}
+              onSelect={item => handleFontChange('mono', item.value)}
             />
-            <div className={styles.preview} style={{ fontFamily: config.typography.fontFamily.mono }}>
+            <div
+              className={styles.preview}
+              style={{ fontFamily: config.typography.fontFamily.mono }}
+            >
               const code = "monospace font";
             </div>
           </div>

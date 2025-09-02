@@ -107,9 +107,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         aria-label={selectedItem ? selectedItem.label : placeholder}
       >
         <span className={styles.triggerContent}>
-          {selectedItem?.icon && (
-            <span className={styles.triggerIcon}>{selectedItem.icon}</span>
-          )}
+          {selectedItem?.icon && <span className={styles.triggerIcon}>{selectedItem.icon}</span>}
           <span className={styles.triggerText}>
             {selectedItem ? selectedItem.label : placeholder}
           </span>
@@ -119,7 +117,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
       {isOpen && (
         <div className={styles.menu} role="listbox">
-          {items.map((item) => (
+          {items.map(item => (
             <div
               key={item.id}
               role="option"
@@ -130,20 +128,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
                 item.disabled && styles.menuItemDisabled
               )}
               onClick={() => handleSelect(item)}
-              onKeyDown={(e) => handleKeyDown(e, item)}
+              onKeyDown={e => handleKeyDown(e, item)}
               tabIndex={item.disabled ? -1 : 0}
             >
               <div className={styles.menuItemContent}>
-                {item.icon && (
-                  <span className={styles.menuItemIcon}>{item.icon}</span>
-                )}
+                {item.icon && <span className={styles.menuItemIcon}>{item.icon}</span>}
                 <Typography variant="caption" className={styles.menuItemText}>
                   {item.label}
                 </Typography>
               </div>
-              {selectedItem?.id === item.id && (
-                <Check className={styles.checkIcon} />
-              )}
+              {selectedItem?.id === item.id && <Check className={styles.checkIcon} />}
             </div>
           ))}
         </div>
