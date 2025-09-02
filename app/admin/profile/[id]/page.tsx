@@ -22,7 +22,14 @@ import {
 } from 'lucide-react';
 import { getEmployeeById, employeesData } from '@/data/employees';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
+
+// Generate static params for all employee IDs
+export async function generateStaticParams() {
+  return employeesData.map((employee) => ({
+    id: employee.id,
+  }));
+}
 
 interface ProfilePageProps {
   params: {
@@ -30,10 +37,8 @@ interface ProfilePageProps {
   };
 }
 
-export default function ProfilePage() {
-  const params = useParams();
-  const router = useRouter();
-  const employeeId = params.id as string;
+export default function ProfilePage({ params }: { params: { id: string } }) {
+  const employeeId = params.id;
   
   const employee = getEmployeeById(employeeId);
 
@@ -63,9 +68,11 @@ export default function ProfilePage() {
               <Typography variant="body" color="muted" className="mb-6">
                 The employee profile you're looking for doesn't exist.
               </Typography>
-              <Button onClick={() => router.push('/admin/team')}>
+              <Link href="/admin/team">
+              <Button>
                 Back to Team
               </Button>
+            </Link>
             </Card>
           </div>
         </div>
@@ -132,15 +139,16 @@ export default function ProfilePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Back Button */}
           <div className="mb-6">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => router.push('/admin/team')}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Team
-            </Button>
+            <Link href="/admin/team">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Team
+              </Button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
