@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { SearchInput } from './SearchInput';
-import { fn } from '@storybook/test';
+const noop = () => {};
 
 const meta: Meta<typeof SearchInput> = {
   title: 'Molecules/SearchInput',
@@ -28,8 +28,8 @@ const meta: Meta<typeof SearchInput> = {
     },
   },
   args: {
-    onSearch: fn(),
-    onClear: fn(),
+    onSearch: noop,
+    onClear: noop,
   },
 };
 
