@@ -482,7 +482,7 @@ export default function MyTeamPage() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {filteredAndSortedMembers.map((employee, index) => (
+                  {filteredAndSortedMembers.map((employee: Employee, index: number) => (
                     <AdminTeamMemberCard
                       key={employee.id}
                       employee={employee}
