@@ -1,0 +1,36 @@
+.step {
+  /* Custom styles for Step component if needed */
+}
+
+.stepInteractive {
+  cursor: pointer;
+}
+
+.stepInteractive:hover {
+  background-color: var(--color-neutral-50);
+}
+
+.stepCircle {
+  transition: all 0.2s ease-in-out;
+}
+
+.stepConnector {
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Animation for step completion */
+.stepCompleted .stepCircle {
+  animation: stepComplete 0.3s ease-out;
+}
+
+@keyframes stepComplete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
