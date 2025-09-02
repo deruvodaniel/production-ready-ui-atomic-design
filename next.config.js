@@ -8,7 +8,7 @@ const nextConfig = {
   trailingSlash: true,
   basePath: repoBasePath || undefined,
   assetPrefix: repoBasePath || undefined,
-  webpack: (config) => {
+  webpack: config => {
     config.cache = { type: 'memory' };
     return config;
   },
