@@ -26,6 +26,7 @@ export interface HeaderProps {
   showNotifications?: boolean;
   notificationCount?: number;
   showSonyAssistant?: boolean;
+  onSonyAssistantClick?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -39,6 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
   showNotifications = true,
   notificationCount = 0,
   showSonyAssistant = true,
+  onSonyAssistantClick,
 }) => {
   const { isDark, toggleDarkMode } = useTheme();
   const pathname = usePathname();
@@ -109,7 +111,12 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Right Actions */}
         <div className={styles.actions}>
           {showSonyAssistant && (
-            <div className={styles.sonyAssistant}>
+            <button
+              className={styles.sonyAssistant}
+              onClick={onSonyAssistantClick}
+              aria-label="Open Sony AI Assistant chat"
+              type="button"
+            >
               <div className={styles.assistantIcon}>
                 <Bot className={styles.botIcon} />
               </div>
@@ -120,7 +127,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 Sony Assistant
               </Typography>
-            </div>
+            </button>
           )}
 
           {showNotifications && (

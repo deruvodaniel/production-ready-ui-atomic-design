@@ -5,6 +5,7 @@ import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
 import { Avatar } from '@/components/atoms/Avatar/Avatar';
 import { Bot, Bell } from 'lucide-react';
 import { getCurrentUser } from '@/data/config';
+import { useChatContext } from '@/components/providers/ChatProvider';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   className = '',
 }) => {
   const [currentUser, setCurrentUser] = React.useState<any>(null);
+  const { toggleChat } = useChatContext();
 
   React.useEffect(() => {
     getCurrentUser().then(setCurrentUser);
@@ -57,14 +59,19 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   const HeaderRightContent = () => (
     <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
       {/* Sony Assistant */}
-      <div className="hidden sm:flex items-center gap-3 bg-neutral-200 rounded-full px-3 lg:px-4 py-2 transition-all duration-200 hover:bg-neutral-300">
+      <button
+        className="hidden sm:flex items-center gap-3 bg-neutral-200 rounded-full px-3 lg:px-4 py-2 transition-all duration-200 hover:bg-neutral-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        onClick={toggleChat}
+        aria-label="Open Sony AI Assistant chat"
+        type="button"
+      >
         <div className="w-8 lg:w-10 h-8 lg:h-10 bg-neutral-600 rounded-full flex items-center justify-center">
           <Bot className="w-4 lg:w-6 h-4 lg:h-6 text-white" />
         </div>
         <span className="hidden lg:block text-neutral-600 font-semibold text-sm lg:text-base">
           Sony Assistant
         </span>
-      </div>
+      </button>
 
       {/* Notifications */}
       <div className="relative">
