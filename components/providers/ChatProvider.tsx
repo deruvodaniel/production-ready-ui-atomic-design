@@ -39,17 +39,17 @@ const initialMessages: ChatMessageData[] = [
 const sampleSources: Source[] = [
   {
     id: '1',
-    title: 'Performance Review Guidelines',
+    name: 'Performance Review Guidelines',
     url: '/docs/performance-reviews',
-    description: 'Best practices for conducting effective performance reviews',
-    type: 'document',
+    type: 'goals',
+    active: true,
   },
   {
     id: '2',
-    title: 'Team Management Tips',
+    name: 'Team Management Tips',
     url: '/docs/team-management',
-    description: 'Strategies for effective team leadership and collaboration',
-    type: 'article',
+    type: 'feedback',
+    active: true,
   },
 ];
 
