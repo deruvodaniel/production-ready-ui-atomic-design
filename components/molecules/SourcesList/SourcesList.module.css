@@ -1,0 +1,92 @@
+.sourcesList {
+  /* Custom styles for SourcesList component */
+}
+
+.sourcesContainer {
+  background: rgba(79, 70, 229, 0.1);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+.sourceItem {
+  transition: all 0.2s ease-in-out;
+}
+
+.sourceItem:hover {
+  background: rgba(79, 70, 229, 0.15);
+  transform: translateX(2px);
+}
+
+.sourceItemActive {
+  position: relative;
+}
+
+.sourceItemActive::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary-500);
+  border-radius: 50%;
+}
+
+.sourceItemInactive {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Animation for new sources */
+.sourceItem {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Focus styles for accessibility */
+.sourceItem:focus-within {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sourcesList {
+    padding: 12px;
+  }
+  
+  .sourceItem {
+    padding: 8px;
+    margin: -8px;
+  }
+}
+
+/* Loading state */
+.sourcesLoading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.sourcesLoading .sourceItem {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
