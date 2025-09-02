@@ -10,6 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'Production UI Starter',
   description:
     'A production-ready Next.js starter with atomic design principles, accessibility compliance, and white-label theming.',
@@ -49,8 +50,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
+
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
