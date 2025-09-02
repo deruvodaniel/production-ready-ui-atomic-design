@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Production-Ready UI Starter
 
 A comprehensive Next.js starter template built with atomic design principles, accessibility compliance, and white-label theming capabilities. Perfect for enterprise-level applications that require scalability, maintainability, and professional polish.
@@ -466,3 +467,6 @@ yarn upgrade
 ---
 
 Built with ❤️ for enterprise-level applications requiring production-ready UI components with accessibility and theming at their core.
+=======
+# production-ready-ui-atomic-design
+>>>>>>> 3222b4648ac21a8e7009806113e2a11edd2c13df
