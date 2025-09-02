@@ -26,6 +26,7 @@ export interface ModalProps {
 export const Modal: React.FC<ModalProps> = ({
   open,
   onOpenChange,
+  onClose,
   title,
   description,
   children,
