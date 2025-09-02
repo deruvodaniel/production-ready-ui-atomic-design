@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "yarn build-storybook && rm -rf public/storybook && mkdir -p public/storybook && cp -r storybook-static/* public/storybook",
     "export": "next export -o out",
     "build:pages": "NEXT_BASE_PATH=${NEXT_BASE_PATH:-} NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-} yarn build && yarn export && yarn build-storybook && mkdir -p out/storybook && cp -r storybook-static/* out/storybook && touch out/.nojekyll",
     "build:vercel": "NEXT_BASE_PATH= NEXT_PUBLIC_SITE_URL= yarn build && yarn export && yarn build-storybook && mkdir -p out/storybook && cp -r storybook-static/* out/storybook",
