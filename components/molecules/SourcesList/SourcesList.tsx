@@ -85,7 +85,7 @@ export const SourcesList: React.FC<SourcesListProps> = ({
             No sources available
           </Typography>
         ) : (
-          sources.map((source) => {
+          sources.filter(source => source && source.id).map((source) => {
             const isClickable = onSourceClick && source.active !== false;
             
             return (
