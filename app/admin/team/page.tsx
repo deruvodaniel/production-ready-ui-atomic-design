@@ -195,7 +195,7 @@ export default function MyTeamPage() {
   const filteredAndSortedMembers = useMemo(() => {
     if (!teamData) return [];
 
-    let filtered = teamData.members.filter((employee: any) => {
+    let filtered = teamData.members.filter((employee: Employee) => {
       const matchesSearch =
         employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         employee.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -207,7 +207,7 @@ export default function MyTeamPage() {
       return matchesSearch && matchesStatus;
     });
 
-    return filtered.sort((a: any, b: any) => {
+    return filtered.sort((a: Employee, b: Employee) => {
       switch (sortBy) {
         case 'name':
           return a.name.localeCompare(b.name);
@@ -468,7 +468,7 @@ export default function MyTeamPage() {
               {/* Team Grid/List */}
               {viewMode === 'grid' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {filteredAndSortedMembers.map((employee, index) => (
+                  {filteredAndSortedMembers.map((employee: Employee, index: number) => (
                     <AdminTeamMemberCard
                       key={employee.id}
                       employee={employee}
