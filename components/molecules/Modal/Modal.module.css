@@ -1,1 +1,15 @@
-.content {\n  @apply bg-card text-card-foreground;\n}\n.title {\n  @apply text-lg font-semibold;\n}\n.description {\n  @apply text-sm text-neutral-600 dark:text-neutral-400;\n}\n.body {\n  @apply mt-2;\n}\n.footer {\n  @apply gap-2;\n}\n
+.content {
+  @apply bg-card text-card-foreground;
+}
+.title {
+  @apply text-lg font-semibold;
+}
+.description {
+  @apply text-sm text-neutral-600 dark:text-neutral-400;
+}
+.body {
+  @apply mt-2;
+}
+.footer {
+  @apply gap-2;
+}
