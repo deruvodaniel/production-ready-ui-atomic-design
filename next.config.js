@@ -4,9 +4,7 @@ const nextConfig = {
   images: { unoptimized: true },
   trailingSlash: false,
   async redirects() {
-    return [
-      { source: '/storybook', destination: '/storybook/index.html', permanent: true },
-    ];
+    return [{ source: '/storybook', destination: '/storybook/index.html', permanent: true }];
   },
   webpack: config => {
     config.cache = { type: 'memory' };
