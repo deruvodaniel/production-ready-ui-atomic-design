@@ -31,6 +31,7 @@ export interface SidebarProps {
   collapsed?: boolean;
   className?: string;
   disableItemLinks?: boolean; // items are not clickable (component gallery)
+  onToggle?: () => void;
 }
 
 const defaultItems: SidebarItem[] = [
