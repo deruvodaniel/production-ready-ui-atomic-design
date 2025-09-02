@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import './team.css';
 import { Button } from '@/components/atoms/Button/Button';
 import { Typography } from '@/components/atoms/Typography/Typography';
@@ -143,6 +144,7 @@ const PerformanceChart = ({ data }: { data: any[] }) => (
 );
 
 export default function MyTeamPage() {
+  const router = useRouter();
   const [teamData, setTeamData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -447,25 +449,27 @@ export default function MyTeamPage() {
               {viewMode === 'grid' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {filteredAndSortedMembers.map((employee, index) => (
-                    <AdminTeamMemberCard 
-                      key={employee.id} 
-                      employee={employee}
-                      showPerformance={true}
-                      showProject={true}
-                      className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
-                      style={{ animationDelay: `${index * 50}ms` } as any}
-                    />
+                    <AdminTeamMemberCard
+                  key={employee.id}
+                  employee={employee}
+                  showPerformance={true}
+                  showProject={true}
+                  className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
+                  style={{ animationDelay: `${index * 50}ms` } as any}
+                  onClick={() => router.push(`/admin/profile/${employee.id}`)}
+                />
                   ))}
                 </div>
               ) : (
                 <div className="space-y-4">
                   {filteredAndSortedMembers.map((employee, index) => (
-                    <AdminTeamMemberCard 
-                      key={employee.id} 
+                    <AdminTeamMemberCard
+                      key={employee.id}
                       employee={employee}
                       showPerformance={true}
                       className="animate-in fade-in-0 slide-in-from-left-4 duration-300"
                       style={{ animationDelay: `${index * 50}ms` } as any}
+                      onClick={() => router.push(`/admin/profile/${employee.id}`)}
                     />
                   ))}
                 </div>
