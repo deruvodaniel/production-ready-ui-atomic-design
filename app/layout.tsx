@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/theme/theme-provider';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
@@ -11,7 +11,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Production UI Starter',
-  description: 'A production-ready Next.js starter with atomic design principles, accessibility compliance, and white-label theming.',
+  description:
+    'A production-ready Next.js starter with atomic design principles, accessibility compliance, and white-label theming.',
   keywords: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Storybook', 'Accessibility'],
   authors: [{ name: 'UI Starter Team' }],
   creator: 'UI Starter',
@@ -46,17 +47,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className={inter.className}>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

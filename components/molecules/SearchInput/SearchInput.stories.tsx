@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { SearchInput } from './SearchInput';
-import { fn } from '@storybook/test';
+const noop = () => {};
 
 const meta: Meta<typeof SearchInput> = {
   title: 'Molecules/SearchInput',
@@ -28,8 +28,8 @@ const meta: Meta<typeof SearchInput> = {
     },
   },
   args: {
-    onSearch: fn(),
-    onClear: fn(),
+    onSearch: noop,
+    onClear: noop,
   },
 };
 
@@ -76,7 +76,7 @@ export const Sizes: Story = {
 export const Interactive: Story = {
   render: () => {
     const [results, setResults] = React.useState<string[]>([]);
-    
+
     const handleSearch = (query: string) => {
       // Simulate search results
       const mockResults = [
@@ -98,7 +98,7 @@ export const Interactive: Story = {
           onSearch={handleSearch}
           onClear={handleClear}
         />
-        
+
         {results.length > 0 && (
           <div className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md p-4">
             <h3 className="font-medium mb-2">Search Results:</h3>

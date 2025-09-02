@@ -1,0 +1,15 @@
+.content {
+  @apply bg-card text-card-foreground;
+}
+.title {
+  @apply text-lg font-semibold;
+}
+.description {
+  @apply text-sm text-neutral-600 dark:text-neutral-400;
+}
+.body {
+  @apply mt-2;
+}
+.footer {
+  @apply gap-2;
+}

@@ -1,0 +1,6 @@
+.trigger {
+  @apply justify-between w-auto;
+}
+.content {
+  @apply p-0;
+}

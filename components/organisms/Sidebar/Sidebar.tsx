@@ -2,10 +2,15 @@
 
 import React from 'react';
 import { Typography } from '@/components/atoms/Typography/Typography';
-import { Button } from '@/components/atoms/Button/Button';
 import { Badge } from '@/components/atoms/Badge/Badge';
 import { cn } from '@/lib/utils';
-import { ChevronRight, Home, Settings, Users, BarChart3, FileText } from 'lucide-react';
+import { Home, Settings, Users, BarChart3, FileText } from 'lucide-react';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/molecules/Accordion/Accordion';
 import styles from './Sidebar.module.css';
 
 export interface SidebarItem {
@@ -24,8 +29,8 @@ export interface SidebarProps {
   items: SidebarItem[];
   currentPath?: string;
   collapsed?: boolean;
-  onToggle?: () => void;
   className?: string;
+  disableItemLinks?: boolean; // items are not clickable (component gallery)
 }
 
 const defaultItems: SidebarItem[] = [
@@ -38,7 +43,7 @@ const defaultItems: SidebarItem[] = [
   {
     id: 'analytics',
     label: 'Analytics',
-    href: '/analytics', 
+    href: '/analytics',
     icon: <BarChart3 />,
     badge: { text: 'New', variant: 'primary' },
   },
@@ -61,7 +66,7 @@ const defaultItems: SidebarItem[] = [
   },
   {
     id: 'settings',
-    label: 'Settings', 
+    label: 'Settings',
     href: '/settings',
     icon: <Settings />,
   },
@@ -71,93 +76,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   items = defaultItems,
   currentPath = '/',
   collapsed = false,
-  onToggle,
   className,
+  disableItemLinks = true,
 }) => {
-  const [expandedItems, setExpandedItems] = React.useState<Set<string>>(new Set());
-
-  const toggleExpanded = (itemId: string) => {
-    setExpandedItems(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(itemId)) {
-        newSet.delete(itemId);
-      } else {
-        newSet.add(itemId);
-      }
-      return newSet;
-    });
-  };
-
   const isActive = (href: string) => currentPath === href;
-  const isExpanded = (itemId: string) => expandedItems.has(itemId);
-
-  const renderSidebarItem = (item: SidebarItem, level: number = 0) => {
-    const hasChildren = item.children && item.children.length > 0;
-    const active = isActive(item.href);
-    const expanded = isExpanded(item.id);
-
-    return (
-      <li key={item.id} className={styles.listItem}>
-        <div className={styles.itemContainer}>
-          <a
-            href={item.href}
-            className={cn(
-              styles.item,
-              level > 0 && styles.subItem,
-              active && styles.active,
-              collapsed && styles.collapsed
-            )}
-            aria-current={active ? 'page' : undefined}
-          >
-            {item.icon && (
-              <span className={styles.icon} aria-hidden="true">
-                {item.icon}
-              </span>
-            )}
-            
-            {!collapsed && (
-              <>
-                <Typography variant="caption" weight="medium" className={styles.label}>
-                  {item.label}
-                </Typography>
-                
-                {item.badge && (
-                  <Badge 
-                    variant={item.badge.variant} 
-                    size="sm"
-                    className={styles.badge}
-                  >
-                    {item.badge.text}
-                  </Badge>
-                )}
-              </>
-            )}
-          </a>
-
-          {hasChildren && !collapsed && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => toggleExpanded(item.id)}
-              className={styles.expandButton}
-              aria-label={`${expanded ? 'Collapse' : 'Expand'} ${item.label}`}
-              aria-expanded={expanded}
-            >
-              <ChevronRight 
-                className={cn(styles.expandIcon, expanded && styles.expandIconRotated)}
-              />
-            </Button>
-          )}
-        </div>
-
-        {hasChildren && !collapsed && expanded && (
-          <ul className={styles.subList} role="list">
-            {item.children!.map(child => renderSidebarItem(child, level + 1))}
-          </ul>
-        )}
-      </li>
-    );
-  };
 
   return (
     <aside
@@ -165,9 +87,95 @@ export const Sidebar: React.FC<SidebarProps> = ({
       aria-label="Main navigation"
     >
       <nav className={styles.navigation} role="navigation">
-        <ul className={styles.list} role="list">
-          {items.map(item => renderSidebarItem(item))}
-        </ul>
+        <Accordion type="multiple" className={styles.list}>
+          {items.map(item => {
+            const hasChildren = item.children && item.children.length > 0;
+            const active = isActive(item.href);
+            if (hasChildren) {
+              return (
+                <AccordionItem key={item.id} value={item.id} className={styles.listItem}>
+                  <AccordionTrigger
+                    className={cn(
+                      styles.item,
+                      active && styles.active,
+                      collapsed && styles.collapsed
+                    )}
+                  >
+                    {item.icon && (
+                      <span className={styles.icon} aria-hidden="true">
+                        {item.icon}
+                      </span>
+                    )}
+                    {!collapsed && (
+                      <>
+                        <Typography variant="caption" weight="medium" className={styles.label}>
+                          {item.label}
+                        </Typography>
+                        {item.badge && (
+                          <Badge variant={item.badge.variant} size="sm" className={styles.badge}>
+                            {item.badge.text}
+                          </Badge>
+                        )}
+                      </>
+                    )}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className={styles.subList} role="list">
+                      {item.children!.map(child => (
+                        <li key={child.id} className={styles.listItem}>
+                          <div
+                            className={cn(
+                              styles.item,
+                              styles.subItem,
+                              isActive(child.href) && styles.active
+                            )}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            {child.icon && (
+                              <span className={styles.icon} aria-hidden="true">
+                                {child.icon}
+                              </span>
+                            )}
+                            {!collapsed && (
+                              <Typography
+                                variant="caption"
+                                weight="medium"
+                                className={styles.label}
+                              >
+                                {child.label}
+                              </Typography>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            }
+            return (
+              <div key={item.id} className={styles.listItem}>
+                <div
+                  className={cn(styles.item, active && styles.active)}
+                  role={disableItemLinks ? 'button' : undefined}
+                  tabIndex={disableItemLinks ? 0 : -1}
+                >
+                  {item.icon && (
+                    <span className={styles.icon} aria-hidden="true">
+                      {item.icon}
+                    </span>
+                  )}
+                  {!collapsed && (
+                    <Typography variant="caption" weight="medium" className={styles.label}>
+                      {item.label}
+                    </Typography>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </Accordion>
       </nav>
     </aside>
   );

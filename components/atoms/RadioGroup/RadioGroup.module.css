@@ -1,0 +1,26 @@
+.option {
+  @apply flex items-start gap-3 py-1;
+}
+.input {
+  @apply sr-only;
+}
+.dot {
+  @apply inline-block h-5 w-5 rounded-full border border-neutral-300 dark:border-neutral-600 bg-card;
+}
+.input:checked + .dot {
+  @apply border-primary-600;
+  box-shadow: inset 0 0 0 4px theme('colors.white');
+  background-color: rgb(var(--color-primary-600));
+}
+.input:focus-visible + .dot {
+  @apply outline outline-2 outline-primary-500;
+}
+.texts {
+  @apply flex flex-col;
+}
+.label {
+  @apply text-sm text-neutral-800 dark:text-neutral-200;
+}
+.description {
+  @apply text-xs text-neutral-600 dark:text-neutral-400;
+}

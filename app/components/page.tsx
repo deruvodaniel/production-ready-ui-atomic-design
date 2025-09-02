@@ -14,12 +14,12 @@ import { Dropdown } from '@/components/molecules/Dropdown/Dropdown';
 import { Sidebar } from '@/components/organisms/Sidebar/Sidebar';
 import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
 import { useState } from 'react';
-import { 
-  Palette, 
-  Code, 
-  Accessibility, 
-  Layers, 
-  Zap, 
+import {
+  Palette,
+  Code,
+  Accessibility,
+  Layers,
+  Zap,
   Github,
   Star,
   CheckCircle,
@@ -28,8 +28,14 @@ import {
   Users,
   BarChart3,
   Settings,
-  FileText
+  FileText,
 } from 'lucide-react';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/molecules/Accordion/Accordion';
 
 export default function ComponentsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,11 +43,7 @@ export default function ComponentsPage() {
 
   const handleSearch = (query: string) => {
     // Simulate search
-    const mockResults = [
-      `Component: ${query}`,
-      `Documentation: ${query}`,
-      `Example: ${query}`,
-    ];
+    const mockResults = [`Component: ${query}`, `Documentation: ${query}`, `Example: ${query}`];
     setSearchResults(mockResults);
     setSearchQuery(query);
   };
@@ -61,7 +63,7 @@ export default function ComponentsPage() {
     },
     {
       id: 'molecules',
-      label: 'Molecules', 
+      label: 'Molecules',
       href: '/components/molecules',
       icon: <Code />,
       children: [
@@ -73,7 +75,7 @@ export default function ComponentsPage() {
     {
       id: 'organisms',
       label: 'Organisms',
-      href: '/components/organisms', 
+      href: '/components/organisms',
       icon: <Users />,
       children: [
         { id: 'header', label: 'Header', href: '/components/organisms/header' },
@@ -97,10 +99,11 @@ export default function ComponentsPage() {
     >
       <div className="flex min-h-[calc(100vh-4rem)]">
         {/* Sidebar */}
-        <Sidebar 
-          items={sidebarItems} 
+        <Sidebar
+          items={sidebarItems}
           currentPath="/components/atoms/button"
           className="sticky top-0 h-[calc(100vh-4rem)]"
+          disableItemLinks
         />
 
         {/* Main Content */}
@@ -110,7 +113,7 @@ export default function ComponentsPage() {
             <Typography variant="h2" weight="semibold" className="mb-4">
               Component Library
             </Typography>
-            
+
             <div className="max-w-md">
               <SearchInput
                 placeholder="Search components..."
@@ -143,7 +146,7 @@ export default function ComponentsPage() {
             <Typography variant="h3" weight="semibold" className="mb-6">
               Atoms
             </Typography>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {/* Buttons */}
               <Card>
@@ -152,14 +155,26 @@ export default function ComponentsPage() {
                 </Typography>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
-                    <Button variant="primary" size="sm">Primary</Button>
-                    <Button variant="secondary" size="sm">Secondary</Button>
-                    <Button variant="outline" size="sm">Outline</Button>
+                    <Button variant="primary" size="sm">
+                      Primary
+                    </Button>
+                    <Button variant="secondary" size="sm">
+                      Secondary
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Outline
+                    </Button>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    <Button loading size="sm">Loading</Button>
-                    <Button disabled size="sm">Disabled</Button>
-                    <Button variant="destructive" size="sm">Delete</Button>
+                    <Button loading size="sm">
+                      Loading
+                    </Button>
+                    <Button disabled size="sm">
+                      Disabled
+                    </Button>
+                    <Button variant="destructive" size="sm">
+                      Delete
+                    </Button>
                   </div>
                 </div>
               </Card>
@@ -172,8 +187,12 @@ export default function ComponentsPage() {
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="primary">Primary</Badge>
-                    <Badge variant="success" icon={<CheckCircle />}>Success</Badge>
-                    <Badge variant="warning" icon={<AlertTriangle />}>Warning</Badge>
+                    <Badge variant="success" icon={<CheckCircle />}>
+                      Success
+                    </Badge>
+                    <Badge variant="warning" icon={<AlertTriangle />}>
+                      Warning
+                    </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Badge size="sm">Small</Badge>
@@ -207,7 +226,7 @@ export default function ComponentsPage() {
             <Typography variant="h3" weight="semibold" className="mb-6">
               Molecules
             </Typography>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Form Fields */}
               <Card>
@@ -221,12 +240,7 @@ export default function ComponentsPage() {
                     placeholder="john@example.com"
                     hint="We'll never share your email"
                   />
-                  <FormField
-                    label="Password"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                  />
+                  <FormField label="Password" type="password" placeholder="••••••••" required />
                   <FormField
                     label="Invalid Field"
                     defaultValue="invalid@"
@@ -255,28 +269,56 @@ export default function ComponentsPage() {
             </div>
           </section>
 
+          {/* Disclosures */}
+          <section className="mb-12">
+            <Typography variant="h3" weight="semibold" className="mb-6">
+              Accordion
+            </Typography>
+            <Card>
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>What is this project?</AccordionTrigger>
+                  <AccordionContent>
+                    A production-ready UI starter with atomic design and theming.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>Can I customize it?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes, update colors, fonts, and spacing from the Theme Customization.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                  <AccordionContent>
+                    Components follow WCAG guidelines and support keyboard navigation.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </Card>
+          </section>
+
           {/* Organisms Section */}
           <section>
             <Typography variant="h3" weight="semibold" className="mb-6">
               Organisms
             </Typography>
-            
+
             <Card variant="elevated" padding="lg">
               <Typography variant="h5" weight="medium" className="mb-4">
                 Navigation Components
               </Typography>
               <Typography variant="body" color="muted" className="mb-6">
-                Complex components like headers and sidebars that combine multiple atoms and molecules 
-                to create functional UI sections. The sidebar you see on the left is an example of an organism component.
+                Complex components like headers and sidebars that combine multiple atoms and
+                molecules to create functional UI sections. The sidebar you see on the left is an
+                example of an organism component.
               </Typography>
-              
+
               <div className="flex gap-4">
                 <Button variant="outline" leftIcon={<Code />}>
                   View Source
                 </Button>
-                <Button leftIcon={<Github />}>
-                  Open in Storybook
-                </Button>
+                <Button leftIcon={<Github />}>Open in Storybook</Button>
               </div>
             </Card>
           </section>

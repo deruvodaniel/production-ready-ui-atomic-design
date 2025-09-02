@@ -24,20 +24,20 @@ export default function StorybookPage() {
           <div className="mb-6">
             <Book className="w-16 h-16 text-primary-600 mx-auto mb-4" />
           </div>
-          
+
           <Typography variant="h1" weight="bold" className="mb-6">
             Component Documentation
           </Typography>
-          
+
           <Typography variant="body" color="muted" className="max-w-2xl mx-auto mb-8 text-lg">
-            Explore our comprehensive component library with interactive examples, 
-            accessibility testing, and responsive design previews.
+            Explore our comprehensive component library with interactive examples, accessibility
+            testing, and responsive design previews.
           </Typography>
 
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             leftIcon={<ExternalLink />}
-            onClick={() => window.open('http://localhost:6006', '_blank')}
+            onClick={() => (window.location.href = '/components')}
           >
             Open Storybook
           </Button>
@@ -49,8 +49,8 @@ export default function StorybookPage() {
               Interactive Components
             </Typography>
             <Typography variant="body" color="muted" className="mb-4">
-              Test all component variants, states, and props with live controls. 
-              See how components respond to different configurations in real-time.
+              Test all component variants, states, and props with live controls. See how components
+              respond to different configurations in real-time.
             </Typography>
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li>• Live prop editing</li>
@@ -65,8 +65,8 @@ export default function StorybookPage() {
               Accessibility Testing
             </Typography>
             <Typography variant="body" color="muted" className="mb-4">
-              Built-in accessibility checks ensure WCAG 2.1 AA compliance. 
-              Test keyboard navigation, screen reader compatibility, and color contrast.
+              Built-in accessibility checks ensure WCAG 2.1 AA compliance. Test keyboard navigation,
+              screen reader compatibility, and color contrast.
             </Typography>
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li>• WCAG compliance checks</li>
@@ -81,8 +81,8 @@ export default function StorybookPage() {
               Responsive Design
             </Typography>
             <Typography variant="body" color="muted" className="mb-4">
-              Preview components across different viewport sizes. Test mobile, 
-              tablet, and desktop layouts with the viewport addon.
+              Preview components across different viewport sizes. Test mobile, tablet, and desktop
+              layouts with the viewport addon.
             </Typography>
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li>• Mobile-first design</li>
@@ -97,8 +97,8 @@ export default function StorybookPage() {
               Design System
             </Typography>
             <Typography variant="body" color="muted" className="mb-4">
-              Explore design tokens, color palettes, typography scales, 
-              and spacing systems that power the component library.
+              Explore design tokens, color palettes, typography scales, and spacing systems that
+              power the component library.
             </Typography>
             <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
               <li>• Color system documentation</li>

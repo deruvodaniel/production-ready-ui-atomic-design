@@ -1,16 +1,11 @@
 .header {
   width: 100%;
-  background-color: rgb(255 255 255 / 0.95);
-  border-bottom: 1px solid rgb(var(--color-neutral-200));
+  background-color: hsl(var(--card) / 0.95);
+  border-bottom: 1px solid hsl(var(--border));
   position: sticky;
   top: 0;
   z-index: 50;
   backdrop-filter: blur(8px);
-}
-
-.dark .header {
-  background-color: rgb(var(--color-neutral-900) / 0.95);
-  border-bottom-color: rgb(var(--color-neutral-800));
 }
 
 .container {
@@ -87,7 +82,7 @@
   outline-offset: 2px;
 }
 
-.navigationLink[aria-current="page"] {
+.navigationLink[aria-current='page'] {
   color: rgb(var(--color-primary-600));
 }
 
@@ -99,7 +94,7 @@
   color: rgb(var(--color-neutral-100));
 }
 
-.dark .navigationLink[aria-current="page"] {
+.dark .navigationLink[aria-current='page'] {
   color: rgb(var(--color-primary-400));
 }
 
