@@ -59,8 +59,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
   const sidebarClasses = cn(
     'chat-sidebar',
-    'fixed right-0 top-0 h-full w-[500px] bg-[#EFEEFF] shadow-lg',
-    'flex flex-col',
+    'fixed right-0 top-0 h-full w-[500px] bg-[#EFEEFF] shadow-xl',
+    'flex flex-col z-50',
     'transform transition-transform duration-300 ease-in-out',
     {
       'translate-x-0': isOpen,
@@ -180,21 +180,28 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             <div className="flex-1 relative">
               <div
                 className={cn(
-                  'w-full h-13 rounded-full border border-black bg-white',
+                  'w-full h-12 rounded-full border border-black bg-white',
                   'shadow-[3px_3px_0_0_#000]',
                   'flex items-center px-6',
                   'focus-within:ring-2 focus-within:ring-blue-500'
                 )}
               >
-                <div className="flex-1 text-lg font-bold text-black">
-                  |
-                </div>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask me anything..."
+                  className="flex-1 text-lg bg-transparent border-none outline-none text-black placeholder-gray-500"
+                  aria-label="Chat message input"
+                />
                 {inputValue && (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={handleSendMessage}
-                    className="p-2 hover:bg-gray-100 rounded-full"
+                    className="p-2 hover:bg-gray-100 rounded-full ml-2"
+                    aria-label="Send message"
                   >
                     <ArrowUp className="w-5 h-5" />
                   </Button>
