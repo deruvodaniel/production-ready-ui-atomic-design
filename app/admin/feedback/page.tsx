@@ -77,9 +77,16 @@ const mockData = {
 };
 
 // Chart component for donut charts
-const DonutChart = ({ data, size = 164 }: { data: any; size?: number }) => {
-  const total = Object.values(data).reduce((a: any, b: any) => a + b, 0);
-  
+type GoalsStatus = {
+  onTrack: number;
+  inProgress: number;
+  offTrack: number;
+  notUpdated: number;
+};
+
+const DonutChart = ({ data, size = 164 }: { data: GoalsStatus; size?: number }) => {
+  const total = Object.values(data).reduce((a, b) => a + b, 0);
+
   return (
     <div className="relative" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="transform -rotate-90">
