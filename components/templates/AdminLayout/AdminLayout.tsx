@@ -84,10 +84,20 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         </div>
       </div>
 
+      {/* Mobile Chat Trigger (hidden on larger screens) */}
+      <button
+        className="sm:hidden w-8 h-8 bg-neutral-600 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-neutral-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        onClick={toggleChat}
+        aria-label="Open Sony AI Assistant chat"
+        type="button"
+      >
+        <Bot className="w-4 h-4 text-white" />
+      </button>
+
       {/* User Avatar */}
-      <Avatar 
-        src={currentUser?.avatar || "/api/placeholder/48/48"} 
-        fallback={currentUser?.name?.split(' ').map((n: string) => n[0]).join('') || "U"} 
+      <Avatar
+        src={currentUser?.avatar || "/api/placeholder/48/48"}
+        fallback={currentUser?.name?.split(' ').map((n: string) => n[0]).join('') || "U"}
         size="md"
         className="lg:w-12 lg:h-12 transition-transform duration-200 hover:scale-105"
       />

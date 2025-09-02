@@ -59,7 +59,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
   const sidebarClasses = cn(
     'chat-sidebar',
-    'fixed right-0 top-0 h-full w-[500px] bg-[#EFEEFF] shadow-xl',
+    'fixed right-0 top-0 h-full w-full sm:w-[500px] bg-[#EFEEFF] shadow-xl',
     'flex flex-col z-50',
     'transform transition-transform duration-300 ease-in-out',
     {
