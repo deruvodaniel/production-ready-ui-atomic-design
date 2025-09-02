@@ -68,14 +68,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {props.required && <span className={styles.required}>*</span>}
           </label>
         )}
-        
+
         <div className={styles.inputWrapper}>
           {leftIcon && (
             <div className={styles.leftIcon} aria-hidden="true">
               {leftIcon}
             </div>
           )}
-          
+
           <input
             ref={ref}
             id={inputId}
@@ -86,16 +86,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
             aria-invalid={inputState === 'error'}
             aria-describedby={
-              errorMessage
-                ? `${inputId}-error`
-                : helperText
-                ? `${inputId}-helper`
-                : undefined
+              errorMessage ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
             }
             onInput={props.onChange}
             {...props}
           />
-          
+
           {rightIcon && (
             <div className={styles.rightIcon} aria-hidden="true">
               {rightIcon}
@@ -108,7 +104,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {errorMessage}
           </p>
         )}
-        
+
         {helperText && !errorMessage && (
           <p id={`${inputId}-helper`} className={styles.helperText}>
             {helperText}
