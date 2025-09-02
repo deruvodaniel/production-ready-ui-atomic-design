@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/theme/theme-provider';
+import { ChatProvider } from '@/components/providers/ChatProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -52,8 +53,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body suppressHydrationWarning>
-
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ChatProvider>
+            {children}
+          </ChatProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
