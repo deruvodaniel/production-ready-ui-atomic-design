@@ -3,7 +3,11 @@
 import React from 'react';
 import styles from './RadioGroup.module.css';
 
-export interface RadioOption { label: string; value: string; description?: string }
+export interface RadioOption {
+  label: string;
+  value: string;
+  description?: string;
+}
 export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   name: string;
   value?: string;
@@ -11,10 +15,16 @@ export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   options: RadioOption[];
 }
 
-export const RadioGroup: React.FC<RadioGroupProps> = ({ name, value, onChange, options, ...props }) => {
+export const RadioGroup: React.FC<RadioGroupProps> = ({
+  name,
+  value,
+  onChange,
+  options,
+  ...props
+}) => {
   return (
     <div role="radiogroup" {...props}>
-      {options.map((opt) => {
+      {options.map(opt => {
         const id = `${name}-${opt.value}`;
         return (
           <label key={opt.value} className={styles.option} htmlFor={id}>
@@ -24,7 +34,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({ name, value, onChange, o
               name={name}
               value={opt.value}
               checked={value === opt.value}
-              onChange={(e) => onChange?.(e.target.value)}
+              onChange={e => onChange?.(e.target.value)}
               className={styles.input}
             />
             <span aria-hidden className={styles.dot} />

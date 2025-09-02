@@ -12,7 +12,11 @@ export interface DatePickerProps {
   placeholder?: string;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ value: valueProp, onChange, placeholder = 'Pick a date' }) => {
+export const DatePicker: React.FC<DatePickerProps> = ({
+  value: valueProp,
+  onChange,
+  placeholder = 'Pick a date',
+}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<Date | null>(valueProp ?? null);
 

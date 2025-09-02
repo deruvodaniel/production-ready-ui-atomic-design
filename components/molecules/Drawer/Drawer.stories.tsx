@@ -19,7 +19,9 @@ export const Basic: Story = {
       <div>
         <Button onClick={() => setOpen(true)}>Open drawer</Button>
         <Drawer open={open} onOpenChange={setOpen} title="Preferences" description="User settings">
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">Drawer content goes here.</p>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            Drawer content goes here.
+          </p>
         </Drawer>
       </div>
     );

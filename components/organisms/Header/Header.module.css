@@ -82,7 +82,7 @@
   outline-offset: 2px;
 }
 
-.navigationLink[aria-current="page"] {
+.navigationLink[aria-current='page'] {
   color: rgb(var(--color-primary-600));
 }
 
@@ -94,7 +94,7 @@
   color: rgb(var(--color-neutral-100));
 }
 
-.dark .navigationLink[aria-current="page"] {
+.dark .navigationLink[aria-current='page'] {
   color: rgb(var(--color-primary-400));
 }
 

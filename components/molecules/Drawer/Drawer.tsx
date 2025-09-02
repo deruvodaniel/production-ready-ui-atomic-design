@@ -1,7 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import styles from './Drawer.module.css';
 
 export interface DrawerProps {
@@ -14,7 +20,15 @@ export interface DrawerProps {
   children?: React.ReactNode;
 }
 
-export const Drawer: React.FC<DrawerProps> = ({ open, onOpenChange, onClose, side = 'right', title, description, children }) => {
+export const Drawer: React.FC<DrawerProps> = ({
+  open,
+  onOpenChange,
+  onClose,
+  side = 'right',
+  title,
+  description,
+  children,
+}) => {
   const handleOpenChange = (next: boolean) => {
     if (!next) onClose?.();
     onOpenChange(next);
@@ -25,7 +39,9 @@ export const Drawer: React.FC<DrawerProps> = ({ open, onOpenChange, onClose, sid
         {(title || description) && (
           <SheetHeader>
             {title && <SheetTitle className={styles.title}>{title}</SheetTitle>}
-            {description && <SheetDescription className={styles.description}>{description}</SheetDescription>}
+            {description && (
+              <SheetDescription className={styles.description}>{description}</SheetDescription>
+            )}
           </SheetHeader>
         )}
         <div className={styles.body}>{children}</div>

@@ -1,7 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/atoms/Button/Button';
 import styles from './Modal.module.css';
 
@@ -45,7 +52,11 @@ export const Modal: React.FC<ModalProps> = ({
         {(primaryAction || secondaryAction) && (
           <DialogFooter className={styles.footer}>
             {secondaryAction && (
-              <Button variant="outline" onClick={secondaryAction.onClick} disabled={secondaryAction.disabled}>
+              <Button
+                variant="outline"
+                onClick={secondaryAction.onClick}
+                disabled={secondaryAction.disabled}
+              >
                 {secondaryAction.label}
               </Button>
             )}

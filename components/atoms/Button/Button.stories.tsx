@@ -10,7 +10,8 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile button component with multiple variants, sizes, and accessibility features.',
+        component:
+          'A versatile button component with multiple variants, sizes, and accessibility features.',
       },
     },
   },

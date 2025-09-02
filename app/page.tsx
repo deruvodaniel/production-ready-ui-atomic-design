@@ -9,17 +9,17 @@ import { Avatar } from '@/components/atoms/Avatar/Avatar';
 import { ProgressBar } from '@/components/atoms/ProgressBar/ProgressBar';
 import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
 import { useTheme } from '@/theme/theme-provider';
-import { 
-  Palette, 
-  Type, 
-  Zap, 
+import {
+  Palette,
+  Type,
+  Zap,
   Star,
   CheckCircle,
   AlertTriangle,
   Settings,
   Moon,
   Sun,
-  Download
+  Download,
 } from 'lucide-react';
 import { FontSelector } from '@/components/molecules/FontSelector/FontSelector';
 
@@ -33,7 +33,7 @@ export default function Home() {
     if (colorType === 'primary') setPrimaryColor(value);
     if (colorType === 'secondary') setSecondaryColor(value);
     if (colorType === 'accent') setAccentColor(value);
-    
+
     updateTheme({
       colors: {
         ...config.colors,
@@ -96,9 +96,9 @@ export default function Home() {
           <Typography variant="h1" weight="bold" className="mb-6">
             Production-Ready Design System
           </Typography>
-          
+
           <Typography variant="body" color="muted" className="max-w-3xl mx-auto mb-8 text-lg">
-            Build beautiful, accessible applications with our comprehensive component library. 
+            Build beautiful, accessible applications with our comprehensive component library.
             Customize colors, typography, and spacing to match your brand identity.
           </Typography>
 
@@ -145,7 +145,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Primary Color */}
               <div className="space-y-4">
@@ -156,7 +156,7 @@ export default function Home() {
                   <input
                     type="color"
                     value={primaryColor}
-                    onChange={(e) => handleColorChange('primary', e.target.value)}
+                    onChange={e => handleColorChange('primary', e.target.value)}
                     className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
                   />
                   <div className="flex-1">
@@ -179,7 +179,7 @@ export default function Home() {
                   <input
                     type="color"
                     value={secondaryColor}
-                    onChange={(e) => handleColorChange('secondary', e.target.value)}
+                    onChange={e => handleColorChange('secondary', e.target.value)}
                     className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
                   />
                   <div className="flex-1">
@@ -202,7 +202,7 @@ export default function Home() {
                   <input
                     type="color"
                     value={accentColor}
-                    onChange={(e) => handleColorChange('accent', e.target.value)}
+                    onChange={e => handleColorChange('accent', e.target.value)}
                     className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
                   />
                   <div className="flex-1">
@@ -229,7 +229,7 @@ export default function Home() {
           <Typography variant="h3" weight="semibold" className="mb-6">
             Component Preview
           </Typography>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {/* Buttons */}
             <Card>
@@ -238,14 +238,26 @@ export default function Home() {
               </Typography>
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
-                  <Button variant="primary" size="sm">Primary</Button>
-                  <Button variant="secondary" size="sm">Secondary</Button>
-                  <Button variant="outline" size="sm">Outline</Button>
+                  <Button variant="primary" size="sm">
+                    Primary
+                  </Button>
+                  <Button variant="secondary" size="sm">
+                    Secondary
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    Outline
+                  </Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Button loading size="sm">Loading</Button>
-                  <Button disabled size="sm">Disabled</Button>
-                  <Button variant="destructive" size="sm">Delete</Button>
+                  <Button loading size="sm">
+                    Loading
+                  </Button>
+                  <Button disabled size="sm">
+                    Disabled
+                  </Button>
+                  <Button variant="destructive" size="sm">
+                    Delete
+                  </Button>
                 </div>
               </div>
             </Card>
@@ -258,8 +270,12 @@ export default function Home() {
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="primary">Primary</Badge>
-                  <Badge variant="success" icon={<CheckCircle />}>Success</Badge>
-                  <Badge variant="warning" icon={<AlertTriangle />}>Warning</Badge>
+                  <Badge variant="success" icon={<CheckCircle />}>
+                    Success
+                  </Badge>
+                  <Badge variant="warning" icon={<AlertTriangle />}>
+                    Warning
+                  </Badge>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge size="sm">Small</Badge>
@@ -295,7 +311,7 @@ export default function Home() {
                   <Avatar size="xl" fallback="XL" />
                 </div>
                 <div className="flex items-center gap-3">
-                  <Avatar 
+                  <Avatar
                     src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
                     alt="User"
                     fallback="U"
@@ -351,7 +367,7 @@ export default function Home() {
           <Typography variant="h3" weight="semibold" className="mb-6">
             Features
           </Typography>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card variant="elevated" padding="lg">
               <div className="text-center">
@@ -362,7 +378,8 @@ export default function Home() {
                   White-Label Theming
                 </Typography>
                 <Typography variant="body" color="muted">
-                  Customize colors, fonts, and spacing to match your brand identity with real-time preview.
+                  Customize colors, fonts, and spacing to match your brand identity with real-time
+                  preview.
                 </Typography>
               </div>
             </Card>
@@ -376,7 +393,8 @@ export default function Home() {
                   Accessibility First
                 </Typography>
                 <Typography variant="body" color="muted">
-                  WCAG 2.1 AA compliant components with full keyboard navigation and screen reader support.
+                  WCAG 2.1 AA compliant components with full keyboard navigation and screen reader
+                  support.
                 </Typography>
               </div>
             </Card>

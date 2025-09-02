@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ResponsiveTable } from './ResponsiveTable';
 
-interface Row { id: number; name: string; email: string; role: string }
+interface Row {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
 
 const meta: Meta = {
   title: 'Molecules/ResponsiveTable',

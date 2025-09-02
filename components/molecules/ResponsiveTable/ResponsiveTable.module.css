@@ -13,7 +13,8 @@
 }
 .tr {
 }
-.th, .td {
+.th,
+.td {
   @apply p-3 text-left align-top border-t border-neutral-200 dark:border-neutral-800;
 }
 .th {
@@ -25,10 +26,27 @@
 
 /* Card layout for small screens */
 @media (max-width: 768px) {
-  .thead { display: none; }
-  .table, .tbody, .tr, .td { display: block; width: 100%; }
-  .tr { @apply bg-card text-card-foreground rounded-md border border-neutral-200 dark:border-neutral-800 mb-3; }
-  .td { @apply grid grid-cols-3 gap-2 border-0; }
-  .td::before { content: attr(data-label); @apply col-span-1 text-sm text-neutral-500 dark:text-neutral-400; }
-  .td { @apply col-span-2; }
+  .thead {
+    display: none;
+  }
+  .table,
+  .tbody,
+  .tr,
+  .td {
+    display: block;
+    width: 100%;
+  }
+  .tr {
+    @apply bg-card text-card-foreground rounded-md border border-neutral-200 dark:border-neutral-800 mb-3;
+  }
+  .td {
+    @apply grid grid-cols-3 gap-2 border-0;
+  }
+  .td::before {
+    content: attr(data-label);
+    @apply col-span-1 text-sm text-neutral-500 dark:text-neutral-400;
+  }
+  .td {
+    @apply col-span-2;
+  }
 }

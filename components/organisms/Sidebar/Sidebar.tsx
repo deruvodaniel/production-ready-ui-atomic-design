@@ -5,7 +5,12 @@ import { Typography } from '@/components/atoms/Typography/Typography';
 import { Badge } from '@/components/atoms/Badge/Badge';
 import { cn } from '@/lib/utils';
 import { Home, Settings, Users, BarChart3, FileText } from 'lucide-react';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/molecules/Accordion/Accordion';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/molecules/Accordion/Accordion';
 import styles from './Sidebar.module.css';
 
 export interface SidebarItem {
@@ -77,7 +82,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const isActive = (href: string) => currentPath === href;
 
   return (
-    <aside className={cn(styles.sidebar, collapsed && styles.sidebarCollapsed, className)} aria-label="Main navigation">
+    <aside
+      className={cn(styles.sidebar, collapsed && styles.sidebarCollapsed, className)}
+      aria-label="Main navigation"
+    >
       <nav className={styles.navigation} role="navigation">
         <Accordion type="multiple" className={styles.list}>
           {items.map(item => {
@@ -86,11 +94,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
             if (hasChildren) {
               return (
                 <AccordionItem key={item.id} value={item.id} className={styles.listItem}>
-                  <AccordionTrigger className={cn(styles.item, active && styles.active, collapsed && styles.collapsed)}>
-                    {item.icon && <span className={styles.icon} aria-hidden="true">{item.icon}</span>}
+                  <AccordionTrigger
+                    className={cn(
+                      styles.item,
+                      active && styles.active,
+                      collapsed && styles.collapsed
+                    )}
+                  >
+                    {item.icon && (
+                      <span className={styles.icon} aria-hidden="true">
+                        {item.icon}
+                      </span>
+                    )}
                     {!collapsed && (
                       <>
-                        <Typography variant="caption" weight="medium" className={styles.label}>{item.label}</Typography>
+                        <Typography variant="caption" weight="medium" className={styles.label}>
+                          {item.label}
+                        </Typography>
                         {item.badge && (
                           <Badge variant={item.badge.variant} size="sm" className={styles.badge}>
                             {item.badge.text}
@@ -103,10 +123,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <ul className={styles.subList} role="list">
                       {item.children!.map(child => (
                         <li key={child.id} className={styles.listItem}>
-                          <div className={cn(styles.item, styles.subItem, isActive(child.href) && styles.active)} role="button" tabIndex={0}>
-                            {child.icon && <span className={styles.icon} aria-hidden="true">{child.icon}</span>}
+                          <div
+                            className={cn(
+                              styles.item,
+                              styles.subItem,
+                              isActive(child.href) && styles.active
+                            )}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            {child.icon && (
+                              <span className={styles.icon} aria-hidden="true">
+                                {child.icon}
+                              </span>
+                            )}
                             {!collapsed && (
-                              <Typography variant="caption" weight="medium" className={styles.label}>{child.label}</Typography>
+                              <Typography
+                                variant="caption"
+                                weight="medium"
+                                className={styles.label}
+                              >
+                                {child.label}
+                              </Typography>
                             )}
                           </div>
                         </li>
@@ -118,9 +156,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
             }
             return (
               <div key={item.id} className={styles.listItem}>
-                <div className={cn(styles.item, active && styles.active)} role={disableItemLinks ? 'button' : undefined} tabIndex={disableItemLinks ? 0 : -1}>
-                  {item.icon && <span className={styles.icon} aria-hidden="true">{item.icon}</span>}
-                  {!collapsed && <Typography variant="caption" weight="medium" className={styles.label}>{item.label}</Typography>}
+                <div
+                  className={cn(styles.item, active && styles.active)}
+                  role={disableItemLinks ? 'button' : undefined}
+                  tabIndex={disableItemLinks ? 0 : -1}
+                >
+                  {item.icon && (
+                    <span className={styles.icon} aria-hidden="true">
+                      {item.icon}
+                    </span>
+                  )}
+                  {!collapsed && (
+                    <Typography variant="caption" weight="medium" className={styles.label}>
+                      {item.label}
+                    </Typography>
+                  )}
                 </div>
               </div>
             );
