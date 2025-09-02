@@ -102,6 +102,7 @@ export default function ComponentsPage() {
           items={sidebarItems}
           currentPath="/components/atoms/button"
           className="sticky top-0 h-[calc(100vh-4rem)]"
+          disableItemLinks
         />
 
         {/* Main Content */}
