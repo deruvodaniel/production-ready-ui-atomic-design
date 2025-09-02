@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './accordion';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './Accordion';
 
 const meta: Meta = {
-  title: 'UI/Accordion',
+  title: 'Molecules/Accordion',
   parameters: { layout: 'centered' },
 };
 export default meta;

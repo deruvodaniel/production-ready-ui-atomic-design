@@ -8,6 +8,7 @@ import styles from './Modal.module.css';
 export interface ModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onClose?: () => void;
   title?: string;
   description?: string;
   children?: React.ReactNode;
@@ -24,8 +25,13 @@ export const Modal: React.FC<ModalProps> = ({
   primaryAction,
   secondaryAction,
 }) => {
+  const handleOpenChange = (next: boolean) => {
+    if (!next) onClose?.();
+    onOpenChange(next);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className={styles.content} aria-modal="true" role="dialog">
         {(title || description) && (
           <DialogHeader>
