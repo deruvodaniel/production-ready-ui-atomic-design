@@ -224,11 +224,155 @@ const GoalCard = ({ goal }: { goal: any }) => {
   );
 };
 
-export default function GameChangersPage() {
+// Content component that uses ChatContext (inside AdminLayout)
+const GameChangersContent = () => {
   const [activeMainTab, setActiveMainTab] = useState('goals');
   const [activeSubTab, setActiveSubTab] = useState('team-goals');
-  const [loading, setLoading] = useState(true);
   const { openChat } = useChatContext();
+
+  const handleChatClick = () => {
+    openChat();
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header with Navigation */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Title */}
+          <div className="py-8">
+            <Typography variant="h2" weight="bold" className="text-gray-900">
+              Game Changers
+            </Typography>
+          </div>
+
+          {/* My Journey Section */}
+          <div className="py-6 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-2">
+                <Avatar
+                  src="/api/placeholder/32/32"
+                  fallback="AR"
+                  size="sm"
+                />
+                <Typography variant="body" weight="bold">
+                  My Journey
+                </Typography>
+                <ArrowRight className="w-4 h-4 text-gray-600" />
+              </div>
+
+              {/* Step Navigation */}
+              <div className="flex items-center gap-4">
+                {mainTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveMainTab(tab.id)}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all duration-200 ${
+                      activeMainTab === tab.id
+                        ? 'bg-gray-200 border-gray-300 text-gray-900'
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Calendar className="w-4 h-4" />
+                    <span className="text-sm font-semibold">{tab.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Performance Metrics */}
+          <div className="py-6">
+            <PerformanceMetrics />
+          </div>
+
+          {/* Team Goals Tabs */}
+          <div className="flex items-center border-b border-gray-200">
+            {teamGoalsTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveSubTab(tab.id)}
+                className={`px-4 py-3 text-sm font-semibold transition-all duration-200 border-b-2 ${
+                  activeSubTab === tab.id
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Team Goals Section */}
+        <div className="space-y-6">
+          {/* Section Header */}
+          <div className="space-y-6">
+            <Typography variant="h4" weight="bold">
+              Team Goals
+            </Typography>
+            
+            {/* Search and Controls */}
+            <div className="flex items-center gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                />
+              </div>
+              <button className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <List className="w-5 h-5 text-gray-600" />
+              </button>
+              <button className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <Grid className="w-5 h-5 text-gray-600" />
+              </button>
+              <Button variant="secondary" size="sm">
+                <ArrowUpRight className="w-4 h-4 mr-2" />
+                Sort by
+              </Button>
+            </div>
+          </div>
+
+          {/* Goals Grid */}
+          <div className="grid grid-cols-1 gap-4">
+            {teamGoals.map((goal, index) => (
+              <div 
+                key={goal.id}
+                className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <GoalCard goal={goal} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Call to Action for AI Chat */}
+        <Card className="p-8 mt-12 text-center bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="max-w-2xl mx-auto">
+            <Typography variant="h5" weight="bold" className="mb-3">
+              Need insights about team performance?
+            </Typography>
+            <Typography variant="body" className="text-gray-600 mb-6">
+              Use our AI assistant to analyze goal progress, team performance metrics, and get actionable recommendations.
+            </Typography>
+            <Button variant="primary" size="lg" onClick={handleChatClick}>
+              Ask Sony AI Assistant
+            </Button>
+          </div>
+        </Card>
+      </main>
+    </div>
+  );
+};
+
+// Main page component
+export default function GameChangersPage() {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Simulate API call
@@ -236,10 +380,6 @@ export default function GameChangersPage() {
       setLoading(false);
     }, 800);
   }, []);
-
-  const handleChatClick = () => {
-    openChat();
-  };
 
   if (loading) {
     return (
@@ -258,138 +398,7 @@ export default function GameChangersPage() {
 
   return (
     <AdminLayout currentPage="game-changers">
-      <div className="min-h-screen bg-gray-50">
-        {/* Header with Navigation */}
-        <header className="bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Title */}
-            <div className="py-8">
-              <Typography variant="h2" weight="bold" className="text-gray-900">
-                Game Changers
-              </Typography>
-            </div>
-
-            {/* My Journey Section */}
-            <div className="py-6 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-2">
-                  <Avatar
-                    src="/api/placeholder/32/32"
-                    fallback="AR"
-                    size="sm"
-                  />
-                  <Typography variant="body" weight="bold">
-                    My Journey
-                  </Typography>
-                  <ArrowRight className="w-4 h-4 text-gray-600" />
-                </div>
-
-                {/* Step Navigation */}
-                <div className="flex items-center gap-4">
-                  {mainTabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveMainTab(tab.id)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all duration-200 ${
-                        activeMainTab === tab.id
-                          ? 'bg-gray-200 border-gray-300 text-gray-900'
-                          : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100'
-                      }`}
-                    >
-                      <Calendar className="w-4 h-4" />
-                      <span className="text-sm font-semibold">{tab.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Performance Metrics */}
-            <div className="py-6">
-              <PerformanceMetrics />
-            </div>
-
-            {/* Team Goals Tabs */}
-            <div className="flex items-center border-b border-gray-200">
-              {teamGoalsTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveSubTab(tab.id)}
-                  className={`px-4 py-3 text-sm font-semibold transition-all duration-200 border-b-2 ${
-                    activeSubTab === tab.id
-                      ? 'border-gray-900 text-gray-900'
-                      : 'border-transparent text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </header>
-
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Team Goals Section */}
-          <div className="space-y-6">
-            {/* Section Header */}
-            <div className="space-y-6">
-              <Typography variant="h4" weight="bold">
-                Team Goals
-              </Typography>
-              
-              {/* Search and Controls */}
-              <div className="flex items-center gap-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                  />
-                </div>
-                <button className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                  <List className="w-5 h-5 text-gray-600" />
-                </button>
-                <button className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                  <Grid className="w-5 h-5 text-gray-600" />
-                </button>
-                <Button variant="secondary" size="sm">
-                  <ArrowUpRight className="w-4 h-4 mr-2" />
-                  Sort by
-                </Button>
-              </div>
-            </div>
-
-            {/* Goals Grid */}
-            <div className="grid grid-cols-1 gap-4">
-              {teamGoals.map((goal, index) => (
-                <div 
-                  key={goal.id}
-                  className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <GoalCard goal={goal} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Call to Action for AI Chat */}
-          <Card className="p-8 mt-12 text-center bg-gradient-to-r from-blue-50 to-purple-50">
-            <div className="max-w-2xl mx-auto">
-              <Typography variant="h5" weight="bold" className="mb-3">
-                Need insights about team performance?
-              </Typography>
-              <Typography variant="body" className="text-gray-600 mb-6">
-                Use our AI assistant to analyze goal progress, team performance metrics, and get actionable recommendations.
-              </Typography>
-              <Button variant="primary" size="lg" onClick={handleChatClick}>
-                Ask Sony AI Assistant
-              </Button>
-            </div>
-          </Card>
-        </main>
-      </div>
+      <GameChangersContent />
     </AdminLayout>
   );
 }
