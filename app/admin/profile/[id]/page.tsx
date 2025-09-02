@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Card } from '@/components/molecules/Card/Card';
 import { Avatar } from '@/components/atoms/Avatar/Avatar';
