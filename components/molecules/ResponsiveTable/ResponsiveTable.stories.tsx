@@ -3,12 +3,11 @@ import { ResponsiveTable } from './ResponsiveTable';
 
 interface Row { id: number; name: string; email: string; role: string }
 
-const meta: Meta<typeof ResponsiveTable<Row>> = {
+const meta: Meta = {
   title: 'Molecules/ResponsiveTable',
-  component: ResponsiveTable,
   parameters: { layout: 'centered' },
 };
-export default meta as Meta;
+export default meta;
 
 type Story = StoryObj<typeof meta>;
 
