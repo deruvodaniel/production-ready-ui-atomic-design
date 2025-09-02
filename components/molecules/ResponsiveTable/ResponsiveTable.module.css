@@ -1,4 +1,27 @@
-.wrapper {\n  @apply w-full;\n}\n.table {\n  @apply w-full border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden;\n  border-collapse: collapse;\n}\n.caption {\n  @apply text-left p-3 text-sm text-neutral-600 dark:text-neutral-400;\n}\n.thead {\n  @apply bg-neutral-50 dark:bg-neutral-800;\n}\n.tr {\n}\n.th, .td {\n  @apply p-3 text-left align-top border-t border-neutral-200 dark:border-neutral-800;\n}\n.th {\n  @apply font-medium text-neutral-700 dark:text-neutral-300;\n}\n.td {\n  @apply text-neutral-800 dark:text-neutral-200;\n}
+.wrapper {
+  @apply w-full;
+}
+.table {
+  @apply w-full border border-neutral-200 dark:border-neutral-800 rounded-md overflow-hidden;
+  border-collapse: collapse;
+}
+.caption {
+  @apply text-left p-3 text-sm text-neutral-600 dark:text-neutral-400;
+}
+.thead {
+  @apply bg-neutral-50 dark:bg-neutral-800;
+}
+.tr {
+}
+.th, .td {
+  @apply p-3 text-left align-top border-t border-neutral-200 dark:border-neutral-800;
+}
+.th {
+  @apply font-medium text-neutral-700 dark:text-neutral-300;
+}
+.td {
+  @apply text-neutral-800 dark:text-neutral-200;
+}
 
 /* Card layout for small screens */
 @media (max-width: 768px) {
