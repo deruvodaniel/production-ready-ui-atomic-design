@@ -30,6 +30,7 @@ import {
   Settings,
   FileText
 } from 'lucide-react';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 
 export default function ComponentsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -97,10 +98,11 @@ export default function ComponentsPage() {
     >
       <div className="flex min-h-[calc(100vh-4rem)]">
         {/* Sidebar */}
-        <Sidebar 
-          items={sidebarItems} 
+        <Sidebar
+          items={sidebarItems}
           currentPath="/components/atoms/button"
           className="sticky top-0 h-[calc(100vh-4rem)]"
+          disableItemLinks
         />
 
         {/* Main Content */}
@@ -253,6 +255,35 @@ export default function ComponentsPage() {
                 </div>
               </Card>
             </div>
+          </section>
+
+          {/* Disclosures */}
+          <section className="mb-12">
+            <Typography variant="h3" weight="semibold" className="mb-6">
+              Accordion
+            </Typography>
+            <Card>
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>What is this project?</AccordionTrigger>
+                  <AccordionContent>
+                    A production-ready UI starter with atomic design and theming.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>Can I customize it?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes, update colors, fonts, and spacing from the Theme Customization.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                  <AccordionContent>
+                    Components follow WCAG guidelines and support keyboard navigation.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </Card>
           </section>
 
           {/* Organisms Section */}
