@@ -217,7 +217,7 @@ export const FontSelector: React.FC<FontSelectorProps> = ({ className }) => {
               className={styles.preview}
               style={{ fontFamily: config.typography.fontFamily.mono }}
             >
-              const code = "monospace font";
+              const code = &quot;monospace font&quot;;
             </div>
           </div>
         </div>
