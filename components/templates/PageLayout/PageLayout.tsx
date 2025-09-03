@@ -20,7 +20,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   className,
 }) => {
   return (
-    <div className={styles.layout}>
+    <div className={cn(styles.layout, className)}>
       {showHeader && <Header {...header} />}
       
       <main 
