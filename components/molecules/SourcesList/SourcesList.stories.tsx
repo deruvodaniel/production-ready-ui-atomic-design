@@ -195,7 +195,7 @@ export const InChatContext: Story = {
     <div className="max-w-md bg-gray-50 p-6 rounded-lg">
       <div className="mb-4">
         <p className="text-sm text-gray-700">
-          Hey Alex! I've filled in Rachel's achievements for you. Rachel's information is based on
+          Hey Alex! I&apos;ve filled in Rachel&apos;s achievements for you. Rachel&apos;s information is based on
           her feedback, 1:1 notes, goals progress. You can find the sources below.
         </p>
       </div>
