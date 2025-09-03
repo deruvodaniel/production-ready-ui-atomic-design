@@ -153,14 +153,24 @@ export const Header: React.FC<HeaderProps> = ({
               )}
 
               {showSettingsButton && (
-                <Button variant="ghost" size="sm" onClick={onSettingsClick} aria-label="Open settings">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onSettingsClick}
+                  aria-label="Open settings"
+                >
                   <Settings />
                 </Button>
               )}
 
               {user && (
                 <div className={styles.userAvatar}>
-                  <Avatar src={user.avatar} alt={user.name} fallback={user.name.charAt(0)} size="md" />
+                  <Avatar
+                    src={user.avatar}
+                    alt={user.name}
+                    fallback={user.name.charAt(0)}
+                    size="md"
+                  />
                 </div>
               )}
             </>
