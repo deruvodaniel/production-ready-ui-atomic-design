@@ -32,6 +32,7 @@ export interface Employee {
   };
   currentProject?: string;
   performanceScore?: number;
+  lastActivity?: Date;
 }
 
 export const employeesData: Employee[] = [
