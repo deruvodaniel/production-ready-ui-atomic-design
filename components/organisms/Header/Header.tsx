@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/atoms/Button/Button';
 import { Typography } from '@/components/atoms/Typography/Typography';
 import { Avatar } from '@/components/atoms/Avatar/Avatar';
-import { Dropdown } from '@/components/molecules/Dropdown/Dropdown';
 import { useTheme } from '@/theme/theme-provider';
 import { Moon, Sun, Settings, User, LogOut, Bell, Bot } from 'lucide-react';
 import styles from './Header.module.css';
@@ -109,59 +108,63 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Actions */}
         <div className={styles.actions}>
-          {showSonyAssistant && (
-            <button
-              className={styles.sonyAssistant}
-              onClick={onSonyAssistantClick}
-              aria-label="Open Sony AI Assistant chat"
-              type="button"
-            >
-              <div className={styles.assistantIcon}>
-                <Bot className={styles.botIcon} />
-              </div>
-              <Typography variant="body" weight="semibold" className={styles.assistantText}>
-                Sony Assistant
-              </Typography>
-            </button>
-          )}
-
-          {showNotifications && (
-            <div className={styles.notificationWrapper}>
-              <div className={styles.notificationIcon}>
-                <Bell className={styles.bellIcon} />
-              </div>
-              {notificationCount > 0 && (
-                <span className={styles.notificationBadge}>
-                  {notificationCount > 99 ? '99+' : notificationCount}
-                </span>
+          {rightContent ? (
+            rightContent
+          ) : (
+            <>
+              {showSonyAssistant && (
+                <button
+                  className={styles.sonyAssistant}
+                  onClick={onSonyAssistantClick}
+                  aria-label="Open Sony AI Assistant chat"
+                  type="button"
+                >
+                  <div className={styles.assistantIcon}>
+                    <Bot className={styles.botIcon} />
+                  </div>
+                  <Typography variant="body" weight="semibold" className={styles.assistantText}>
+                    Sony Assistant
+                  </Typography>
+                </button>
               )}
-            </div>
-          )}
 
-          {showThemeToggle && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleDarkMode}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {isDark ? <Sun /> : <Moon />}
-            </Button>
-          )}
+              {showNotifications && (
+                <div className={styles.notificationWrapper}>
+                  <div className={styles.notificationIcon}>
+                    <Bell className={styles.bellIcon} />
+                  </div>
+                  {notificationCount > 0 && (
+                    <span className={styles.notificationBadge}>
+                      {notificationCount > 99 ? '99+' : notificationCount}
+                    </span>
+                  )}
+                </div>
+              )}
 
-          {showSettingsButton && (
-            <Button variant="ghost" size="sm" onClick={onSettingsClick} aria-label="Open settings">
-              <Settings />
-            </Button>
-          )}
+              {showThemeToggle && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleDarkMode}
+                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {isDark ? <Sun /> : <Moon />}
+                </Button>
+              )}
 
-          {user && (
-            <div className={styles.userAvatar}>
-              <Avatar src={user.avatar} alt={user.name} fallback={user.name.charAt(0)} size="md" />
-            </div>
-          )}
+              {showSettingsButton && (
+                <Button variant="ghost" size="sm" onClick={onSettingsClick} aria-label="Open settings">
+                  <Settings />
+                </Button>
+              )}
 
-          {rightContent}
+              {user && (
+                <div className={styles.userAvatar}>
+                  <Avatar src={user.avatar} alt={user.name} fallback={user.name.charAt(0)} size="md" />
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
     </header>
