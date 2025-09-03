@@ -10,7 +10,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: false, // Change to false for better routing
+  trailingSlash: true,
   // Only use basePath in production
   basePath: process.env.NODE_ENV === 'production' ? repoBasePath : undefined,
   assetPrefix: process.env.NODE_ENV === 'production' ? repoBasePath : undefined,
