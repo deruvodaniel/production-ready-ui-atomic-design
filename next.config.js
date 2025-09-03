@@ -24,9 +24,6 @@ const nextConfig = {
     return config;
   },
   
-  // Enable CSS Modules with better configuration
-  cssModules: true,
-  
   experimental: {
     // Better CSS handling
     optimizeCss: false,
