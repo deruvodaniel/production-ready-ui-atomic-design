@@ -487,7 +487,6 @@ export default function MyTeamPage() {
                       employee={employee}
                       showPerformance={true}
                       className="animate-in fade-in-0 slide-in-from-left-4 duration-300"
-                      style={{ animationDelay: `${index * 50}ms` } as any}
                       onClick={() => router.push(`/admin/profile/${employee.id}`)}
                     />
                   ))}
