@@ -280,17 +280,7 @@ export const AdminQuickAction: React.FC<QuickActionProps> = ({
 
 // Team Member Card Component
 export interface TeamMemberCardProps {
-  employee: {
-    id: string;
-    name: string;
-    role: string;
-    avatar: string;
-    status: string;
-    team?: string;
-    performanceScore?: number;
-    currentProject?: string;
-    lastActivity?: Date;
-  };
+  employee: Employee;
   onClick?: () => void;
   showPerformance?: boolean;
   showProject?: boolean;
