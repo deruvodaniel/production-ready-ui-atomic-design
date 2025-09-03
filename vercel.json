@@ -1,6 +1,29 @@
 {
   "framework": "nextjs",
-  "buildCommand": "yarn build:vercel",
-  "outputDirectory": "out",
-  "cleanUrls": true
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps",
+  "outputDirectory": ".next",
+  "public": false,
+  "rewrites": [
+    {
+      "source": "/storybook/:path*",
+      "destination": "/storybook/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ]
 }

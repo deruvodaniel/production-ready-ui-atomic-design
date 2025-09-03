@@ -1,419 +1,260 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '@/components/atoms/Button/Button';
-import { Typography } from '@/components/atoms/Typography/Typography';
+import React from 'react';
+import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
 import { Card } from '@/components/molecules/Card/Card';
+import { Typography } from '@/components/atoms/Typography/Typography';
+import { Button } from '@/components/atoms/Button/Button';
 import { Badge } from '@/components/atoms/Badge/Badge';
 import { Avatar } from '@/components/atoms/Avatar/Avatar';
-import { ProgressBar } from '@/components/atoms/ProgressBar/ProgressBar';
-import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
-import { useTheme } from '@/theme/theme-provider';
+import { ColorPicker } from '@/components/molecules/ColorPicker/ColorPicker';
+import { FontSelector } from '@/components/molecules/FontSelector/FontSelector';
+import { SpacingSelector } from '@/components/molecules/SpacingSelector/SpacingSelector';
 import {
   Palette,
   Type,
-  Zap,
-  Star,
-  CheckCircle,
-  AlertTriangle,
-  Settings,
-  Moon,
-  Sun,
+  Layout,
   Download,
+  Upload,
+  RefreshCw,
+  Settings,
+  Eye,
+  Code,
+  Layers,
+  Zap,
 } from 'lucide-react';
-import { FontSelector } from '@/components/molecules/FontSelector/FontSelector';
+import { ThemeActions } from '@/components/organisms/ThemeActions/ThemeActions';
+import Link from 'next/link';
 
-export default function Home() {
-  const { isDark, toggleDarkMode, config, updateTheme } = useTheme();
-  const [primaryColor, setPrimaryColor] = useState('#3b82f6');
-  const [secondaryColor, setSecondaryColor] = useState('#64748b');
-  const [accentColor, setAccentColor] = useState('#d946ef');
+// Component Preview Section
+const ComponentPreview: React.FC = () => {
+  return (
+    <Card variant="elevated" padding="lg">
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-green-100 rounded-lg">
+            <Eye className="w-5 h-5 text-green-600" />
+          </div>
+          <div>
+            <Typography variant="h6" weight="bold">
+              Live Preview
+            </Typography>
+            <Typography variant="caption" color="muted">
+              See your changes in real-time
+            </Typography>
+          </div>
+        </div>
 
-  const handleColorChange = (colorType: 'primary' | 'secondary' | 'accent', value: string) => {
-    if (colorType === 'primary') setPrimaryColor(value);
-    if (colorType === 'secondary') setSecondaryColor(value);
-    if (colorType === 'accent') setAccentColor(value);
+        <div className="space-y-6 p-6 bg-gray-50 rounded-lg">
+          {/* Buttons Preview */}
+          <div className="space-y-3">
+            <Typography variant="body" weight="semibold">
+              Buttons
+            </Typography>
+            <div className="flex flex-wrap gap-3">
+              <Button variant="primary" size="sm">
+                Primary
+              </Button>
+              <Button variant="secondary" size="sm">
+                Secondary
+              </Button>
+              <Button variant="outline" size="sm">
+                Outline
+              </Button>
+              <Button variant="ghost" size="sm">
+                Ghost
+              </Button>
+            </div>
+          </div>
 
-    updateTheme({
-      colors: {
-        ...config.colors,
-        [colorType]: value,
-      },
-    });
-  };
+          {/* Typography Preview */}
+          <div className="space-y-3">
+            <Typography variant="body" weight="semibold">
+              Typography
+            </Typography>
+            <div className="space-y-2">
+              <Typography variant="h4" weight="bold">
+                Heading Large
+              </Typography>
+              <Typography variant="h6" weight="bold">
+                Heading Small
+              </Typography>
+              <Typography variant="body">Body text with regular weight</Typography>
+              <Typography variant="caption" color="muted">
+                Caption text in muted color
+              </Typography>
+            </div>
+          </div>
 
-  const resetColors = () => {
-    setPrimaryColor('#3b82f6');
-    setSecondaryColor('#64748b');
-    setAccentColor('#d946ef');
-    updateTheme({
-      colors: {
-        primary: '#3b82f6',
-        secondary: '#64748b',
-        accent: '#d946ef',
-      },
-    });
-  };
+          {/* Badges Preview */}
+          <div className="space-y-3">
+            <Typography variant="body" weight="semibold">
+              Badges
+            </Typography>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="primary">Primary</Badge>
+              <Badge variant="success">Success</Badge>
+              <Badge variant="warning">Warning</Badge>
+              <Badge variant="error">Error</Badge>
+              <Badge variant="secondary">Secondary</Badge>
+            </div>
+          </div>
 
-  const handleExport = () => {
-    const data = {
-      theme: config,
-      mode: isDark ? 'dark' : 'light',
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'theme-config.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
+          {/* Card Preview */}
+          <div className="space-y-3">
+            <Typography variant="body" weight="semibold">
+              Cards
+            </Typography>
+            <Card className="p-4">
+              <div className="flex items-start gap-3">
+                <Avatar src="/api/placeholder/40/40" fallback="UI" size="md" />
+                <div className="flex-1">
+                  <Typography variant="body" weight="semibold" className="mb-1">
+                    Card Component
+                  </Typography>
+                  <Typography variant="caption" color="muted">
+                    This is a sample card showing how your theme affects different components.
+                  </Typography>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+};
 
-  const scrollToTheme = () => {
-    const el = document.getElementById('theme-customization');
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
+export default function ThemeBuilderHome() {
   return (
     <PageLayout
       header={{
-        logo: <Zap className="w-6 h-6 text-primary-600" />,
-        title: 'Design System Builder',
+        logo: (
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <Layers className="w-6 h-6 text-white" />
+          </div>
+        ),
+        title: 'UI Theme Builder',
         navigation: [
-          { label: 'Home', href: '/' },
+          { label: 'Theme Builder', href: '/', active: true },
           { label: 'Components', href: '/components' },
           { label: 'Storybook', href: '/storybook' },
+          { label: 'Sony POC', href: '/admin' },
         ],
+        rightContent: (
+          <div className="flex items-center gap-4">
+            <Link href="/admin">
+              <Button variant="outline" size="sm">
+                <Zap className="w-4 h-4 mr-2" />
+                Admin Demo
+              </Button>
+            </Link>
+            <Button variant="ghost" size="sm">
+              <Code className="w-4 h-4 mr-2" />
+              View Code
+            </Button>
+          </div>
+        ),
         showThemeToggle: true,
-        showSettingsButton: true,
+        showSettingsButton: false,
       }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Hero Section */}
-        <section className="text-center mb-16">
-          <Typography variant="h1" weight="bold" className="mb-6">
-            Production-Ready Design System
-          </Typography>
-
-          <Typography variant="body" color="muted" className="max-w-3xl mx-auto mb-8 text-lg">
-            Build beautiful, accessible applications with our comprehensive component library.
-            Customize colors, typography, and spacing to match your brand identity.
-          </Typography>
-
-          <div className="flex justify-center gap-4 mb-8">
-            <Button size="lg" leftIcon={<Palette />} onClick={scrollToTheme}>
-              Customize Theme
-            </Button>
-            <Button variant="outline" size="lg" leftIcon={<Download />} onClick={handleExport}>
-              Export Config
-            </Button>
-          </div>
-
-          <div className="flex justify-center items-center gap-4">
-            <Badge variant="success" icon={<CheckCircle />}>
-              WCAG 2.1 AA
-            </Badge>
-            <Badge variant="primary" icon={<Star />}>
-              Production Ready
-            </Badge>
-            <Badge variant="warning" icon={<AlertTriangle />}>
-              TypeScript
-            </Badge>
-          </div>
-        </section>
-
-        {/* Theme Customization */}
-        <section className="mb-16" id="theme-customization">
-          <Card variant="elevated" padding="lg">
-            <div className="flex items-center justify-between mb-6">
-              <Typography variant="h3" weight="semibold">
-                Theme Customization
+        <header className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="text-center">
+              <Typography variant="h1" weight="bold" className="text-gray-900 mb-4">
+                Production-Ready Design System
               </Typography>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleDarkMode}
-                  leftIcon={isDark ? <Sun /> : <Moon />}
-                >
-                  {isDark ? 'Light' : 'Dark'} Mode
-                </Button>
-                <Button variant="outline" size="sm" onClick={resetColors}>
-                  Reset
-                </Button>
+              <Typography variant="h6" className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                Build and customize your theme with real-time preview. Export your configuration and
+                deploy a production-ready design system.
+              </Typography>
+              <div className="flex items-center justify-center gap-4">
+                <Badge variant="success" size="lg">
+                  <Layers className="w-4 h-4 mr-1" />
+                  Atomic Design
+                </Badge>
+                <Badge variant="primary" size="lg">
+                  <Zap className="w-4 h-4 mr-1" />
+                  Live Preview
+                </Badge>
+                <Badge variant="secondary" size="lg">
+                  <Code className="w-4 h-4 mr-1" />
+                  TypeScript
+                </Badge>
               </div>
             </div>
+          </div>
+        </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Primary Color */}
-              <div className="space-y-4">
-                <Typography variant="h6" weight="medium">
-                  Primary Color
-                </Typography>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="color"
-                    value={primaryColor}
-                    onChange={e => handleColorChange('primary', e.target.value)}
-                    className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-mono text-neutral-600 dark:text-neutral-400">
-                      {primaryColor}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      Used for buttons, links, and primary actions
-                    </div>
-                  </div>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column - Theme Controls */}
+            <div className="lg:col-span-2 space-y-8">
+              <section>
+                <div className="mb-6">
+                  <Typography variant="h4" weight="bold" className="mb-2">
+                    Theme Customization
+                  </Typography>
+                  <Typography variant="body" className="text-gray-600">
+                    Customize your brand colors, typography, and spacing to match your design.
+                  </Typography>
                 </div>
-              </div>
 
-              {/* Secondary Color */}
-              <div className="space-y-4">
-                <Typography variant="h6" weight="medium">
-                  Secondary Color
-                </Typography>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="color"
-                    value={secondaryColor}
-                    onChange={e => handleColorChange('secondary', e.target.value)}
-                    className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-mono text-neutral-600 dark:text-neutral-400">
-                      {secondaryColor}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      Used for secondary buttons and elements
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <div className="space-y-6">
+                  {/* Colors */}
+                  <ColorPicker />
 
-              {/* Accent Color */}
-              <div className="space-y-4">
-                <Typography variant="h6" weight="medium">
-                  Accent Color
-                </Typography>
-                <div className="flex items-center gap-4">
-                  <input
-                    type="color"
-                    value={accentColor}
-                    onChange={e => handleColorChange('accent', e.target.value)}
-                    className="w-16 h-16 rounded-lg border-2 border-neutral-300 dark:border-neutral-600 cursor-pointer"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-mono text-neutral-600 dark:text-neutral-400">
-                      {accentColor}
-                    </div>
-                    <div className="text-xs text-neutral-500">
-                      Used for highlights and special elements
-                    </div>
-                  </div>
+                  {/* Typography */}
+                  <FontSelector />
+
+                  {/* Spacing */}
+                  <SpacingSelector />
                 </div>
-              </div>
+              </section>
             </div>
-          </Card>
-        </section>
 
-        {/* Typography Settings */}
-        <section className="mb-16">
-          <FontSelector />
-        </section>
+            {/* Right Column - Preview and Actions */}
+            <div className="space-y-8">
+              {/* Live Preview */}
+              <ComponentPreview />
 
-        {/* Component Preview */}
-        <section className="mb-16">
-          <Typography variant="h3" weight="semibold" className="mb-6">
-            Component Preview
-          </Typography>
+              {/* Theme Actions */}
+              <ThemeActions />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {/* Buttons */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Buttons
-              </Typography>
-              <div className="space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  <Button variant="primary" size="sm">
-                    Primary
-                  </Button>
-                  <Button variant="secondary" size="sm">
-                    Secondary
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    Outline
-                  </Button>
+              {/* Quick Links */}
+              <Card variant="elevated" padding="lg">
+                <div className="space-y-4">
+                  <Typography variant="h6" weight="bold">
+                    Quick Links
+                  </Typography>
+                  <div className="space-y-2">
+                    <Link href="/components" className="block">
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        <Layers className="w-4 h-4 mr-2" />
+                        View All Components
+                      </Button>
+                    </Link>
+                    <Link href="/storybook" className="block">
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        <Eye className="w-4 h-4 mr-2" />
+                        Open Storybook
+                      </Button>
+                    </Link>
+                    <Link href="/admin" className="block">
+                      <Button variant="ghost" size="sm" className="w-full justify-start">
+                        <Zap className="w-4 h-4 mr-2" />
+                        Admin Demo
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <Button loading size="sm">
-                    Loading
-                  </Button>
-                  <Button disabled size="sm">
-                    Disabled
-                  </Button>
-                  <Button variant="destructive" size="sm">
-                    Delete
-                  </Button>
-                </div>
-              </div>
-            </Card>
-
-            {/* Badges */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Badges
-              </Typography>
-              <div className="space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="primary">Primary</Badge>
-                  <Badge variant="success" icon={<CheckCircle />}>
-                    Success
-                  </Badge>
-                  <Badge variant="warning" icon={<AlertTriangle />}>
-                    Warning
-                  </Badge>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge size="sm">Small</Badge>
-                  <Badge size="md">Medium</Badge>
-                  <Badge size="lg">Large</Badge>
-                </div>
-              </div>
-            </Card>
-
-            {/* Progress */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Progress Bars
-              </Typography>
-              <div className="space-y-4">
-                <ProgressBar value={75} showLabel label="Upload Progress" />
-                <ProgressBar value={60} variant="success" label="Success" />
-                <ProgressBar value={40} variant="warning" label="Warning" />
-                <ProgressBar value={25} variant="error" label="Error" />
-              </div>
-            </Card>
-
-            {/* Avatars */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Avatars
-              </Typography>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <Avatar size="sm" fallback="SM" />
-                  <Avatar size="md" fallback="MD" />
-                  <Avatar size="lg" fallback="LG" />
-                  <Avatar size="xl" fallback="XL" />
-                </div>
-                <div className="flex items-center gap-3">
-                  <Avatar
-                    src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&dpr=2"
-                    alt="User"
-                    fallback="U"
-                  />
-                  <Avatar variant="rounded" fallback="R" />
-                  <Avatar variant="square" fallback="S" />
-                </div>
-              </div>
-            </Card>
-
-            {/* Typography */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Typography
-              </Typography>
-              <div className="space-y-2">
-                <Typography variant="h6">Heading 6</Typography>
-                <Typography variant="body">Body text with normal weight</Typography>
-                <Typography variant="caption" color="muted">
-                  Caption text in muted color
-                </Typography>
-                <Typography variant="overline" color="primary">
-                  Overline Text
-                </Typography>
-              </div>
-            </Card>
-
-            {/* Status Cards */}
-            <Card>
-              <Typography variant="h5" weight="medium" className="mb-4">
-                Status Examples
-              </Typography>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">System Status</span>
-                  <Badge variant="success">Online</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">API Health</span>
-                  <Badge variant="warning">Degraded</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Database</span>
-                  <Badge variant="error">Offline</Badge>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </div>
           </div>
-        </section>
-
-        {/* Features */}
-        <section>
-          <Typography variant="h3" weight="semibold" className="mb-6">
-            Features
-          </Typography>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card variant="elevated" padding="lg">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Palette className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                </div>
-                <Typography variant="h5" weight="semibold" className="mb-2">
-                  White-Label Theming
-                </Typography>
-                <Typography variant="body" color="muted">
-                  Customize colors, fonts, and spacing to match your brand identity with real-time
-                  preview.
-                </Typography>
-              </div>
-            </Card>
-
-            <Card variant="elevated" padding="lg">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-success-100 dark:bg-success-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-6 h-6 text-success-600 dark:text-success-400" />
-                </div>
-                <Typography variant="h5" weight="semibold" className="mb-2">
-                  Accessibility First
-                </Typography>
-                <Typography variant="body" color="muted">
-                  WCAG 2.1 AA compliant components with full keyboard navigation and screen reader
-                  support.
-                </Typography>
-              </div>
-            </Card>
-
-            <Card variant="elevated" padding="lg">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-warning-100 dark:bg-warning-900 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Type className="w-6 h-6 text-warning-600 dark:text-warning-400" />
-                </div>
-                <Typography variant="h5" weight="semibold" className="mb-2">
-                  TypeScript Ready
-                </Typography>
-                <Typography variant="body" color="muted">
-                  Fully typed components with comprehensive interfaces and strict type checking.
-                </Typography>
-              </div>
-            </Card>
-          </div>
-        </section>
+        </main>
       </div>
     </PageLayout>
   );

@@ -45,10 +45,7 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   return (
-    <span
-      className={cn(badgeVariants({ variant, size, className }))}
-      {...props}
-    >
+    <span className={cn(badgeVariants({ variant, size, className }))} {...props}>
       {icon && (
         <span className={styles.icon} aria-hidden="true">
           {icon}

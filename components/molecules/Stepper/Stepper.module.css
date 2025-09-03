@@ -1,0 +1,46 @@
+.stepper {
+  /* Custom styles for Stepper component */
+}
+
+.stepperVertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepperHorizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.stepperHorizontal .step {
+  flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stepperHorizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stepperHorizontal .step {
+    flex: none;
+  }
+}
+
+/* Animation for step transitions */
+.stepper .step {
+  transition: all 0.2s ease-in-out;
+}
+
+.stepper .step:hover {
+  transform: translateX(2px);
+}
+
+/* Accessibility improvements */
+.stepper .step:focus-within {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: 8px;
+}

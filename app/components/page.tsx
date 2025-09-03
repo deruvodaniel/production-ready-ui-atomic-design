@@ -128,7 +128,7 @@ export default function ComponentsPage() {
             {searchResults.length > 0 && (
               <Card className="mt-4 max-w-md">
                 <Typography variant="h6" weight="medium" className="mb-2">
-                  Search Results for "{searchQuery}"
+                  Search Results for &quot;{searchQuery}&quot;
                 </Typography>
                 <ul className="space-y-1">
                   {searchResults.map((result, index) => (

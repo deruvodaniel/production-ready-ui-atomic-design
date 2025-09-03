@@ -30,6 +30,9 @@ export interface Employee {
     received: number;
     pending: number;
   };
+  currentProject?: string;
+  performanceScore?: number;
+  lastActivity?: Date;
 }
 
 export const employeesData: Employee[] = [
@@ -39,7 +42,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
     email: 'rachel.green@company.com',
     phone: '+1 (555) 123-4567',
     location: 'New York, NY',
@@ -51,21 +55,21 @@ export const employeesData: Employee[] = [
     achievements: [
       'Led the component library migration to TypeScript',
       'Improved app performance by 40%',
-      'Mentored 2 junior developers'
+      'Mentored 2 junior developers',
     ],
     goals: {
       current: ['Complete React 18 migration', 'Learn Next.js 13'],
-      completed: ['Master TypeScript', 'Implement testing best practices']
+      completed: ['Master TypeScript', 'Implement testing best practices'],
     },
     feedbackHistory: {
       given: 15,
       received: 8,
-      pending: 2
+      pending: 2,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/rachelgreen',
-      github: 'https://github.com/rachelgreen'
-    }
+      github: 'https://github.com/rachelgreen',
+    },
   },
   {
     id: 'julia-harvey',
@@ -73,7 +77,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=150&h=150&fit=crop&crop=face',
     email: 'julia.harvey@company.com',
     phone: '+1 (555) 234-5678',
     location: 'San Francisco, CA',
@@ -85,21 +90,21 @@ export const employeesData: Employee[] = [
     achievements: [
       'Built the new e-commerce checkout flow',
       'Reduced bundle size by 30%',
-      'Implemented accessibility standards (WCAG 2.1)'
+      'Implemented accessibility standards (WCAG 2.1)',
     ],
     goals: {
       current: ['Learn React ecosystem', 'Contribute to open source'],
-      completed: ['Master Vue 3 Composition API', 'Obtain accessibility certification']
+      completed: ['Master Vue 3 Composition API', 'Obtain accessibility certification'],
     },
     feedbackHistory: {
       given: 12,
       received: 6,
-      pending: 1
+      pending: 1,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/juliaharvey',
-      github: 'https://github.com/juliaharvey'
-    }
+      github: 'https://github.com/juliaharvey',
+    },
   },
   {
     id: 'jonah-smith',
@@ -107,7 +112,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
     email: 'jonah.smith@company.com',
     location: 'Austin, TX',
     joinDate: '2023-01-10',
@@ -118,22 +124,22 @@ export const employeesData: Employee[] = [
     achievements: [
       'Implemented real-time features using WebSockets',
       'Optimized API calls reducing load time by 50%',
-      'Created comprehensive testing suite'
+      'Created comprehensive testing suite',
     ],
     goals: {
       current: ['Master GraphQL federation', 'Learn Kubernetes'],
-      completed: ['Build first full-stack application', 'Learn Docker containerization']
+      completed: ['Build first full-stack application', 'Learn Docker containerization'],
     },
     feedbackHistory: {
       given: 8,
       received: 10,
-      pending: 3
+      pending: 3,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/jonahsmith',
       github: 'https://github.com/jonahsmith',
-      twitter: 'https://twitter.com/jonahsmith'
-    }
+      twitter: 'https://twitter.com/jonahsmith',
+    },
   },
   {
     id: 'jim-andrada',
@@ -141,7 +147,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
     email: 'jim.andrada@company.com',
     location: 'Seattle, WA',
     joinDate: '2020-08-05',
@@ -152,21 +159,21 @@ export const employeesData: Employee[] = [
     achievements: [
       'Led Angular migration from AngularJS',
       'Established testing standards and practices',
-      'Reduced bug reports by 60%'
+      'Reduced bug reports by 60%',
     ],
     goals: {
       current: ['Explore micro-frontends', 'Learn React'],
-      completed: ['Master RxJS patterns', 'Implement comprehensive testing']
+      completed: ['Master RxJS patterns', 'Implement comprehensive testing'],
     },
     feedbackHistory: {
       given: 20,
       received: 5,
-      pending: 1
+      pending: 1,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/jimandrada',
-      github: 'https://github.com/jimandrada'
-    }
+      github: 'https://github.com/jimandrada',
+    },
   },
   {
     id: 'alex-ruiz',
@@ -174,7 +181,8 @@ export const employeesData: Employee[] = [
     role: 'Engineering Manager',
     team: 'God of War',
     status: 'Available',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
     email: 'alex.ruiz@company.com',
     phone: '+1 (555) 345-6789',
     location: 'Los Angeles, CA',
@@ -186,21 +194,21 @@ export const employeesData: Employee[] = [
     achievements: [
       'Built and led a team of 12 developers',
       'Improved team productivity by 45%',
-      'Implemented agile best practices'
+      'Implemented agile best practices',
     ],
     goals: {
       current: ['Scale team to 15 members', 'Implement DevOps practices'],
-      completed: ['Establish team processes', 'Achieve 95% employee satisfaction']
+      completed: ['Establish team processes', 'Achieve 95% employee satisfaction'],
     },
     feedbackHistory: {
       given: 35,
       received: 12,
-      pending: 0
+      pending: 0,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/alexruiz',
-      github: 'https://github.com/alexruiz'
-    }
+      github: 'https://github.com/alexruiz',
+    },
   },
   {
     id: 'tom-hardy',
@@ -208,7 +216,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=150&h=150&fit=crop&crop=face',
     email: 'tom.hardy@company.com',
     location: 'Chicago, IL',
     joinDate: '2022-09-01',
@@ -219,21 +228,21 @@ export const employeesData: Employee[] = [
     achievements: [
       'Implemented Redux toolkit migration',
       'Created comprehensive Storybook documentation',
-      'Reduced build time by 35%'
+      'Reduced build time by 35%',
     ],
     goals: {
       current: ['Learn server-side rendering', 'Explore Web Components'],
-      completed: ['Master Redux patterns', 'Build development tools']
+      completed: ['Master Redux patterns', 'Build development tools'],
     },
     feedbackHistory: {
       given: 10,
       received: 7,
-      pending: 2
+      pending: 2,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/tomhardy',
-      github: 'https://github.com/tomhardy'
-    }
+      github: 'https://github.com/tomhardy',
+    },
   },
   {
     id: 'amanda-wilson',
@@ -241,7 +250,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
     email: 'amanda.wilson@company.com',
     location: 'Denver, CO',
     joinDate: '2021-03-22',
@@ -252,21 +262,21 @@ export const employeesData: Employee[] = [
     achievements: [
       'Collaborated with design team on component library',
       'Improved mobile experience across all products',
-      'Conducted user research sessions'
+      'Conducted user research sessions',
     ],
     goals: {
       current: ['Learn animation libraries', 'Master design tokens'],
-      completed: ['Implement responsive design system', 'Learn user research methods']
+      completed: ['Implement responsive design system', 'Learn user research methods'],
     },
     feedbackHistory: {
       given: 14,
       received: 9,
-      pending: 1
+      pending: 1,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/amandawilson',
-      github: 'https://github.com/amandawilson'
-    }
+      github: 'https://github.com/amandawilson',
+    },
   },
   {
     id: 'jessica-wright',
@@ -274,7 +284,8 @@ export const employeesData: Employee[] = [
     role: 'Front End Developer',
     team: 'God of War',
     status: 'PR In Progress',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
+    avatar:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
     email: 'jessica.wright@company.com',
     location: 'Miami, FL',
     joinDate: '2023-06-15',
@@ -285,22 +296,22 @@ export const employeesData: Employee[] = [
     achievements: [
       'Created award-winning animation library',
       'Improved user engagement by 25%',
-      'Mentored design interns'
+      'Mentored design interns',
     ],
     goals: {
       current: ['Learn WebGL', 'Explore Three.js'],
-      completed: ['Master CSS animations', 'Build interactive prototypes']
+      completed: ['Master CSS animations', 'Build interactive prototypes'],
     },
     feedbackHistory: {
       given: 6,
       received: 11,
-      pending: 4
+      pending: 4,
     },
     socialLinks: {
       linkedin: 'https://linkedin.com/in/jessicawright',
-      github: 'https://github.com/jessicawright'
-    }
-  }
+      github: 'https://github.com/jessicawright',
+    },
+  },
 ];
 
 // Helper functions
@@ -328,8 +339,8 @@ export const teamsData = [
     description: 'Frontend development team focused on user-facing applications',
     memberCount: 8,
     manager: 'alex-ruiz',
-    projects: ['Design System', 'Mobile App', 'Dashboard', 'E-commerce Platform']
-  }
+    projects: ['Design System', 'Mobile App', 'Dashboard', 'E-commerce Platform'],
+  },
 ];
 
 // Activity feed data
@@ -340,7 +351,7 @@ export const activitiesData = [
     type: 'self-assessment',
     message: 'completed her self Assessment today',
     timestamp: new Date('2024-01-15T10:30:00'),
-    status: 'completed'
+    status: 'completed',
   },
   {
     id: 2,
@@ -348,7 +359,7 @@ export const activitiesData = [
     type: 'check-in',
     message: "It's been 3 months since your last check in with Julia",
     timestamp: new Date('2024-01-14T15:45:00'),
-    status: 'reminder'
+    status: 'reminder',
   },
   {
     id: 3,
@@ -356,6 +367,6 @@ export const activitiesData = [
     type: 'self-assessment',
     message: 'completed his self Assessment today',
     timestamp: new Date('2024-01-13T09:15:00'),
-    status: 'completed'
-  }
+    status: 'completed',
+  },
 ];

@@ -1,577 +1,390 @@
 'use client';
 
-import React, { useState } from 'react';
-import './game-changers.css';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { AdminLayout } from '@/components/templates/AdminLayout/AdminLayout';
 import { Card } from '@/components/molecules/Card/Card';
 import { Avatar } from '@/components/atoms/Avatar/Avatar';
 import { Typography } from '@/components/atoms/Typography/Typography';
 import { Button } from '@/components/atoms/Button/Button';
 import { Badge } from '@/components/atoms/Badge/Badge';
-import { PageLayout } from '@/components/templates/PageLayout/PageLayout';
-import { 
-  ChevronLeft,
-  Star,
-  Sparkles,
-  Bot,
-  Bell
+import { useChatContext } from '@/components/providers/ChatProvider';
+import {
+  Calendar,
+  ArrowRight,
+  Plus,
+  Search,
+  List,
+  Grid,
+  ArrowUpLeft,
+  ExpandIcon,
+  ArrowUpRight,
 } from 'lucide-react';
-import { employeesData } from '@/data/employees';
-import Link from 'next/link';
+import { employeesData, getEmployeeById } from '@/data/employees';
 
-// Rating Toggle Component
-interface RatingToggleProps {
-  value: 'low' | 'medium' | 'high';
-  onChange: (value: 'low' | 'medium' | 'high') => void;
-}
+// Main tabs for the Game Changers section
+const mainTabs = [
+  { id: 'goals', label: 'Goals', active: true },
+  { id: 'checkins', label: 'Check-ins', active: false },
+  { id: 'feedback', label: 'Feedback', active: false },
+  { id: 'performance', label: 'Performance', active: false },
+  { id: 'talent-plan', label: 'Talent Plan', active: false },
+];
 
-const RatingToggle: React.FC<RatingToggleProps> = ({ value, onChange }) => {
+// Sub tabs for Team Goals section
+const teamGoalsTabs = [
+  { id: 'middle-range', label: 'Middle Range Plans', active: false },
+  { id: 'my-goals', label: 'My Goals', active: false },
+  { id: 'team-goals', label: 'Team Goals', active: true },
+];
+
+// Mock goal data based on Figma design
+const teamGoals = [
+  {
+    id: 1,
+    title: '2026 Artificial intelligence Technology Adoption',
+    progress: 50,
+    status: 'On Track',
+    assignee: {
+      name: 'Perform AI Trainings',
+      avatar: '/api/placeholder/36/36',
+    },
+    badges: ['Personal Goal', 'Approved'],
+  },
+  {
+    id: 2,
+    title: '2026 Artificial intelligence Technology Adoption',
+    progress: 50,
+    status: 'On Track',
+    assignee: {
+      name: 'Perform AI Trainings',
+      avatar: '/api/placeholder/36/36',
+    },
+    badges: ['Personal Goal', 'Approved'],
+  },
+  {
+    id: 3,
+    title: '2026 Artificial intelligence Technology Adoption',
+    progress: 50,
+    status: 'On Track',
+    assignee: {
+      name: 'Perform AI Trainings',
+      avatar: '/api/placeholder/36/36',
+    },
+    badges: ['Personal Goal', 'Approved'],
+  },
+  {
+    id: 4,
+    title: '2026 Artificial intelligence Technology Adoption',
+    progress: 50,
+    status: 'On Track',
+    assignee: {
+      name: 'Perform AI Trainings',
+      avatar: '/api/placeholder/36/36',
+    },
+    badges: ['Personal Goal', 'Approved'],
+  },
+  {
+    id: 5,
+    title: '2026 Artificial intelligence Technology Adoption',
+    progress: 50,
+    status: 'On Track',
+    assignee: {
+      name: 'Perform AI Trainings',
+      avatar: '/api/placeholder/36/36',
+    },
+    badges: ['Personal Goal', 'Approved'],
+  },
+];
+
+// Performance metrics component
+const PerformanceMetrics = () => {
   return (
-    <div className="rating-toggle">
-      <button
-        type="button"
-        className={`rating-option ${value === 'low' ? 'active' : ''}`}
-        onClick={() => onChange('low')}
-      >
-        Low
-      </button>
-      <button
-        type="button"
-        className={`rating-option ${value === 'medium' ? 'active' : ''}`}
-        onClick={() => onChange('medium')}
-      >
-        Medium
-      </button>
-      <button
-        type="button"
-        className={`rating-option ${value === 'high' ? 'active' : ''}`}
-        onClick={() => onChange('high')}
-      >
-        High
-      </button>
-    </div>
-  );
-};
-
-// Performance Row Component
-interface PerformanceRowProps {
-  label: string;
-  value: 'low' | 'medium' | 'high';
-  onChange: (value: 'low' | 'medium' | 'high') => void;
-}
-
-const PerformanceRow: React.FC<PerformanceRowProps> = ({ label, value, onChange }) => {
-  return (
-    <div className="performance-row">
-      <Typography variant="body" className="performance-label">
-        {label}
-      </Typography>
-      <RatingToggle value={value} onChange={onChange} />
-    </div>
-  );
-};
-
-// Radar Chart Component (simplified)
-const RadarChart: React.FC = () => {
-  return (
-    <div className="radar-chart">
-      <svg width="233" height="233" viewBox="0 0 233 233" className="radar-svg">
-        {/* Background grids */}
-        <g className="radar-grid">
-          <polygon
-            points="116.5,20 180,60 200,116.5 180,173 116.5,213 53,173 33,116.5 53,60"
-            fill="rgba(255, 255, 255, 0.24)"
+    <div className="flex items-center gap-8">
+      {/* Circular Progress Chart */}
+      <div className="relative w-24 h-24">
+        <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+          {/* Background circle */}
+          <circle cx="50" cy="50" r="35" stroke="#CBCEE1" strokeWidth="8" fill="none" />
+          {/* Progress circle */}
+          <circle
+            cx="50"
+            cy="50"
+            r="35"
             stroke="#9498B8"
-            strokeWidth="1"
+            strokeWidth="8"
+            fill="none"
+            strokeDasharray={`${25 * 2.2} ${100 * 2.2}`}
+            className="transition-all duration-1000 ease-out"
           />
-          <polygon
-            points="116.5,50 150,75 165,116.5 150,158 116.5,183 83,158 68,116.5 83,75"
-            fill="rgba(203, 216, 228, 0.24)"
-            stroke="#9498B8"
-            strokeWidth="1"
+          {/* Inner progress segment */}
+          <circle
+            cx="50"
+            cy="50"
+            r="28"
+            stroke="#CBCEE1"
+            strokeWidth="6"
+            fill="none"
+            strokeDasharray={`${15 * 1.8} ${100 * 1.8}`}
+            strokeDashoffset={`${-10 * 1.8}`}
+            className="transition-all duration-1000 ease-out"
           />
-          <polygon
-            points="116.5,80 135,95 145,116.5 135,138 116.5,153 98,138 88,116.5 98,95"
-            fill="rgba(255, 255, 255, 0.24)"
-            stroke="#9498B8"
-            strokeWidth="1"
-          />
-        </g>
-        
-        {/* Data polygon */}
-        <polygon
-          points="116.5,30 165,70 190,116.5 165,163 116.5,203 68,163 43,116.5 68,70"
-          fill="rgba(79, 70, 229, 0.1)"
-          stroke="#4F46E5"
-          strokeWidth="2"
-        />
-        
-        {/* Labels */}
-        <g className="radar-labels">
-          <text x="116.5" y="15" textAnchor="middle" className="radar-label">Retention Risk</text>
-          <text x="205" y="65" textAnchor="start" className="radar-label">Game Changers</text>
-          <text x="225" y="121" textAnchor="start" className="radar-label">Values & Leadership</text>
-          <text x="205" y="175" textAnchor="start" className="radar-label">Engagement</text>
-          <text x="116.5" y="225" textAnchor="middle" className="radar-label">Ability</text>
-          <text x="28" y="175" textAnchor="end" className="radar-label">Aspiration</text>
-          <text x="8" y="121" textAnchor="end" className="radar-label">Agility</text>
-        </g>
-      </svg>
-    </div>
-  );
-};
-
-export default function GameChangersPage() {
-  // Employee data - using Rachel Green from mock data
-  const employee = employeesData.find(emp => emp.id === 'rachel-green') || employeesData[0];
-
-  // Performance ratings state
-  const [performanceRatings, setPerformanceRatings] = useState({
-    retentionRisk: 'high' as 'low' | 'medium' | 'high',
-    gameChangers: 'high' as 'low' | 'medium' | 'high',
-    valuesAlignment: 'medium' as 'low' | 'medium' | 'high',
-    engagementScore: 'low' as 'low' | 'medium' | 'high',
-  });
-
-  // Potential ratings state
-  const [potentialRatings, setPotentialRatings] = useState({
-    ability: 'high' as 'low' | 'medium' | 'high',
-    aspiration: 'high' as 'low' | 'medium' | 'high',
-    agility: 'medium' as 'low' | 'medium' | 'high',
-  });
-
-  // Text areas state
-  const [performanceBehaviors, setPerformanceBehaviors] = useState(`Quality of Work:
-Delivers consistently high-quality work with exceptional attention to detail, which significantly contributes to project success".
-
-Productivity & Efficiency:
-Consistently meets or exceeds quarterly goals and deadlines through effective time management".
-
-Communication:
-Communicates effectively with team members, ensuring clear, concise, and error-free information exchange".`);
-
-  const [potentialBehaviors, setPotentialBehaviors] = useState(`Quality of Work:
-Delivers consistently high-quality work with exceptional attention to detail, which significantly contributes to project success".
-
-Productivity & Efficiency:
-Consistently meets or exceeds quarterly goals and deadlines through effective time management".
-
-Communication:
-Communicates effectively with team members, ensuring clear, concise, and error-free information exchange".`);
-
-  // Proposed and final ratings
-  const [proposedRating, setProposedRating] = useState<'low' | 'medium' | 'high'>('medium');
-  const [finalRating, setFinalRating] = useState<'low' | 'medium' | 'high'>('medium');
-
-  // Form state management
-  const [isDirty, setIsDirty] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
-
-  // Auto-save functionality
-  React.useEffect(() => {
-    if (isDirty && !isSaving) {
-      const timer = setTimeout(() => {
-        handleAutoSave();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isDirty, performanceRatings, potentialRatings, performanceBehaviors, potentialBehaviors, proposedRating, finalRating]);
-
-  const handleAutoSave = async () => {
-    setIsSaving(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setLastSaved(new Date());
-    setIsDirty(false);
-    setIsSaving(false);
-  };
-
-  const handleSaveDraft = async () => {
-    setIsSaving(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setLastSaved(new Date());
-    setIsDirty(false);
-    setIsSaving(false);
-    // In a real app, would navigate away or show success message
-  };
-
-  const handleMarkCompleted = async () => {
-    setIsSaving(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    // In a real app, would mark as completed and navigate away
-    setIsSaving(false);
-  };
-
-  // Mark form as dirty when any value changes
-  const markDirty = () => {
-    if (!isDirty) setIsDirty(true);
-  };
-
-  return (
-    <PageLayout
-      header={{
-        logo: (
-          <div className="w-15 h-15 bg-gradient-to-br from-neutral-400 to-neutral-600 rounded-lg transform rotate-45 relative">
-            <div className="absolute inset-2 bg-white rounded opacity-20" />
-          </div>
-        ),
-        title: '',
-        navigation: [
-          { label: 'Home', href: '/admin/feedback' },
-          { label: 'My Team', href: '/admin/team' },
-          { label: 'Game Changers', href: '/admin/game-changers', active: true },
-        ],
-        rightContent: (
-          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
-            <div className="hidden sm:flex items-center gap-3 bg-neutral-200 rounded-full px-3 lg:px-4 py-2">
-              <div className="w-8 lg:w-10 h-8 lg:h-10 bg-neutral-600 rounded-full flex items-center justify-center">
-                <Bot className="w-4 lg:w-6 h-4 lg:h-6 text-white" />
-              </div>
-              <span className="hidden lg:block text-neutral-600 font-semibold text-sm lg:text-base">Sony Assistant</span>
-            </div>
-            <div className="w-8 lg:w-10 h-8 lg:h-10 bg-neutral-100 rounded-full flex items-center justify-center">
-              <Bell className="w-4 lg:w-5 h-4 lg:h-5 text-neutral-800" />
-            </div>
-            <Avatar 
-              src="/api/placeholder/48/48" 
-              fallback="AR" 
-              size="md"
-              className="lg:w-12 lg:h-12"
-            />
-          </div>
-        ),
-        showThemeToggle: false,
-        showSettingsButton: false,
-      }}
-    >
-      <div className="game-changers-page">
-        {/* Back Button */}
-        <div className="back-button">
-          <Link href="/admin/team" className="back-link">
-            <ChevronLeft className="w-4 h-4" />
-            <span>BACK</span>
-          </Link>
-        </div>
-
-        <div className="game-changers-content">
-          {/* Sidebar */}
-          <div className="sidebar">
-            <div className="employee-info">
-              <Avatar 
-                src={employee.avatar}
-                fallback={employee.name.split(' ').map(n => n[0]).join('')}
-                size="xl"
-                className="employee-avatar"
-              />
-              <div className="employee-details">
-                <Typography variant="h4" weight="bold" className="employee-name">
-                  {employee.name}
-                </Typography>
-                <Typography variant="body" className="employee-title">
-                  {employee.role}
-                </Typography>
-              </div>
-            </div>
-
-            <div className="employee-profile-data">
-              <div className="profile-field">
-                <Typography variant="body" weight="bold" className="field-label">
-                  Job Profile
-                </Typography>
-                <Typography variant="body" className="field-value">
-                  PMF005 - Director, Finance
-                </Typography>
-              </div>
-              
-              <div className="profile-field">
-                <Typography variant="body" weight="bold" className="field-label">
-                  Job Level
-                </Typography>
-                <Typography variant="body" className="field-value">
-                  M5
-                </Typography>
-              </div>
-              
-              <div className="profile-field">
-                <Typography variant="body" weight="bold" className="field-label">
-                  Business Division
-                </Typography>
-                <Typography variant="body" className="field-value">
-                  Admin
-                </Typography>
-              </div>
-              
-              <div className="profile-field">
-                <Typography variant="body" weight="bold" className="field-label">
-                  Last Game Changers Rating
-                </Typography>
-                <Typography variant="body" className="field-value">
-                  Medium
-                </Typography>
-              </div>
-              
-              <div className="profile-field">
-                <Typography variant="body" weight="bold" className="field-label">
-                  Last Effectiveness Index
-                </Typography>
-                <Typography variant="body" className="field-value">
-                  Admin
-                </Typography>
-              </div>
-
-              <Button variant="secondary" className="view-all-btn">
-                View all →
-              </Button>
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="main-content">
-            {/* Classification Section */}
-            <div className="classification-section">
-              <div className="classification-icon">
-                <Star className="star-icon" />
-              </div>
-              <Typography variant="h3" weight="bold" className="classification-title">
-                Advancing Player
-              </Typography>
-            </div>
-
-            {/* Performance Section */}
-            <div className="evaluation-section">
-              <Typography variant="h5" weight="bold" className="section-title">
-                Performance
-              </Typography>
-              
-              <div className="evaluation-content">
-                <div className="performance-metrics">
-                  <PerformanceRow
-                    label="Retention Risk"
-                    value={performanceRatings.retentionRisk}
-                    onChange={(value) => {
-                      setPerformanceRatings(prev => ({ ...prev, retentionRisk: value }));
-                      markDirty();
-                    }}
-                  />
-                  <PerformanceRow
-                    label="Game Changers"
-                    value={performanceRatings.gameChangers}
-                    onChange={(value) => {
-                      setPerformanceRatings(prev => ({ ...prev, gameChangers: value }));
-                      markDirty();
-                    }}
-                  />
-                  <PerformanceRow
-                    label="Alignment to Our Values & Leadership Behaviors"
-                    value={performanceRatings.valuesAlignment}
-                    onChange={(value) => {
-                      setPerformanceRatings(prev => ({ ...prev, valuesAlignment: value }));
-                      markDirty();
-                    }}
-                  />
-                  <PerformanceRow
-                    label="Engagement Survey Score"
-                    value={performanceRatings.engagementScore}
-                    onChange={(value) => {
-                      setPerformanceRatings(prev => ({ ...prev, engagementScore: value }));
-                      markDirty();
-                    }}
-                  />
-                </div>
-
-                <div className="rating-highlights">
-                  <div className="rating-card">
-                    <Typography variant="h6" weight="bold" className="rating-card-title">
-                      Proposed Rating
-                    </Typography>
-                    <RatingToggle
-                      value={proposedRating}
-                      onChange={(value) => {
-                        setProposedRating(value);
-                        markDirty();
-                      }}
-                    />
-                  </div>
-                  
-                  <div className="rating-card">
-                    <Typography variant="h6" weight="bold" className="rating-card-title">
-                      Final Selected Rating
-                    </Typography>
-                    <RatingToggle
-                      value={finalRating}
-                      onChange={(value) => {
-                        setFinalRating(value);
-                        markDirty();
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Example Behaviors */}
-              <div className="behaviors-section">
-                <Typography variant="body" weight="bold" className="behaviors-label">
-                  Example Behaviors
-                </Typography>
-                <div className="textarea-container">
-                  <textarea
-                    value={performanceBehaviors}
-                    onChange={(e) => {
-                      setPerformanceBehaviors(e.target.value);
-                      markDirty();
-                    }}
-                    className="behaviors-textarea"
-                    rows={6}
-                  />
-                  <div className="resize-handle" />
-                </div>
-                <div className="prefilled-note">
-                  <Sparkles className="w-6 h-6 text-neutral-500" />
-                  <Typography variant="body" className="note-text">
-                    This draft is pre-filled using goals, feedback, and notes. You can edit freely.
-                  </Typography>
-                </div>
-              </div>
-            </div>
-
-            {/* Potential Section */}
-            <div className="evaluation-section">
-              <Typography variant="h5" weight="bold" className="section-title">
-                Potential
-              </Typography>
-              
-              <div className="evaluation-content">
-                <div className="performance-metrics">
-                  <PerformanceRow
-                    label="Ability"
-                    value={potentialRatings.ability}
-                    onChange={(value) => {
-                      setPotentialRatings(prev => ({ ...prev, ability: value }));
-                      markDirty();
-                    }}
-                  />
-                  <PerformanceRow
-                    label="Aspiration"
-                    value={potentialRatings.aspiration}
-                    onChange={(value) => {
-                      setPotentialRatings(prev => ({ ...prev, aspiration: value }));
-                      markDirty();
-                    }}
-                  />
-                  <PerformanceRow
-                    label="Agility"
-                    value={potentialRatings.agility}
-                    onChange={(value) => {
-                      setPotentialRatings(prev => ({ ...prev, agility: value }));
-                      markDirty();
-                    }}
-                  />
-                </div>
-
-                <div className="rating-highlights">
-                  <div className="rating-card">
-                    <Typography variant="h6" weight="bold" className="rating-card-title">
-                      Proposed Rating
-                    </Typography>
-                    <RatingToggle
-                      value={proposedRating}
-                      onChange={(value) => {
-                        setProposedRating(value);
-                        markDirty();
-                      }}
-                    />
-                  </div>
-                  
-                  <div className="rating-card">
-                    <Typography variant="h6" weight="bold" className="rating-card-title">
-                      Final Selected Rating
-                    </Typography>
-                    <RatingToggle
-                      value={finalRating}
-                      onChange={(value) => {
-                        setFinalRating(value);
-                        markDirty();
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Example Behaviors */}
-              <div className="behaviors-section">
-                <Typography variant="body" weight="bold" className="behaviors-label">
-                  Example Behaviors
-                </Typography>
-                <div className="textarea-container">
-                  <textarea
-                    value={potentialBehaviors}
-                    onChange={(e) => {
-                      setPotentialBehaviors(e.target.value);
-                      markDirty();
-                    }}
-                    className="behaviors-textarea"
-                    rows={6}
-                  />
-                  <div className="resize-handle" />
-                </div>
-                <div className="prefilled-note">
-                  <Sparkles className="w-6 h-6 text-neutral-500" />
-                  <Typography variant="body" className="note-text">
-                    This draft is pre-filled using goals, feedback, and notes. You can edit freely.
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Radar Chart */}
-          <div className="radar-section">
-            <RadarChart />
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="footer-section">
-          <div className="ai-assistant">
-            <div className="ai-avatar">
-              <Bot className="w-8 h-8 text-neutral-800" />
-            </div>
-          </div>
-          
-          <div className="footer-actions">
-            <div className="footer-left">
-              <Button
-                variant="secondary"
-                size="lg"
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-              >
-                {isSaving ? 'Saving...' : 'Save Draft and Close'}
-              </Button>
-              {lastSaved && (
-                <Typography variant="caption" className="auto-save-status">
-                  Last saved: {lastSaved.toLocaleTimeString()}
-                </Typography>
-              )}
-              {isSaving && (
-                <Typography variant="caption" className="auto-save-status">
-                  Auto-saving...
-                </Typography>
-              )}
-            </div>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={handleMarkCompleted}
-              disabled={isSaving}
-            >
-              {isSaving ? 'Saving...' : 'Mark as Completed'}
-            </Button>
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-lg font-bold text-gray-900">25%</div>
+            <div className="text-xs text-gray-500">Completed</div>
           </div>
         </div>
       </div>
-    </PageLayout>
+
+      {/* Metrics */}
+      <div className="flex items-center gap-6">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-gray-900">20</div>
+          <div className="text-xs text-gray-500">Goals</div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-gray-900">15</div>
+          <div className="text-xs text-gray-500">On Time</div>
+        </div>
+        <div className="text-center">
+          <div className="text-2xl font-bold text-gray-900">5</div>
+          <div className="text-xs text-gray-500">Pending</div>
+        </div>
+      </div>
+
+      {/* New Goal Button */}
+      <Button variant="primary" size="sm" className="ml-auto">
+        <Plus className="w-4 h-4 mr-2" />
+        New Goal
+      </Button>
+    </div>
+  );
+};
+
+// Goal Card Component
+const GoalCard = ({ goal }: { goal: any }) => {
+  return (
+    <Card className="p-6 hover:shadow-md transition-all duration-200">
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center gap-3">
+          <ArrowUpLeft className="w-4 h-4 text-gray-600" />
+          <Typography variant="body" weight="semibold" className="flex-1">
+            {goal.title}
+          </Typography>
+          <div className="flex items-center gap-2">
+            {goal.badges.map((badge: string, index: number) => (
+              <Badge key={index} variant="secondary" size="sm">
+                {badge}
+              </Badge>
+            ))}
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="flex items-center gap-4">
+          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gray-400 rounded-full transition-all duration-1000 ease-out"
+              style={{ width: `${goal.progress}%` }}
+            />
+          </div>
+          <Typography variant="body" weight="semibold" className="text-sm">
+            {goal.progress}% ({goal.status})
+          </Typography>
+        </div>
+
+        {/* Assignee */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Avatar src={goal.assignee.avatar} fallback="PA" size="sm" />
+            <Typography variant="body" className="text-sm">
+              {goal.assignee.name}
+            </Typography>
+          </div>
+          <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <ExpandIcon className="w-4 h-4 text-gray-600" />
+          </button>
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+// Content component that uses ChatContext (inside AdminLayout)
+const GameChangersContent = () => {
+  const [activeMainTab, setActiveMainTab] = useState('goals');
+  const [activeSubTab, setActiveSubTab] = useState('team-goals');
+  const { openChat } = useChatContext();
+
+  const handleChatClick = () => {
+    openChat();
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header with Navigation */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Title */}
+          <div className="py-8">
+            <Typography variant="h2" weight="bold" className="text-gray-900">
+              Game Changers
+            </Typography>
+          </div>
+
+          {/* My Journey Section */}
+          <div className="py-6 border-b border-gray-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-2">
+                <Avatar src="/api/placeholder/32/32" fallback="AR" size="sm" />
+                <Typography variant="body" weight="bold">
+                  My Journey
+                </Typography>
+                <ArrowRight className="w-4 h-4 text-gray-600" />
+              </div>
+
+              {/* Step Navigation */}
+              <div className="flex items-center gap-4">
+                {mainTabs.map(tab => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveMainTab(tab.id)}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border transition-all duration-200 ${
+                      activeMainTab === tab.id
+                        ? 'bg-gray-200 border-gray-300 text-gray-900'
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Calendar className="w-4 h-4" />
+                    <span className="text-sm font-semibold">{tab.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Performance Metrics */}
+          <div className="py-6">
+            <PerformanceMetrics />
+          </div>
+
+          {/* Team Goals Tabs */}
+          <div className="flex items-center border-b border-gray-200">
+            {teamGoalsTabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveSubTab(tab.id)}
+                className={`px-4 py-3 text-sm font-semibold transition-all duration-200 border-b-2 ${
+                  activeSubTab === tab.id
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Team Goals Section */}
+        <div className="space-y-6">
+          {/* Section Header */}
+          <div className="space-y-6">
+            <Typography variant="h4" weight="bold">
+              Team Goals
+            </Typography>
+
+            {/* Search and Controls */}
+            <div className="flex items-center gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                />
+              </div>
+              <button className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <List className="w-5 h-5 text-gray-600" />
+              </button>
+              <button className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <Grid className="w-5 h-5 text-gray-600" />
+              </button>
+              <Button variant="secondary" size="sm">
+                <ArrowUpRight className="w-4 h-4 mr-2" />
+                Sort by
+              </Button>
+            </div>
+          </div>
+
+          {/* Goals Grid */}
+          <div className="grid grid-cols-1 gap-4">
+            {teamGoals.map((goal, index) => (
+              <div
+                key={goal.id}
+                className="animate-in fade-in-0 slide-in-from-bottom-4 duration-300"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <GoalCard goal={goal} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Call to Action for AI Chat */}
+        <Card className="p-8 mt-12 text-center bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="max-w-2xl mx-auto">
+            <Typography variant="h5" weight="bold" className="mb-3">
+              Need insights about team performance?
+            </Typography>
+            <Typography variant="body" className="text-gray-600 mb-6">
+              Use our AI assistant to analyze goal progress, team performance metrics, and get
+              actionable recommendations.
+            </Typography>
+            <Button variant="primary" size="lg" onClick={handleChatClick}>
+              Ask Sony AI Assistant
+            </Button>
+          </div>
+        </Card>
+      </main>
+    </div>
+  );
+};
+
+// Main page component
+export default function GameChangersPage() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+    }, 800);
+  }, []);
+
+  if (loading) {
+    return (
+      <AdminLayout currentPage="game-changers">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <Typography variant="body" className="text-gray-600">
+              Loading Game Changers...
+            </Typography>
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
+  return (
+    <AdminLayout currentPage="game-changers">
+      <GameChangersContent />
+    </AdminLayout>
   );
 }

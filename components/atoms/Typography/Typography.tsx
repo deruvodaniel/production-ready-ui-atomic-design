@@ -49,12 +49,12 @@ const typographyVariants = cva(styles.base, {
   },
 });
 
-export interface TypographyProps
-  extends VariantProps<typeof typographyVariants> {
+export interface TypographyProps extends VariantProps<typeof typographyVariants> {
   children: React.ReactNode;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
   className?: string;
   htmlFor?: string;
+  style?: React.CSSProperties;
 }
 
 export const Typography: React.FC<TypographyProps> = ({
