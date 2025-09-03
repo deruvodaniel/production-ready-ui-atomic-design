@@ -376,7 +376,7 @@ export default function AdminDashboard() {
                   Welcome back, {currentUser?.name.split(' ')[0]}! 👋
                 </Typography>
                 <Typography variant="body" className="text-gray-600">
-                  Here's what's happening with your team today
+                  Here&apos;s what&apos;s happening with your team today
                 </Typography>
               </div>
               <div className="flex items-center gap-3">
