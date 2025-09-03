@@ -30,6 +30,8 @@ export interface Employee {
     received: number;
     pending: number;
   };
+  currentProject?: string;
+  performanceScore?: number;
 }
 
 export const employeesData: Employee[] = [
