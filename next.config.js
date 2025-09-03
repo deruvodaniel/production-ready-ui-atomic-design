@@ -2,8 +2,8 @@ const repoBasePath = process.env.NEXT_BASE_PATH || '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove static export for development - this was causing CSS Module issues
-  // output: 'export', // Only enable for production static builds
+  // Disable static export
+  output: undefined,
   eslint: {
     ignoreDuringBuilds: process.env.NODE_ENV === 'production', // Only ignore in production
   },
