@@ -2,8 +2,8 @@ const repoBasePath = process.env.NEXT_BASE_PATH || '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Disable static export
-  output: undefined,
+  // Enable static export
+  output: 'export',
   eslint: {
     ignoreDuringBuilds: process.env.NODE_ENV === 'production', // Only ignore in production
   },
