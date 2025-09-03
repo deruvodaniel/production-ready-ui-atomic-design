@@ -112,7 +112,6 @@ export const FullExample: Story = {
           items={sampleItems}
           currentPath={currentPath}
           collapsed={collapsed}
-          onToggle={() => setCollapsed(!collapsed)}
         />
         <main className="flex-1 p-6 bg-neutral-50 dark:bg-neutral-900">
           <div className="mb-4">
