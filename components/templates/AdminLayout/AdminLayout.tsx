@@ -154,8 +154,9 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         showBackButton={showBackButton}
         customHeader={customHeader}
         className={className}
-        children={children}
-      />
+      >
+        {children}
+      </AdminLayoutContent>
     </ChatProvider>
   );
 };
