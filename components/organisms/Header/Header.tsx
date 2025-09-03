@@ -42,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   notificationCount = 0,
   showSonyAssistant = true,
   onSonyAssistantClick,
+  rightContent,
 }) => {
   const { isDark, toggleDarkMode } = useTheme();
   const pathname = usePathname();
