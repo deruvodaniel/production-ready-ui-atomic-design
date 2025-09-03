@@ -160,6 +160,8 @@ export const Header: React.FC<HeaderProps> = ({
               <Avatar src={user.avatar} alt={user.name} fallback={user.name.charAt(0)} size="md" />
             </div>
           )}
+
+          {rightContent}
         </div>
       </div>
     </header>
