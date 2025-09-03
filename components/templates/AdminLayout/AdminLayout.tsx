@@ -117,9 +117,9 @@ const AdminLayoutContent: React.FC<AdminLayoutProps> = ({
         title: '',
         navigation: getNavigationItems(),
         rightContent: <HeaderRightContent />,
-        showSonyAssistant: true,
+        showSonyAssistant: false,
         onSonyAssistantClick: toggleChat,
-        showNotifications: true,
+        showNotifications: false,
         notificationCount: 3,
         user: currentUser
           ? {
