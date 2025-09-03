@@ -4,30 +4,29 @@ const repoBasePath = process.env.NEXT_BASE_PATH || '';
 const nextConfig = {
   // Remove static export for development - this was causing CSS Module issues
   // output: 'export', // Only enable for production static builds
-  eslint: { 
-    ignoreDuringBuilds: process.env.NODE_ENV === 'production' // Only ignore in production
+  eslint: {
+    ignoreDuringBuilds: process.env.NODE_ENV === 'production', // Only ignore in production
   },
-  images: { 
-    unoptimized: true 
+  images: {
+    unoptimized: true,
   },
   trailingSlash: false, // Change to false for better routing
   // Only use basePath in production
   basePath: process.env.NODE_ENV === 'production' ? repoBasePath : undefined,
   assetPrefix: process.env.NODE_ENV === 'production' ? repoBasePath : undefined,
-  
+
   webpack: config => {
     // Use filesystem cache in development, memory in production
-    config.cache = process.env.NODE_ENV === 'development' 
-      ? { type: 'filesystem' } 
-      : { type: 'memory' };
-    
+    config.cache =
+      process.env.NODE_ENV === 'development' ? { type: 'filesystem' } : { type: 'memory' };
+
     return config;
   },
-  
+
   experimental: {
     // Better CSS handling
     optimizeCss: false,
-  }
+  },
 };
 
 module.exports = nextConfig;
