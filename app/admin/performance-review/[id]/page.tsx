@@ -59,7 +59,7 @@ export default function PerformanceReviewPage() {
                 Employee Not Found
               </Typography>
               <Typography variant="body" color="muted" className="mb-6">
-                The employee you're trying to review doesn't exist.
+                The employee you&apos;re trying to review doesn&apos;t exist.
               </Typography>
               <Button onClick={() => router.push('/admin/team')}>Back to Team</Button>
             </div>
