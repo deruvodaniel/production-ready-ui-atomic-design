@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Header, HeaderProps } from '@/components/organisms/Header/Header';
+import { cn } from '@/lib/utils';
 import styles from './PageLayout.module.css';
 
 export interface PageLayoutProps {
