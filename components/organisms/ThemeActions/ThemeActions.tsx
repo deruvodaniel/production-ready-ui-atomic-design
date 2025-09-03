@@ -68,29 +68,27 @@ export const ThemeActions: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Button
-            variant="outline"
-            leftIcon={<Download />}
-            onClick={handleExportTheme}
-            className="w-full"
-          >
+        <div className="space-y-3">
+          <Button variant="outline" className="w-full justify-start" onClick={handleExportTheme}>
+            <Download className="w-4 h-4 mr-2" />
             Export Theme
           </Button>
-          <Button
-            variant="outline"
-            leftIcon={<Upload />}
-            onClick={handleImportTheme}
-            className="w-full"
-          >
+
+          <Button variant="outline" className="w-full justify-start" onClick={handleImportTheme}>
+            <Upload className="w-4 h-4 mr-2" />
             Import Theme
+          </Button>
+
+          <Button variant="outline" className="w-full justify-start" onClick={handleResetTheme}>
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Reset to Default
           </Button>
         </div>
 
         <div className="pt-4 border-t border-gray-200">
-          <Button variant="ghost" leftIcon={<RefreshCw />} className="w-full">
-            Reset to Defaults
-          </Button>
+          <Typography variant="caption" color="muted" className="text-xs">
+            Theme changes are automatically saved to your browser
+          </Typography>
         </div>
       </div>
     </Card>
