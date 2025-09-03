@@ -17,6 +17,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   header,
   showHeader = true,
   maxWidth = 'xl',
+  className,
 }) => {
   return (
     <div className={styles.layout}>
