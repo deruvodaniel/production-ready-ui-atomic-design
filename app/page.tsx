@@ -23,7 +23,7 @@ import {
   Layers,
   Zap,
 } from 'lucide-react';
-import { useTheme } from '@/theme/theme-provider';
+import { ThemeActions } from '@/components/organisms/ThemeActions/ThemeActions';
 import Link from 'next/link';
 
 // Component Preview Section
