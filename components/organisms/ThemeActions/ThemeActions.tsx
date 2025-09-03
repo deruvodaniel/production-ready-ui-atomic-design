@@ -32,7 +32,7 @@ export const ThemeActions: React.FC = () => {
         reader.onload = (e) => {
           try {
             const themeData = JSON.parse(e.target?.result as string);
-            // Handle theme import
+            // updateTheme(themeData); // Would need to implement validation
             console.log('Theme imported:', themeData);
           } catch (error) {
             console.error('Invalid theme file:', error);
@@ -42,6 +42,13 @@ export const ThemeActions: React.FC = () => {
       }
     };
     input.click();
+  };
+
+  const handleResetTheme = () => {
+    if (confirm('Are you sure you want to reset to default theme?')) {
+      localStorage.removeItem('ui-starter-theme');
+      window.location.reload();
+    }
   };
 
   return (
