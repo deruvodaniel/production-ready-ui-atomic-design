@@ -9,6 +9,7 @@ export interface PageLayoutProps {
   header?: HeaderProps;
   showHeader?: boolean;
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+  className?: string;
 }
 
 export const PageLayout: React.FC<PageLayoutProps> = ({
