@@ -309,7 +309,7 @@ export const AdminTeamMemberCard: React.FC<TeamMemberCardProps> = ({
   };
 
   const isRecentlyActive = employee.lastActivity
-    ? (new Date().getTime() - employee.lastActivity.getTime()) < 24 * 60 * 60 * 1000
+    ? new Date().getTime() - employee.lastActivity.getTime() < 24 * 60 * 60 * 1000
     : false;
 
   const content = (

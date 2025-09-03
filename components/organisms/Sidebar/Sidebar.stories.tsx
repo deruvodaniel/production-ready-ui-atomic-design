@@ -10,7 +10,8 @@ const meta: Meta<typeof Sidebar> = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'A navigation sidebar with support for nested items, badges, and collapsible state.',
+        component:
+          'A navigation sidebar with support for nested items, badges, and collapsible state.',
       },
     },
   },
@@ -108,11 +109,7 @@ export const FullExample: Story = {
 
     return (
       <div className="flex h-96">
-        <Sidebar
-          items={sampleItems}
-          currentPath={currentPath}
-          collapsed={collapsed}
-        />
+        <Sidebar items={sampleItems} currentPath={currentPath} collapsed={collapsed} />
         <main className="flex-1 p-6 bg-neutral-50 dark:bg-neutral-900">
           <div className="mb-4">
             <button
@@ -122,11 +119,9 @@ export const FullExample: Story = {
               {collapsed ? 'Expand' : 'Collapse'} Sidebar
             </button>
           </div>
-          
-          <h1 className="text-2xl font-bold mb-4">
-            Current Page: {currentPath}
-          </h1>
-          
+
+          <h1 className="text-2xl font-bold mb-4">Current Page: {currentPath}</h1>
+
           <div className="space-y-2">
             <p>Click sidebar items to navigate.</p>
             <p>Try collapsing the sidebar to see icon-only mode.</p>
