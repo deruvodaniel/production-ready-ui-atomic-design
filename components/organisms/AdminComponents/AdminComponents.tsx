@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Employee } from '@/data/employees';
 import { Card } from '@/components/molecules/Card/Card';
 import { Avatar } from '@/components/atoms/Avatar/Avatar';
 import { Typography } from '@/components/atoms/Typography/Typography';
