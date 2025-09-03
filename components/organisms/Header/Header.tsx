@@ -27,6 +27,7 @@ export interface HeaderProps {
   notificationCount?: number;
   showSonyAssistant?: boolean;
   onSonyAssistantClick?: () => void;
+  rightContent?: React.ReactNode;
 }
 
 export const Header: React.FC<HeaderProps> = ({
