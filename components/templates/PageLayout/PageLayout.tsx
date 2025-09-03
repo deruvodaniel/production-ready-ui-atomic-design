@@ -23,13 +23,8 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   return (
     <div className={cn(styles.layout, className)}>
       {showHeader && <Header {...header} />}
-      
-      <main 
-        className={styles.main}
-        role="main"
-        id="main-content"
-        tabIndex={-1}
-      >
+
+      <main className={styles.main} role="main" id="main-content" tabIndex={-1}>
         <div className={styles[`maxWidth${maxWidth.charAt(0).toUpperCase() + maxWidth.slice(1)}`]}>
           {children}
         </div>

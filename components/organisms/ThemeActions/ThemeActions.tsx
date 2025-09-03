@@ -25,11 +25,11 @@ export const ThemeActions: React.FC = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = (e) => {
+    input.onchange = e => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = e => {
           try {
             const themeData = JSON.parse(e.target?.result as string);
             // updateTheme(themeData); // Would need to implement validation

@@ -21,9 +21,7 @@ export default function NotFound() {
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </Typography>
         <Link href="/">
-          <Button size="lg">
-            Go Home
-          </Button>
+          <Button size="lg">Go Home</Button>
         </Link>
       </div>
     </PageLayout>

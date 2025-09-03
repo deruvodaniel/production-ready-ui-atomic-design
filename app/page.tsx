@@ -125,7 +125,6 @@ const ComponentPreview: React.FC = () => {
   );
 };
 
-
 export default function ThemeBuilderHome() {
   return (
     <PageLayout
